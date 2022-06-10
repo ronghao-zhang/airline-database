@@ -16,52 +16,68 @@
 \author{Quynh Nguyen, Jiamu Zhang, Luke Zhang}
 
 \begin{document}
-
-% set the underline style for schema code
-\lstset{
-  language=C, 
-  basicstyle=\ttfamily,
-  moredelim=[is][\underbar]{-}{-}
-}
-
-\maketitle
-
-\section{Introduction}
-
-In recent decades, the growing demand for leisure and business travel leads to the prosperity of the airline market. An increasing number of people have been choosing to take flights to travel domestically or internationally. Therefore, an organized and comprehensive database that stores the airline system is critical for both travelers and crew to obtain plenty and simultaneous information.
-\\
-\\
-Although there do exist several flight databases or applications for commercial airlines, it is rare to find comprehensive information - including weather at the departure airport and destination, aircraft type, the total flight hour of pilots, and the number of luggage allowed - in just one database. This information offers travelers a chance to be better prepared for traveling.
-\\
-\\
-Since our airline querying system contains a relatively extensive data set, the crew members who choose to use our database are able to access the basic information about the travelers who will be on their flight and provides updates about the airline information. 
-
-\section{Schemas}
-
-\subsection{Entities}
-\begin{lstlisting}[keepspaces=true]
-
-Travelers(-id-: double
-          name: String
-          gender: Char(1)
-          dob: date
-          travel_times: int
-          ) 
-          
-Flights(-id-: double
-        flight_no: Char(7)
-        flight_age: int
-        aircraft_type: String
-        airline_co: String
-        status: String
-        )
-        
-Airports(-iata_code-: Char(3)
-         weather: String
-         )
-
-\end{lstlisting}
-
-\subsection{Relationships}
-
+	
+	% set the underline style for schema code
+	\lstset{
+		language=C, 
+		basicstyle=\ttfamily,
+		moredelim=[is][\underbar]{-}{-}
+	}
+	
+	\maketitle
+	
+	\section{Introduction}
+	
+	In recent decades, the growing demand for leisure and business travel leads to the prosperity of the airline market. An increasing number of people have been choosing to take flights to travel domestically or internationally. Therefore, an organized and comprehensive database that stores the airline system is critical for both travelers and crew to obtain plenty and simultaneous information.
+	\\
+	\\
+	Although there do exist several flight databases or applications for commercial airlines, it is rare to find comprehensive information - including weather at the departure airport and destination, aircraft type, the total flight hour of pilots, and the number of luggage allowed - in just one database. This information offers travelers a chance to be better prepared for traveling.
+	\\
+	\\
+	Since our airline querying system contains a relatively extensive data set, the crew members who choose to use our database are able to access the basic information about the travelers who will be on their flight and provides updates about the airline information. 
+	
+	\section{Schemas}
+	
+	\subsection{Entities}
+	\begin{lstlisting}[keepspaces=true]
+		
+		Travelers(-id-: double
+		name: String
+		gender: Char(1)
+		dob: date
+		) 
+		
+		Aeroplanes(-regis_no-: Char(7)
+		flight_age: int
+		aircraft_type: String
+		airline: String
+		)
+		
+		Airports(-iata_code-: Char(3)
+		weather: String
+		)
+		
+		Crew(-crew_id-: double
+		ssn: String
+		name: String
+		gender: Char(1)
+		dob: date
+		)
+		
+		
+		Flights(-regist_no-: Char(7)
+		-flight_no-: Char(7)
+		-day-: date
+		-dept_time-: int
+		-ariv_time-: int
+		status: String
+		)
+		Foreign Key (regist_no) references Aeroplanes.regist_no
+		
+	\end{lstlisting}
+	
+	\subsection{Relationships}
+	
+	
 \end{document}
+

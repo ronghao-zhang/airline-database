@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.10) (preloaded format=pdflatex 2021.2.21)  7 JUN 2022 16:40
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.10) (preloaded format=pdflatex 2021.2.21)  10 JUN 2022 00:20
 entering extended mode
 **./CSDS341_Project_Initial_Report.tex
 (CSDS341_Project_Initial_Report.tex
@@ -425,26 +425,30 @@ LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <10> not available
 [1
 
 {C:/Users/luke_/AppData/Local/MiKTeX/pdftex/config/pdftex.map}]
-(CSDS341_Project_Initial_Report.aux)
+Overfull \hbox (3.72066pt too wide) in paragraph at lines 75--76
+[][][][][][][][][][][][][][][][][][] 
+ []
+
+[2] (CSDS341_Project_Initial_Report.aux)
 Package rerunfilecheck Info: File `CSDS341_Project_Initial_Report.out' has not 
 changed.
 (rerunfilecheck)             Checksum: 6C808A58AD15395559A3365B60F02F41;208.
  ) 
 Here is how much of TeX's memory you used:
- 8758 strings out of 479623
- 126176 string characters out of 2882104
- 667457 words of memory out of 3000000
- 25773 multiletter control sequences out of 15000+200000
+ 8785 strings out of 479623
+ 126516 string characters out of 2882104
+ 673457 words of memory out of 3000000
+ 25783 multiletter control sequences out of 15000+200000
  408673 words of font info for 46 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 71i,6n,74p,434b,1175s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 71i,6n,74p,435b,1889s stack positions out of 5000i,500n,10000p,200000b,50000s
 <D:/Latex/fonts/type1/public/amsfonts/cm/cmbx12.pfb><D:/Latex/fonts/type1/pub
 lic/amsfonts/cm/cmr10.pfb><D:/Latex/fonts/type1/public/amsfonts/cm/cmr12.pfb><D
 :/Latex/fonts/type1/public/amsfonts/cm/cmr17.pfb><D:/Latex/fonts/type1/public/a
 msfonts/cm/cmtt10.pfb>
-Output written on CSDS341_Project_Initial_Report.pdf (1 page, 75362 bytes).
+Output written on CSDS341_Project_Initial_Report.pdf (2 pages, 78991 bytes).
 PDF statistics:
- 73 PDF objects out of 1000 (max. 8388607)
- 26 named destinations out of 1000 (max. 500000)
+ 98 PDF objects out of 1000 (max. 8388607)
+ 43 named destinations out of 1000 (max. 500000)
  33 words of extra memory for PDF output out of 10000 (max. 10000000)
 
