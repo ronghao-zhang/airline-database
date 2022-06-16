@@ -1,5 +1,6 @@
 \documentclass{article}
 
+
 \usepackage[english]{babel} % Language settings 
 \usepackage{listings} % Schema Code settings
 
@@ -10,6 +11,8 @@
 \usepackage{amsmath}
 \usepackage{graphicx}
 \usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+\usepackage{float}
 
 % title and author of the homework assignment 
 \title{CSDS341 Project - Airline Querying System - Initial Report}
@@ -36,48 +39,195 @@
 	\\
 	Since our airline querying system contains a relatively extensive data set, the crew members who choose to use our database are able to access the basic information about the travelers who will be on their flight and provides updates about the airline information. 
 	
+	\section{Entity-Relationship Model}
+	
+	\subsection{Assumptions}
+	{Before performing the high-level design of the airline querying system, our group lists the following assumptions that need to be considered in our database systems.}
+	
+	\begin{enumerate}
+		\item Assume that there have and only have two types of users of the airline querying system: travelers and crew.
+		
+		\item Assume that plane ticket information is stored in the database system and each ticket is only valid for one traveler. However, a traveler may own zero or more plane tickets. This matches the real situation in which travelers need to transfer their flights. 
+		
+		\item Assume that each ticket contains a specific seat location for exactly one flight. However, a flight may have multiple tickets being sold to travelers since a flight has obviously more than one seat.   
+		
+		\item Assume that a crew member can be either an air attendant or a pilot. Therefore, a crew member can serve zero or more flights. Additionally, a flight must be served by at least one crew. There does have a slight chance that a small propeller airplane only needs one crew member (i.e. the pilot).
+		
+		\item Assume that a flight is operated by exactly one areoplane. For example, figure 1 shows that the aircraft with registration number B-6075 is operating a specific flight (flight number: CA862) from Beijing(PEK) to Geneva(GVA). However, it is likely that one aeroplane can fly multiple flights. It is worth noticing that the  registration number is unique for each aeroplane.
+		
+		\item Assume that an aeroplane can only belong to one company. This database system does not consider private aeroplanes that do not belong to any company. For instance, the aeroplane B-6075 belongs to Air China. Additionally, a airline company can have multiple planes. 
+		
+		\item Assume that each airline company must have at least one airport as its hub, a place where the headquarter of the company locates and where the aeroplanes get maintenance and repaired. However, some large airports can provide services for multiple airline companies. For example, Los Angeles International Airport (LAX) is a hub for both United and Delta Airlines, and Delta Airlines has another hub : Detroit Metropolitan Airport (DTW).
+		
+		\item Assume that each flight can have multiple schedules, and a schedule can be mapped to multiple flights. It is common for most domestic flights to have the same flight flying the same route on two successive days. There is also a slight chance that two flights have the exact same schedule.
+		
+		\item Assume that each flight only departures from exactly one airport and only arrives at exactly one airport. However, an airport can have many flights. If a plane can arrive at two destinations simultaneously, then the pilot will win the next Nobel Physics Price.
+		
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=100mm]{CSDS341_Project_B-6075.jpg}
+			\caption{Aircraft with Registration Number B-6075 (\copyright Pascal Simon)}
+		\end{figure}
+		
+	\end{enumerate}
+	
+	\subsection{ER Diagram}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=140mm]{CSDS341_Project_ER_Diagram.jpeg}
+		\caption{ER Diagram for Airline Querying System}
+	\end{figure}
+	
 	\section{Schemas}
 	
-	\subsection{Entities}
+	\subsection{Strong Entities}
 	\begin{lstlisting}[keepspaces=true]
-		
-		Travelers(-id-: double
-		name: String
-		gender: Char(1)
-		dob: date
-		) 
-		
-		Aeroplanes(-regis_no-: Char(7)
-		flight_age: int
-		aircraft_type: String
-		airline: String
+		Travelers(-user_id: int-,
+		first_name: CHAR(50),
+		middle_name: CHAR(50),
+		last_name: CHAR(50),
+		gender: CHAR(1),
+		dob: date,
+		credits: int,
+		passport_no: CHAR(20), 
+		citizenship: CHAR(30)
 		)
-		
-		Airports(-iata_code-: Char(3)
-		weather: String
+	\end{lstlisting}    
+	
+	The entity \texttt{Travelers} is a type of \texttt{Users} in this Airline Querying Systems. The 
+	\texttt{user\_id} attribute is the primary key of this entity.
+	
+	\begin{lstlisting}[keepspaces=true]
+		Crew(-user_id: int-,
+		first_name: CHAR(50),
+		middle_name: CHAR(50),
+		last_name: CHAR(50),
+		gender: CHAR(1),
+		dob: date,
+		ssn: int, 
+		salary: double, 
+		total_distance: int
 		)
-		
-		Crew(-crew_id-: double
-		ssn: String
-		name: String
-		gender: Char(1)
-		dob: date
+	\end{lstlisting}    
+	
+	The entity \texttt{Crew} is the other type of \texttt{Users} in this Airline Querying Systems. The 
+	\texttt{user\_id} attribute is the primary key of this entity.
+	
+	\begin{lstlisting}[keepspaces=true]
+		Airports(-iata_code: CHAR(3)-, 
+		weather: CHAR: CHAR(15),
+		temperature: int,
+		airport_status: CHAR(10)
 		)
-		
-		
-		Flights(-regist_no-: Char(7)
-		-flight_no-: Char(7)
-		-day-: date
-		-dept_time-: int
-		-ariv_time-: int
-		status: String
+	\end{lstlisting}    
+	
+	The entity \texttt{Airports} stores the information of airports, with a primary key \texttt{iata\_code}. IATA Code stands for International Air Transport Association Code. It is a three-character code that is unique for each airport. For example, the IATA Code for Los Angeles International Airport is LAX.
+	
+	\begin{lstlisting}[keepspaces=true]             
+		Airlines(-company_id: int-,
+		company_name: CHAR(30)
 		)
-		Foreign Key (regist_no) references Aeroplanes.regist_no
-		
+	\end{lstlisting}    
+	
+	The entity \texttt{Airports} stores the information of airports, with a primary key \texttt{iata\_code}. IATA Code stands for International Air Transport Association Code. It is a three-character code that is unique for each airport. For example, the IATA Code for Los Angeles International Airport is LAX.
+	
+	\begin{lstlisting}[keepspaces=true]               
+		Aeroplanes(-regis_no: CHAR(10)-,
+		fir_capacity: int,
+		bus_capacity: int, 
+		eco_capacity: int,
+		aircraft_type: CHAR(10)
+		)
+	\end{lstlisting}    
+	
+	The entity \texttt{Aeroplanes} stores the information of each aircraft, with a primary key \texttt{regis\_no} (registration number). Before each plane start operating, it will be assigned with a unique registration number.
+	
+	\begin{lstlisting}[keepspaces=true] 
+		Schedules(-schedule_id: int-, 
+		operate_date: date,
+		dept_time: time,
+		ariv_time: time
+		)
 	\end{lstlisting}
 	
-	\subsection{Relationships}
+	The entity \texttt{Schedules} stores the flight schedules. The primary key is \texttt{schedule\_id}.
 	
+	\subsection{Weak Entities}
+	
+	\begin{lstlisting}[keepspaces=true]
+		Tickets(-traveler_id: int-, 
+		-order_no: int-, 
+		seat_location: CHAR(3),
+		seat_type: CHAR(1),
+		luggage_no: int
+		)
+		Foreign Key (traveler_id) references (Travelers.user_id)
+		
+		Flights(-regis_no: int-, 
+		flight_no: CHAR(7),
+		flight_status: CHAR(10)
+		)
+		Foreign Key (regis_no) references (Aeroplanes.regis_no)
+	\end{lstlisting}
+	\subsection{Relationships}
+	\begin{lstlisting}[keepspaces=true]
+		for(-traveler_id: int-, 
+		-order_no: int-,
+		regis_no: int, 
+		flight_no: CHAR(7)
+		)
+		Foreign Key (traveler_id) references (Travelers.user_id)
+		Foreign Key (order_no) references (Tickets.user)
+		Foreign Key (regis_no) references (Aeroplanes.regis_no)
+		Foreign Key (flight_no) references (Flights.flight_no)
+		
+		serve(-crew_id: int-, 
+		-regis_no: int-, 
+		-flight_no: CHAR(7)-
+		)
+		Foreign Key (crew_id) references (Crew.user_id)
+		Foreign Key (regis_no) references (Aeroplanes.regis_no)
+		Foreign Key (flight_no) references (Flights.flight_no)
+		
+		depart(-regis_no: CHAR(10)-,
+		-flight_no: CHAR(7)-,
+		dept_iata_code: CHAR(3),
+		)  
+		Foreign Key (regis_no) references (Aeroplanes.regis_no)
+		Foreign Key (flight_no) references (Flights.flight_no)
+		Foreign Key (dept_iata_code) references (Airports.iata_code)
+		
+		arrive(-regis_no: CHAR(10)-,
+		-flight_no: CHAR(7)-,
+		ariv_iata_code: CHAR(3),
+		)  
+		Foreign Key (regis_no) references (Aeroplanes.regis_no)
+		Foreign Key (flight_no) references (Flights.flight_no)
+		Foreign Key (ariv_iata_code) references (Airports.iata_code)
+		
+		assign(-regis_no: CHAR(10)-,
+		-flight_no: CHAR(7)-,
+		-schedule_id: int-
+		)
+		Foreign Key (regis_no) references (Aeroplanes.regis_no)
+		Foreign Key (flight_no) references (Flights.flight_no)
+		Foreign Key (schedule_id) references (Schedules.schedule_id)
+		
+		hub(-company_id: int-,
+		-iata_code: CHAR(3)-
+		)
+		Foreign Key (company_id) references (Airlines.company_id)
+		Foreign Key (iata_code) references (Airports.iata_code)
+		
+		belong(-regis_no: CHAR(10)-,
+		-company_id: int-
+		)
+		Foreign Key (regis_no) references (Aeroplanes.regis_no)
+		Foreign Key (company_id) references (Airlines.company_id)
+	\end{lstlisting}
+	
+	\subsection{Identifying Relationships}
+	All the identifying relationships in the schema are merged with the weak entity. There is no need to create separate tables because that may cause redundancies.
 	
 \end{document}
-

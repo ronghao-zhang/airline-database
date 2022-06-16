@@ -1,4 +1,9 @@
 \BOOKMARK [1][-]{section.1}{Introduction}{}% 1
-\BOOKMARK [1][-]{section.2}{Schemas}{}% 2
-\BOOKMARK [2][-]{subsection.2.1}{Entities}{section.2}% 3
-\BOOKMARK [2][-]{subsection.2.2}{Relationships}{section.2}% 4
+\BOOKMARK [1][-]{section.2}{Entity-Relationship Model}{}% 2
+\BOOKMARK [2][-]{subsection.2.1}{Assumptions}{section.2}% 3
+\BOOKMARK [2][-]{subsection.2.2}{ER Diagram}{section.2}% 4
+\BOOKMARK [1][-]{section.3}{Schemas}{}% 5
+\BOOKMARK [2][-]{subsection.3.1}{Strong Entities}{section.3}% 6
+\BOOKMARK [2][-]{subsection.3.2}{Weak Entities}{section.3}% 7
+\BOOKMARK [2][-]{subsection.3.3}{Relationships}{section.3}% 8
+\BOOKMARK [2][-]{subsection.3.4}{Identifying Relationships}{section.3}% 9
