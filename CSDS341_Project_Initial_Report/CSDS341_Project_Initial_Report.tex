@@ -84,14 +84,14 @@
 	\subsection{Strong Entities}
 	\begin{lstlisting}[keepspaces=true]
 Travelers(-user_id: int-,
-          first_name: CHAR(50),
-          middle_name: CHAR(50),
-          last_name: CHAR(50),
-          gender: CHAR(1),
+          first_name: varchar(50),
+          middle_name: varchar(50),
+          last_name: varchar(50),
+          gender: char(1),
           dob: date,
           credits: int,
-          passport_no: CHAR(20), 
-          citizenship: CHAR(30)
+          passport_no: varchar(20), 
+          citizenship: varchar(30)
           )
 	\end{lstlisting}    
 	
@@ -100,10 +100,10 @@ Travelers(-user_id: int-,
 	
 	\begin{lstlisting}[keepspaces=true]
 Crew(-user_id: int-,
-     first_name: CHAR(50),
-     middle_name: CHAR(50),
-     last_name: CHAR(50),
-     gender: CHAR(1),
+     first_name: varchar(50),
+     middle_name: varchar(50),
+     last_name: varchar(50),
+     gender: char(1),
      dob: date,
      ssn: int, 
      salary: double, 
@@ -115,10 +115,10 @@ Crew(-user_id: int-,
 	\texttt{user\_id} attribute is the primary key of this entity.
 	
 	\begin{lstlisting}[keepspaces=true]
-Airports(-iata_code: CHAR(3)-, 
-         weather: CHAR: CHAR(15),
+Airports(-iata_code: char(3)-, 
+         weather: varchar(15),
          temperature: int,
-         airport_status: CHAR(10)
+         airport_status: varchar(10)
          )
 	\end{lstlisting}    
 	
@@ -126,18 +126,18 @@ Airports(-iata_code: CHAR(3)-,
 	
 	\begin{lstlisting}[keepspaces=true]             
 Airlines(-company_id: int-,
-         company_name: CHAR(30)
+         company_name: varchar(30)
          )
 	\end{lstlisting}    
 	
 	The entity \texttt{Airports} stores the information of airports, with a primary key \texttt{iata\_code}. IATA Code stands for International Air Transport Association Code. It is a three-character code that is unique for each airport. For example, the IATA Code for Los Angeles International Airport is LAX.
 	
 	\begin{lstlisting}[keepspaces=true]               
-Aeroplanes(-regis_no: CHAR(10)-,
+Aeroplanes(-regis_no: varchar(10)-,
            fir_capacity: int,
            bus_capacity: int, 
            eco_capacity: int,
-           aircraft_type: CHAR(10)
+           aircraft_type: varchar(10)
            )
 	\end{lstlisting}    
 	
@@ -158,8 +158,8 @@ Schedules(-schedule_id: int-,
 	\begin{lstlisting}[keepspaces=true]
 Tickets(-traveler_id: int-, 
         -order_no: int-, 
-        seat_location: CHAR(3),
-        seat_type: CHAR(1),
+        seat_location: char(3),
+        seat_type: char(1),
         luggage_no: int
         )
         Foreign Key (traveler_id) references (Travelers.user_id)
@@ -170,8 +170,8 @@ Tickets(-traveler_id: int-,
 	\begin{lstlisting}[keepspaces=true]        
 		
 Flights(-regis_no: int-, 
-        -flight_no: CHAR(7)-,
-        flight_status: CHAR(10)
+        -flight_no: varchar(7)-,
+        flight_status: varchar(10)
         )
         Foreign Key (regis_no) references (Aeroplanes.regis_no)
 	\end{lstlisting}
@@ -184,7 +184,7 @@ Flights(-regis_no: int-,
 for(-traveler_id: int-, 
     -order_no: int-,
     regis_no: int, 
-    flight_no: CHAR(7)
+    flight_no: varchar(7)
     )
     Foreign Key (traveler_id) references (Travelers.user_id)
     Foreign Key (order_no) references (Tickets.order_no)
@@ -197,7 +197,7 @@ for(-traveler_id: int-,
 	\begin{lstlisting}[keepspaces=true]        
 serve(-crew_id: int-, 
       -regis_no: int-, 
-      -flight_no: CHAR(7)-
+      -flight_no: varchar(7)-
       )
       Foreign Key (crew_id) references (Crew.user_id)
       Foreign Key (regis_no) references (Aeroplanes.regis_no)
@@ -207,9 +207,9 @@ serve(-crew_id: int-,
 	The \texttt{serve} relationship stores the information regarding how crew members serve for flights. Since each crew member can serve multiple flights and a flight may need multiple crews, this is a many-to-many relationship. Therefore, the primary key from both sides should be set as the primary key of this relationship.
 
 	\begin{lstlisting}[keepspaces=true] 
-depart(-regis_no: CHAR(10)-,
-       -flight_no: CHAR(7)-,
-       dept_iata_code: CHAR(3)
+depart(-regis_no: varchar(10)-,
+       -flight_no: varchar(7)-,
+       dept_iata_code: cahr(3)
        )  
        Foreign Key (regis_no) references (Aeroplanes.regis_no)
        Foreign Key (flight_no) references (Flights.flight_no)
@@ -219,9 +219,9 @@ depart(-regis_no: CHAR(10)-,
 	The \texttt{depart} relationship stores the information regarding departure information. Since each flight can depart from only one airport while an airport can have many departing planes, this is a one-to-many relationship. Therefore, the primary key from many sides (i.e. \texttt{Aeroplanes.regis\_no} and \texttt{Flights.flight\_no}) should be set as the primary key of this relationship.
 
 	\begin{lstlisting}[keepspaces=true]
-arrive(-regis_no: CHAR(10)-,
-       -flight_no: CHAR(7)-, 
-       ariv_iata_code: CHAR(3),
+arrive(-regis_no: varchar(10)-,
+       -flight_no: varchar(7)-, 
+       ariv_iata_code: char(3),
        )  
        Foreign Key (regis_no) references (Aeroplanes.regis_no)
        Foreign Key (flight_no) references (Flights.flight_no)
@@ -231,8 +231,8 @@ arrive(-regis_no: CHAR(10)-,
 	The \texttt{arrive} relationship stores the information regarding arrival information. Since each flight can arrive only one airport while an airport can have many departing planes, this is a one-to-many relationship. Therefore, the primary key from many sides (i.e. \texttt{Aeroplanes.regis\_no} and \texttt{Flights.flight\_no}) should be set as the primary key of this relationship.
 
 	\begin{lstlisting}[keepspaces=true]		
-assign(-regis_no: CHAR(10)-,
-       -flight_no: CHAR(7)-,
+assign(-regis_no: varchar(10)-,
+       -flight_no: varchar(7)-,
        -schedule_id: int-
        )
        Foreign Key (regis_no) references (Aeroplanes.regis_no)
@@ -244,7 +244,7 @@ assign(-regis_no: CHAR(10)-,
 
 	\begin{lstlisting}[keepspaces=true]	
 hub(-company_id: int-,
-    -iata_code: CHAR(3)-
+    -iata_code: char(3)-
     )
     Foreign Key (company_id) references (Airlines.company_id)
     Foreign Key (iata_code) references (Airports.iata_code)
@@ -253,7 +253,7 @@ hub(-company_id: int-,
 	The \texttt{hub} relationship stores the information regarding airline companies and their hub airports. Since this is a many-to-many relationship, the primary key from both sides should be set as the primary key of this relationship.
 
 	\begin{lstlisting}[keepspaces=true]	
-belong(-regis_no: CHAR(10)-,
+belong(-regis_no: varchar(10)-,
        company_id: int
        )
        Foreign Key (regis_no) references (Aeroplanes.regis_no)
