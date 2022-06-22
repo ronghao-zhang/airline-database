@@ -31,11 +31,11 @@
 	
 	\section{Introduction}
 	
-	\noindent In recent decades, the growing demand for leisure and business travel leads to the prosperity of the airline market. An increasing number of people have been choosing to take flights to travel domestically or internationally. Therefore, an organized and comprehensive database that stores the airline system is critical for both travelers and crew to obtain plenty and simultaneous information.\\
+	\noindent In recent decades, the growing demand for leisure and business travel has led to the prosperity of the airline market. An increasing number of people have been choosing to take flights to travel domestically or internationally. Therefore, an organized and comprehensive database that stores the airline system is critical for both travelers and crew to obtain plenty of simultaneous information.\\
 	
-	\noindent Although there do exist several flight databases or applications for commercial airlines, it is rare to find comprehensive information - including weather at the departure airport and destination, aircraft type, the total flight hour of pilots, and the number of luggage allowed - in just one database. This information offers travelers a chance to be better prepared for traveling.\\
+	\noindent Although there do exist several flight databases or applications for commercial airlines, it is rare to find comprehensive information - including weather at the departure airport and destination, aircraft type, the total flight hours of pilots, and the number of luggage allowed - in just one database. This information offers travelers a chance to be better prepared for traveling.\\
 	
-	\noindent Since our airline querying system contains a relatively extensive data set, the crew members who choose to use our database are able to access the basic information about the travelers who will be on their flight and provides updates about the airline information. 
+	\noindent Since our airline querying system contains a relatively extensive data sets, the crew members who choose to use our database are able to access the basic information about the travelers who will be on their flight and provides updates about the airline information. 
 	
 	\section{Entity-Relationship Model}
 	
@@ -49,9 +49,9 @@
 		
 		\item Assume that each ticket contains a specific seat location for exactly one flight. However, a flight may have multiple tickets being sold to travelers since a flight has obviously more than one seat.   
 		
-		\item Assume that a crew member can be either an air attendant or a pilot. Therefore, a crew member can serve zero or more flights. Additionally, a flight must be served by at least one crew. There does have a slight chance that a small propeller airplane only needs one crew member (i.e. the pilot).
+		\item Assume that a crew member can be either an air attendant or a pilot. Therefore, a crew member can serve zero or more flights. Additionally, a flight must be served by at least one crew member. It does have a slight chance that a small propeller airplane only needs one crew member (i.e. the pilot).
 		
-		\item Assume that a flight is operated by exactly one areoplane. For example, figure 1 shows that the aircraft with registration number B-6075 is operating a specific flight (flight number: CA862) from Beijing(PEK) to Geneva(GVA). However, it is likely that one aeroplane can fly multiple flights. It is worth noticing that the  registration number is unique for each aeroplane.
+		\item Assume that a flight is operated by exactly one aeroplane. For example, figure 1 shows that the aircraft with registration number B-6075 is operating a specific flight (flight number: CA862) from Beijing(PEK) to Geneva(GVA). However, it is likely that one aeroplane can fly multiple flights. It is worth noticing that the  registration number is unique for each aeroplane.
 		
 		\item Assume that an aeroplane can only belong to one company. This database system does not consider private aeroplanes that do not belong to any company. For instance, the aeroplane B-6075 belongs to Air China. Additionally, a airline company can have multiple planes. 
 		
@@ -59,7 +59,7 @@
 		
 		\item Assume that each flight can have multiple schedules, and a schedule can be mapped to multiple flights. It is common for most domestic flights to have the same flight flying the same route on two successive days. There is also a slight chance that two flights have the exact same schedule.
 		
-		\item Assume that each flight only departures from exactly one airport and only arrives at exactly one airport. However, an airport can have many flights. If a plane can arrive at two destinations simultaneously, then the pilot will win the next Nobel Physics Price.
+		\item Assume that each flight only departures from exactly one airport and only arrives at exactly one airport. However, an airport can have many flights.
 		
 		\begin{figure}[H]
 			\centering
@@ -145,8 +145,6 @@ Schedules(-schedule_id: int-,
 	\end{lstlisting}
 	The entity \texttt{Schedules} stores the flight schedules. The primary key is \texttt{schedule\_id}.
 	
-	\subsection{Weak Entities}
-	
 	\begin{lstlisting}[keepspaces=true]
 Tickets(-traveler_id: int-, 
         -order_no: int-, 
@@ -154,17 +152,18 @@ Tickets(-traveler_id: int-,
         seat_type: char(1),
         luggage_no: int
         )
-        Foreign Key (traveler_id) references (Travelers.user_id)
+        FOREIGN KEY (traveler_id) references (Travelers.user_id)
 	\end{lstlisting}    
 	The weak entity \texttt{Tickets} stores the ticket information of each traveler. The primary key of the weak entity is \texttt{traveler\_id} and \texttt{order\_no}. 
-
+	
+	\subsection{Weak Entities}
 	\begin{lstlisting}[keepspaces=true]        
 		
 Flights(-regis_no: int-, 
         -flight_no: varchar(7)-,
         flight_status: varchar(10)
         )
-        Foreign Key (regis_no) references (Aeroplanes.regis_no)
+        FOREIGN KEY (regis_no) REFERENCES (Aeroplanes.regis_no)
 	\end{lstlisting}
 	The weak entity \texttt{Flights} stores the information of each flight operated by each aeroplane. The primary key of the weak entity is \texttt{regis\_no} and \texttt{flight\_no}.
 
@@ -176,10 +175,10 @@ for(-traveler_id: int-,
     regis_no: int, 
     flight_no: varchar(7)
     )
-    Foreign Key (traveler_id) references (Travelers.user_id)
-    Foreign Key (order_no) references (Tickets.order_no)
-    Foreign Key (regis_no) references (Aeroplanes.regis_no)
-    Foreign Key (flight_no) references (Flights.flight_no)
+    FOREIGN KEY (traveler_id) REFERENCES (Travelers.user_id)
+    FOREIGN KEY (order_no) REFERENCES (Tickets.order_no)
+    FOREIGN KEY (regis_no) REFERENCES (Aeroplanes.regis_no)
+    FOREIGN KEY (flight_no) REFERENCES (Flights.flight_no)
 	\end{lstlisting}    
 	The \texttt{for} relationship stores the information regrading tickets for flights. Since each ticket is for exactly one flight and a flight can have many tickets, this is a many-to-one relationship. Therefore, the primary key from the many side (i.e. \texttt{Tickets.order\_no} and \texttt{Travelers.user\_id}) should be set as the primary key of this relationship.
 
@@ -188,9 +187,9 @@ serve(-crew_id: int-,
       -regis_no: int-, 
       -flight_no: varchar(7)-
       )
-      Foreign Key (crew_id) references (Crew.user_id)
-      Foreign Key (regis_no) references (Aeroplanes.regis_no)
-      Foreign Key (flight_no) references (Flights.flight_no)
+      FOREIGN KEY (crew_id) REFERENCES (Crew.user_id)
+      FOREIGN KEY (regis_no) REFERENCES (Aeroplanes.regis_no)
+      FOREIGN KEY (flight_no) REFERENCES (Flights.flight_no)
 	\end{lstlisting}    
 	The \texttt{serve} relationship stores the information regarding how crew members serve for flights. Since each crew member can serve multiple flights and a flight may need multiple crews, this is a many-to-many relationship. Therefore, the primary key from both sides should be set as the primary key of this relationship.
 
@@ -199,9 +198,9 @@ depart(-regis_no: varchar(10)-,
        -flight_no: varchar(7)-,
        dept_iata_code: cahr(3)
        )  
-       Foreign Key (regis_no) references (Aeroplanes.regis_no)
-       Foreign Key (flight_no) references (Flights.flight_no)
-       Foreign Key (dept_iata_code) references (Airports.iata_code)
+       FOREIGN KEY (regis_no) REFERENCES (Aeroplanes.regis_no)
+       FOREIGN KEY (flight_no) REFERENCES (Flights.flight_no)
+       FOREIGN KEY (dept_iata_code) REFERENCES (Airports.iata_code)
 	\end{lstlisting}    
 	The \texttt{depart} relationship stores the information regarding departure information. Since each flight can depart from only one airport while an airport can have many departing planes, this is a one-to-many relationship. Therefore, the primary key from many sides (i.e. \texttt{Aeroplanes.regis\_no} and \texttt{Flights.flight\_no}) should be set as the primary key of this relationship.
 
@@ -210,9 +209,9 @@ arrive(-regis_no: varchar(10)-,
        -flight_no: varchar(7)-, 
        ariv_iata_code: char(3),
        )  
-       Foreign Key (regis_no) references (Aeroplanes.regis_no)
-       Foreign Key (flight_no) references (Flights.flight_no)
-       Foreign Key (ariv_iata_code) references (Airports.iata_code)
+       FOREIGN KEY (regis_no) REFERENCES (Aeroplanes.regis_no)
+       FOREIGN KEY (flight_no) REFERENCES (Flights.flight_no)
+       FOREIGN KEY (ariv_iata_code) REFERENCES (Airports.iata_code)
 	\end{lstlisting}    
 	The \texttt{arrive} relationship stores the information regarding arrival information. Since each flight can arrive only one airport while an airport can have many departing planes, this is a one-to-many relationship. Therefore, the primary key from many sides (i.e. \texttt{Aeroplanes.regis\_no} and \texttt{Flights.flight\_no}) should be set as the primary key of this relationship.
 
@@ -221,9 +220,9 @@ assign(-regis_no: varchar(10)-,
        -flight_no: varchar(7)-,
        -schedule_id: int-
        )
-       Foreign Key (regis_no) references (Aeroplanes.regis_no)
-       Foreign Key (flight_no) references (Flights.flight_no)
-       Foreign Key (schedule_id) references (Schedules.schedule_id)
+       FOREIGN KEY (regis_no) REFERENCES (Aeroplanes.regis_no)
+       FOREIGN KEY (flight_no) REFERENCES (Flights.flight_no)
+       FOREIGN KEY (schedule_id) REFERENCES (Schedules.schedule_id)
 	\end{lstlisting}    
 	The \texttt{assign} relationship stores the information regarding the mapping between flights and schedules. Since this is a many-to-many relationship, the primary key from both sides should be set as the primary key of this relationship.
 
@@ -231,8 +230,8 @@ assign(-regis_no: varchar(10)-,
 hub(-company_id: int-,
     -iata_code: char(3)-
     )
-    Foreign Key (company_id) references (Airlines.company_id)
-    Foreign Key (iata_code) references (Airports.iata_code)
+    FOREIGN KEY (company_id) REFERENCES (Airlines.company_id)
+    FOREIGN KEY (iata_code) REFERENCES (Airports.iata_code)
 	\end{lstlisting}    
 	The \texttt{hub} relationship stores the information regarding airline companies and their hub airports. Since this is a many-to-many relationship, the primary key from both sides should be set as the primary key of this relationship.
 
@@ -240,8 +239,8 @@ hub(-company_id: int-,
 belong(-regis_no: varchar(10)-,
        company_id: int
        )
-       Foreign Key (regis_no) references (Aeroplanes.regis_no)
-       Foreign Key (company_id) references (Airlines.company_id)
+       FOREIGN KEY (regis_no) REFERENCES (Aeroplanes.regis_no)
+       FOREIGN KEY (company_id) REFERENCES (Airlines.company_id)
 	\end{lstlisting}
     The \texttt{belong} relationship stores the information regarding airline companies and planes they owned. Since this is a one-to-many relationship, the primary key from the many side (i.e. \texttt{Aeroplanes.regis\_no}) should be set as the primary key of this relationship.
 	
