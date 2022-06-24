@@ -240,59 +240,55 @@ hub(-company_id: int-,
 	
 	\section{Example Queries}
 	
-	Find the passport number of all Chinese Traveler who has already booked at least one Plane Ticket. 
+	\noindent Find the passport number of all Chinese Traveler who has already booked at least one Plane Ticket. 
 	% query starts here
 	\begin{verbatim}
 		SELECT    passport_no 
 		FROM      Travelers
 		WHERE     (Citizenship = "Chinese") 
 		          AND 
-		          (traveler_id IN (SELECT    traveler_id, count(order_no)
-		                           FROM      Tickets
-		                           GROUP BY  traveler_id))
-		
+		          (traveler_id IN (SELECT    traveler_id, count(ticket_id)
+		                           FROM      Tickets_book_for
+		                           GROUP BY  traveler_id
+		                           HAVING    count(ticket_id) >= 1));
 	\end{verbatim}
     % query ends here
-	Find all flights that belongs to \textit{Emirates} and has over 30-seat capacity in first class. 
+    
+	\noindent Find the flight number of all flights that belongs to \textit{Emirates} and has over 30-seat capacity in first class. 
+	% query starts here
 	\begin{verbatim}
 		SELECT    flight_no
-		FROM      Flights NATURAL JOIN Aeroplanes
-		WHERE     (fir_capacity > 30) 
+		FROM      Flights_ariv_dept NATURAL JOIN Aeroplanes_belongs
+		WHERE     (Aeroplanes_belongs.fir_capacity > 30) 
 		          AND
 		          (regis_no IN (SELECT    regis_no
-		                        FROM      belong NATURAL JOIN Aeroplanes NATURAL JOIN Airlines
-		                        WHERE     company_name = "Emirates"))
-		                        
+		                        FROM      belong NATURAL JOIN Aeroplanes_belongs NATURAL JOIN Airlines
+		                        WHERE     Airlines.company_name = "Emirates"))               
 	\end{verbatim}
-	Find all flights that departs from Los Angeles International Airport on both 2021-06-22 and 2021-06-23.
+	% query ends here
+	
+	\noindent Find the flight number of all flights that departs from Los Angeles International Airport on both 2021-06-22 and 2021-06-23.
+	% query starts here
 	\begin{verbatim}
 		
 		SELECT flight_no
-		FROM   depart, Airports
-		WHERE  (dept_iata_code = iata_code)
-		        AND
-		        (iata_code = "LAX")
-		        AND 
-		        (flight_no IN (SELECT flight_no
-		                       FROM   assign NATURAL JOIN Schedules NATURAL JOIN Flights AS s22
-		                       WHERE  operate_date = "2021-06-22" 
-		                              AND 
-		                              (exists(SELECT flight_no
-		                                      FROM   assign NATURAL JOIN Schedule 
-		                                             NATURAL JOIN Flights AS s23
-		                                      WHERE  operate_date = "2021-06-23" 
-		                                             AND
-		                                             s22.flight_no = s23.flight_no))))
-		          
+		FROM   Flights_ariv_dept
+		WHERE  (dept_iata_code = "LAX")
+		       AND 
+		       (flight_no IN (SELECT flight_no
+		                      FROM   Flights_ariv_dept NATURAL JOIN assign NATURAL JOIN Schedules AS s22
+		                      WHERE  operate_date = "2021-06-22"
+		                             AND
+		                             (exists(SELECT flight_no
+		                                     FROM   Flights_ariv_dept NATURAL JOIN assign 
+		                                            NATURAL JOIN Schedules AS s23
+		                                     WHERE  operate_date = "2021-06-23"
+		                                            AND
+		                                            s22.flight_no = s23.flight_no))))     
 	\end{verbatim}
+	% query ends here
 	
-	
-	
-	
-	
-	
-	
-	
-	
+	\section{Data Sources}
+	Since there exists various sources about flight numbers and their departure or arrival information, we are able to use real data for most flights. However, it is hard to keep track on the real-time temperature or status of the airport. For this part of data, our group decide to use make-up data.
 	
 \end{document}

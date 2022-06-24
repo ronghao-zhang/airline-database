@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.10) (preloaded format=pdflatex 2021.2.21)  24 JUN 2022 00:28
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.10) (preloaded format=pdflatex 2021.2.21)  24 JUN 2022 01:05
 entering extended mode
 **./CSDS341_Project_Initial_Report.tex
 (CSDS341_Project_Initial_Report.tex
@@ -431,12 +431,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 36--37
 [1
 
 {C:/Users/luke_/AppData/Local/MiKTeX/pdftex/config/pdftex.map}]
-<CSDS341_Project_B-6075.jpg, id=58, 1204.5pt x 569.87906pt>
+<CSDS341_Project_B-6075.jpg, id=62, 1204.5pt x 569.87906pt>
 File: CSDS341_Project_B-6075.jpg Graphic file (type jpg)
 <use CSDS341_Project_B-6075.jpg>
 Package pdftex.def Info: CSDS341_Project_B-6075.jpg  used on input line 66.
 (pdftex.def)             Requested size: 284.52756pt x 134.61723pt.
-<CSDS341_Project_ER_Diagram.jpeg, id=59, 760.2804pt x 546.1203pt>
+<CSDS341_Project_ER_Diagram.jpeg, id=63, 760.2804pt x 546.1203pt>
 File: CSDS341_Project_ER_Diagram.jpeg Graphic file (type jpg)
 <use CSDS341_Project_ER_Diagram.jpeg>
 Package pdftex.def Info: CSDS341_Project_ER_Diagram.jpeg  used on input line 76
@@ -523,27 +523,27 @@ Overfull \hbox (3.72066pt too wide) in paragraph at lines 223--224
  []
 
 [5]
-Overfull \hbox (7.91759pt too wide) in paragraph at lines 266--266
+Overfull \hbox (49.91722pt too wide) in paragraph at lines 267--267
 []                        \OT1/cmtt/m/n/10 FROM      belong NATURAL JOIN Aeropl
-anes NATURAL JOIN Airlines[] 
+anes_belongs NATURAL JOIN Airlines[] 
  []
 
 
-Overfull \hbox (13.16754pt too wide) in paragraph at lines 287--287
-[]                       \OT1/cmtt/m/n/10 FROM   assign NATURAL JOIN Schedules 
-NATURAL JOIN Flights AS s22[] 
+Overfull \hbox (60.41713pt too wide) in paragraph at lines 288--288
+[]                      \OT1/cmtt/m/n/10 FROM   Flights_ariv_dept NATURAL JOIN 
+assign NATURAL JOIN Schedules AS s22[] 
  []
 
 [6] (CSDS341_Project_Initial_Report.aux)
 Package rerunfilecheck Info: File `CSDS341_Project_Initial_Report.out' has not 
 changed.
-(rerunfilecheck)             Checksum: 2F8931430AAB77FF89B71D27F5D1B56B;581.
+(rerunfilecheck)             Checksum: 5D9A42D99A519450E07331D1BA4942C9;629.
  ) 
 Here is how much of TeX's memory you used:
- 9021 strings out of 479623
- 129580 string characters out of 2882104
+ 9023 strings out of 479623
+ 129910 string characters out of 2882104
  706906 words of memory out of 3000000
- 25922 multiletter control sequences out of 15000+200000
+ 25923 multiletter control sequences out of 15000+200000
  409354 words of font info for 48 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  71i,6n,74p,633b,1170s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -553,9 +553,9 @@ e1/public/amsfonts/cm/cmr10.pfb><D:/Latex/fonts/type1/public/amsfonts/cm/cmr12.
 pfb><D:/Latex/fonts/type1/public/amsfonts/cm/cmr17.pfb><D:/Latex/fonts/type1/pu
 blic/amsfonts/cm/cmti10.pfb><D:/Latex/fonts/type1/public/amsfonts/cm/cmtt10.pfb
 >
-Output written on CSDS341_Project_Initial_Report.pdf (6 pages, 603808 bytes).
+Output written on CSDS341_Project_Initial_Report.pdf (6 pages, 605039 bytes).
 PDF statistics:
- 242 PDF objects out of 1000 (max. 8388607)
- 130 named destinations out of 1000 (max. 500000)
- 91 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 246 PDF objects out of 1000 (max. 8388607)
+ 131 named destinations out of 1000 (max. 500000)
+ 99 words of extra memory for PDF output out of 10000 (max. 10000000)
 
