@@ -5,7 +5,7 @@
 \usepackage{listings} % Schema Code settings
 
 % Set page size and margins - Replace `letterpaper' with`a4paper' for UK/EU standard size
-\usepackage[letterpaper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+\usepackage[letterpaper,top=2cm,bottom=2cm,left=2.54cm,right=2.54cm,marginparwidth=1.75cm]{geometry}
 
 % Useful packages
 \usepackage{amsmath}
@@ -112,7 +112,7 @@ Crew(-user_id: int-,
 	\end{lstlisting}    
 
 	% Entity: Tickets; Relationship: book & for --------------------------------
-	\noindent The table \texttt{Tickets\_book\_for} stores the ticket information of each traveler. The primary key of the entity is  \texttt{ticket\_id}. Since both the \texttt{book} and \texttt{for} relationships are one-to-many relationships, they are merged with the entity on many side which is \texttt{Tickets}. Therefore, there are three different foreign keys in the table. \texttt{traveler\_id} comes from the one side of the \texttt{book} relationship, while \texttt{regis\_no} and \texttt{flight\_no} comes from the one side of the \texttt{for} relationship.
+	\noindent The table \texttt{Tickets\_book\_for} stores the ticket information of each traveler. The primary key of the entity is  \texttt{ticket\_id}. Since both the \texttt{book} and \texttt{for} relationships are one-to-many relationships, they are merged with the entity on many side which is \texttt{Tickets}. This table includes three different foreign keys, such as \texttt{traveler\_id} from the \texttt{book} relationship; \texttt{regis\_no} and \texttt{flight\_no} from \texttt{for} relationship. Additionally, \texttt{Tickets} involves in both \texttt{for} and \texttt{book} relationship as total participation, while \texttt{Travellers} (in \texttt{book} relationship) and \texttt{Flights} (in \texttt{for} relationship) are partial relationship. 
 
 	\begin{lstlisting}[keepspaces=true]
 Tickets_book_for(-ticket_id: int-, 
@@ -129,7 +129,7 @@ Tickets_book_for(-ticket_id: int-,
 	\end{lstlisting} 
 
 	% Entity: Airports ---------------------------------------------------------
-	\noindent The entity \texttt{Airports} stores the information of airports, with a primary key \texttt{iata\_code}. IATA Code stands for International Air Transport Association Code. It is a three-character code that is unique for each airport. For example, the IATA Code for Los Angeles International Airport is LAX.
+	\noindent The entity \texttt{Airports} stores the information of airports, with a primary key \texttt{iata\_code}, which stands for the unique  three-character International Air Transport Association Code for each airport. For example, the IATA Code for Los Angeles International Airport is LAX.
 	
 	\begin{lstlisting}[keepspaces=true]
 Airports(-iata_code: char(3)-, 
@@ -149,7 +149,7 @@ Airlines(-company_id: int-,
 	\end{lstlisting}    
 
 	% Entity: Aeroplanes; Relationship: belong ---------------------------------
-	\noindent The entity \texttt{Aeroplanes\_belong} stores the information of each aeroplane and the airline company they belong to, with a primary key \texttt{regis\_no} (registration number). Before each plane starts operating, it will be assigned a unique registration number.
+	\noindent The entity \texttt{Aeroplanes\_belong} stores the information of each aeroplane and the airline company they belong to, with a primary key \texttt{regis\_no} (registration number) which is unique for each operated plane. 
 	
 	\begin{lstlisting}[keepspaces=true]               
 Aeroplanes_belong(-regis_no: varchar(10)-,
@@ -175,7 +175,7 @@ Schedules(-schedule_id: int-,
 	\subsection{Weak Entities}
 	
 	% Weak Entity: Flights; Id relationship: fly; Relationship: ariv dept------
-	\noindent The weak entity \texttt{Flights\_ariv\_dept} stores the information of each flight operated by each aeroplane and the \texttt{depart} \& \texttt{arrive} information. The primary key of the weak entity is \texttt{regis\_no} and \texttt{flight\_no}. It contains foreign keys obtains from both \texttt{Aeroplanes} and \texttt{Airports} Entities. This table merges the weak entity \texttt{Flights}, the identifying relationship \texttt{fly} and two many to one relationships (\texttt{depart} and \texttt{arrive}). 
+	\noindent The weak entity \texttt{Flights\_ariv\_dept} stores the information of each flight operated by each aeroplane and the \texttt{depart} \& \texttt{arrive} information. The primary key of the weak entity is \texttt{regis\_no} and \texttt{flight\_no}. It contains foreign keys obtains from both \texttt{Aeroplanes} and \texttt{Airports} Entities. This table merges the weak entity \texttt{Flights}, the identifying relationship \texttt{fly} and two many-to-one relationships (\texttt{depart} and \texttt{arrive}). In these three relationships, \texttt{Flights} involve as total participation, while \texttt{Airports} involves as partial participation in \texttt{depart} and \texttt{arrive} relationships and \texttt{Aeroplanes} involves as partial participation in \texttt{fly} relationship.
 	\begin{lstlisting}[keepspaces=true]        
 Flights_ariv_dept(-regis_no: int-, 
                   -flight_no: varchar(7)-,
@@ -190,18 +190,9 @@ Flights_ariv_dept(-regis_no: int-,
 
 	\subsection{Relationships}
 	
-	\noindent The \texttt{book} relationship is merged with the entity \texttt{Tickets} in the table \texttt{Tickets\_book\_for}. \\
-	
-	\noindent The \texttt{for} relationship is merged with the entity \texttt{Tickets} in the table \texttt{Tickets\_book\_for}. \\
-	
-	\noindent The \texttt{dept} relationship is merged with the entity \texttt{Flights} in the table \texttt{Flights\_ariv\_dept}. \\
-	
-	\noindent The \texttt{ariv} relationship is merged with the entity \texttt{Flights} in the table \texttt{Flights\_ariv\_dept}. \\
-	
-	\noindent The \texttt{belong} relationship is merged with the entity \texttt{Aeroplanes} in the table \texttt{Aeroplanes\_belong}. \\
 	
 	% Relationsip: serve -------------------------------------------------------
-	\noindent The \texttt{serve} relationship stores the information regarding how crew members serve for flights. Since each crew member can serve multiple flights and a flight may need multiple crews, this is a many-to-many relationship. Therefore, the primary keys from both sides should be set as the primary keys of this relationship.
+	\noindent The \texttt{serve} relationship stores the information regarding how crew members serve for flights. Since each crew member can serve multiple flights and a flight may need multiple crews, this is a many-to-many relationship which its primary key(s) contains primary key(s) from both sides. In this relationship, \texttt{crew} involves as partial participation while \texttt{Flights} involves as total participation. 
 	\begin{lstlisting}[keepspaces=true]        
 serve(-crew_id: int-, 
       -regis_no: int-, 
@@ -213,7 +204,7 @@ serve(-crew_id: int-,
 	\end{lstlisting}    
 
 	% Relationship: assign -----------------------------------------------------
-	\noindent The \texttt{assign} relationship stores the information regarding the mapping between flights and schedules. Since this is a many-to-many relationship, the primary keys from both sides should be set as the primary keys of this relationship.
+	\noindent The \texttt{assign} relationship stores the information regarding the mapping between flights and schedules. Since this is a many-to-many relationship which its primary keys come from both sides. In this relationship, \texttt{Flights} involves as total participation and \texttt{Schedule} involves as partial participation.
 	\begin{lstlisting}[keepspaces=true]		
 assign(-regis_no: varchar(10)-,
        -flight_no: varchar(7)-,
@@ -225,7 +216,7 @@ assign(-regis_no: varchar(10)-,
 	\end{lstlisting}    
 	
 	% Relationship: hub --------------------------------------------------------
-	\noindent The \texttt{hub} relationship stores the information regarding airline companies and their hub airports. Since this is a many-to-many relationship, the primary keys from both sides should be set as the primary keys of this relationship.
+	\noindent The \texttt{hub} relationship stores the information regarding airline companies and their hub airports. Since this is a many-to-many relationship which its primary keys come from both sides. In this relationship, \texttt{Airlines} involves as total participation and \texttt{Airports} involves as partial participation.
 	\begin{lstlisting}[keepspaces=true]	
 hub(-company_id: int-,
     -iata_code: char(3)-
@@ -237,6 +228,7 @@ hub(-company_id: int-,
 	\subsection{Identifying Relationships}
 	
 	All the identifying relationships in the schema are merged with the weak entity. There is no need to create separate tables because that may cause redundancies.
+
 	
 	\section{Example Queries}
 	
@@ -288,6 +280,6 @@ hub(-company_id: int-,
 	% query ends here
 	
 	\section{Data Sources}
-	Since there exists various sources about flight numbers and their departure or arrival information, we are able to use real data for most flights. However, it is hard to keep track on the real-time temperature or status of the airport. For this part of data, our group decide to use make-up data. For travelers and crew information, since the data are usually protected by the airline companies, we also decide to use make up data. 
+	Since there exists various sources about flight numbers and their departure or arrival information, we are able to use real data for most flights. However, it is hard to keep track on the real-time temperature or status of the airport. For this part of data, our group decide to use make-up data. For travelers and crew information, since the data are usually protected by the airline companies, we also decide to use make-up data. 
 	
 \end{document}
