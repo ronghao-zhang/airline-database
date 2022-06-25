@@ -16,7 +16,7 @@
 
 % title and author of the homework assignment 
 \title{CSDS341 Project - Airline Querying System - Initial Report}
-\author{Quynh Nguyen, Jiamu Zhang, Luke Zhang}
+\author{Quynh Nguyen (qtn2), Jiamu Zhang (jxz1217), Luke Zhang (rxz330)}
 
 \begin{document}
 	
@@ -57,7 +57,7 @@
 		
 		\item Assume that each airline company must have at least one airport as its hub, a place where the headquarter of the company locates and where the aeroplanes get maintenance and repaired. However, some large airports can provide services for multiple airline companies. For example, Los Angeles International Airport (LAX) is a hub for both United and Delta Airlines, and Delta Airlines has another hub : Detroit Metropolitan Airport (DTW).
 		
-		\item Assume that each flight can have multiple schedules, and a schedule can be mapped to multiple flights. It is common for most domestic flights to have the same flight flying the same route on two successive days. There is also a slight chance that two flights have the exact same schedule.
+		\item Assume that each flight can have multiple schedules, and a schedule can be mapped to multiple flights. It is common for most domestic flights to have the same flight flying the same route on two successive days. There is also a slight chance that two flights have the exact same schedule. Additionally, each schedule should have unique \texttt{schedule\_id}.
 		
 		\item Assume that each flight only departures from exactly one airport and only arrives at exactly one airport. However, an airport can have many flights.
 		
@@ -247,10 +247,10 @@ hub(-company_id: int-,
 		FROM      Travelers
 		WHERE     (Citizenship = "Chinese") 
 		          AND 
-		          (traveler_id IN (SELECT    traveler_id, count(ticket_id)
-		                           FROM      Tickets_book_for
-		                           GROUP BY  traveler_id
-		                           HAVING    count(ticket_id) >= 1));
+		          (user_id IN (SELECT    traveler_id, count(ticket_id)
+		                       FROM      Tickets_book_for
+		                       GROUP BY  traveler_id
+		                       HAVING    count(ticket_id) >= 1));
 	\end{verbatim}
     % query ends here
     
@@ -262,7 +262,7 @@ hub(-company_id: int-,
 		WHERE     (Aeroplanes_belongs.fir_capacity > 30) 
 		          AND
 		          (regis_no IN (SELECT    regis_no
-		                        FROM      belong NATURAL JOIN Aeroplanes_belongs NATURAL JOIN Airlines
+		                        FROM      Aeroplanes_belongs NATURAL JOIN Airlines
 		                        WHERE     Airlines.company_name = "Emirates"))               
 	\end{verbatim}
 	% query ends here
@@ -270,25 +270,24 @@ hub(-company_id: int-,
 	\noindent Find the flight number of all flights that departs from Los Angeles International Airport on both 2021-06-22 and 2021-06-23.
 	% query starts here
 	\begin{verbatim}
-		
 		SELECT flight_no
 		FROM   Flights_ariv_dept
 		WHERE  (dept_iata_code = "LAX")
 		       AND 
 		       (flight_no IN (SELECT flight_no
 		                      FROM   Flights_ariv_dept NATURAL JOIN assign NATURAL JOIN Schedules AS s22
-		                      WHERE  operate_date = "2021-06-22"
+		                      WHERE  s22.operate_date = "2021-06-22"
 		                             AND
 		                             (exists(SELECT flight_no
 		                                     FROM   Flights_ariv_dept NATURAL JOIN assign 
 		                                            NATURAL JOIN Schedules AS s23
-		                                     WHERE  operate_date = "2021-06-23"
+		                                     WHERE  s23.operate_date = "2021-06-23"
 		                                            AND
 		                                            s22.flight_no = s23.flight_no))))     
 	\end{verbatim}
 	% query ends here
 	
 	\section{Data Sources}
-	Since there exists various sources about flight numbers and their departure or arrival information, we are able to use real data for most flights. However, it is hard to keep track on the real-time temperature or status of the airport. For this part of data, our group decide to use make-up data.
+	Since there exists various sources about flight numbers and their departure or arrival information, we are able to use real data for most flights. However, it is hard to keep track on the real-time temperature or status of the airport. For this part of data, our group decide to use make-up data. For travelers and crew information, since the data are usually protected by the airline companies, we also decide to use make up data. 
 	
 \end{document}
