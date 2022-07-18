@@ -1,0 +1,69 @@
+---
+title: "data_retrieval_&_pre-processing"
+author: "Luke Zhang (rxz330)"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+# Preliminaries
+```{r}
+library(tidyverse)
+library(knitr)
+```
+
+# IATA Code & Airports
+This section retrieves iata code and corresponding name of airports in the United States. 
+```{r, warning=FALSE}
+install.packages("jsonlite", repos="https://cran.rstudio.com/")
+library("jsonlite")
+
+# get list of all resources
+json_file <- 'https://datahub.io/core/airport-codes/datapackage.json'
+json_data <- fromJSON(paste(readLines(json_file), collapse = "")) 
+
+# print all tabular data(if exists any)
+for(i in 1:length(json_data$resources$datahub$type)){
+  if(json_data$resources$datahub$type[i]=='derived/csv'){
+    path_to_file = json_data$resources$path[i]
+    raw_data <- read.csv(url(path_to_file))
+    print(data)
+  }
+}
+```
+
+This section perform data pre-processing (i.e. selecting the airports which has the iata code). 
+Use the code `iata_airport %>% group_by(type) %>% count(type)` we can find out that there are 6 different airports: `closed`($$n = 262$$), `heliport` ($$n = 82$$), `seaplane_base` ($$n = 147$$), `small_airport`($$n = 4249$$), `medium_airport`($$n = 3849$$), `large_airport`($$n = 602$$). We do not need to save `closed`, `heliport`,`seaplane_base` airports, which means that we only keep small, medium, and large airports.
+
+```{r}
+iata_airport <- raw_data %>% 
+  filter(complete.cases(name,iata_code,iso_country,type)) %>%
+  filter(iata_code != "" & nchar(iso_country) == 2 ) %>%
+  filter(type == "small_airport" | type =="medium_airport" | type =="large_airport") %>% 
+  rename(airport_name = name, country = iso_country) %>% 
+  select(airport_name, iata_code, country, type) 
+
+iata_airport %>% group_by(type) %>% count(type) %>% kable()
+```
+
+```{r}
+fucking_error <- iata_airport %>% 
+  filter(country == 'TW' | country == 'HK' |country == 'MO')
+count(fucking_error)
+```
+
+```{r}
+iata_airport <- iata_airport %>% 
+  filter(country == replace(country, country == 'HK', 'CN'))
+iata_airport <- iata_airport %>% 
+  filter(country == replace(country, country == 'TW', 'CN'))
+iata_airport <- iata_airport %>% 
+  filter(country == replace(country, country == 'MO', 'CN'))
+```
+
+```{r}
+error_solved <- iata_airport %>% 
+  filter(country == 'TW' | country == 'HK')
+count(error_solved)
+```
+
+
