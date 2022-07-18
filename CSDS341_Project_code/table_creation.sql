@@ -36,6 +36,8 @@ CREATE TABLE IF NOT EXISTS Crew (
 
 CREATE TABLE IF NOT EXISTS Airports (
     iata_code CHAR(3) NOT NULL,
+    airport_name CHAR, 
+    country CHAR(2),
     weather CHAR,
     temperature INT,
     airport_status CHAR,
