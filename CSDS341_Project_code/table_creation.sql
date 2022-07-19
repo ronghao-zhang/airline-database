@@ -39,7 +39,6 @@ CREATE TABLE IF NOT EXISTS Airports (
     airport_name CHAR, 
     country CHAR(2),
     weather CHAR,
-    temperature INT,
     airport_status CHAR,
     PRIMARY KEY (iata_code),
     CHECK (weather IN ('Sunny' , 'Mostly Sunny',
