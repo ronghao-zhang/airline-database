@@ -1,0 +1,201 @@
+# Preliminaries
+library(knitr)
+library(dplyr)
+library(randomNames)
+library(stringi)
+library(tidyverse)
+
+# Airports Table Data 
+install.packages("jsonlite", repos="https://cran.rstudio.com/")
+library("jsonlite")
+
+# get list of all resources
+json_file <- 'https://datahub.io/core/airport-codes/datapackage.json'
+json_data <- fromJSON(paste(readLines(json_file), collapse = "")) 
+
+# print all tabular data(if exists any)
+for(i in 1:length(json_data$resources$datahub$type)){
+  if(json_data$resources$datahub$type[i]=='derived/csv'){
+    path_to_file = json_data$resources$path[i]
+    raw_iata_data <- read.csv(url(path_to_file))
+    print(data)
+  }
+}
+
+#This section perform data pre-processing (i.e. selecting the airports which has the iata code). 
+iata_airport <- raw_iata_data %>% 
+  filter(complete.cases(name,iata_code,iso_country,type)) %>%
+  filter(iata_code != "" & nchar(iso_country) == 2 ) %>%
+  filter(type =="large_airport") %>% 
+  rename(airport_name = name, country = iso_country) %>% 
+  select(airport_name, iata_code, country) 
+
+# The `country` label is not correct for some airports. The following code help to fix it. 
+iata_airport <- iata_airport %>% 
+  filter(country == replace(country, country == 'HK', 'CN'))
+iata_airport <- iata_airport %>% 
+  filter(country == replace(country, country == 'TW', 'CN'))
+iata_airport <- iata_airport %>% 
+  filter(country == replace(country, country == 'MO', 'CN'))
+
+# `weather` can have 10 different values: `Sunny`, `Mostly Sunny`, `Partly Cloudy`, `Cloudy`, `Rainy`, `Heavy Rainy`, `Foggy`, `Snowy`, `Heavy Snowy`, `Frost`. Additionally, `airport_status` can have 5 different values: `Free`, `Normal`, `Busy`, `Small-Scale Delay`, `Large-Scale Delay`. 
+set.seed(2022341)
+iata_num <- dim(iata_airport)[1]
+
+# set up weather data - randomly simulated 
+weather1 <- round(runif(floor(iata_num),1,4))
+weather2 <- round(runif(ceiling(iata_num*1/10),5,10))
+weather <- c(weather1, weather2)
+
+weather <- as.data.frame(weather) %>%
+  slice_sample(., prop = iata_num/length(weather))
+
+# set up status data
+airport_status <- round(runif(floor(iata_num),1,5))
+
+# combine the weather and status with the original data
+iata_airport_bind <- cbind(iata_airport, weather, airport_status)
+
+iata_airport_rename <- iata_airport_bind %>% 
+  mutate(weather = replace(weather, weather == '1', 'Sunny'), 
+         weather = replace(weather, weather == '2', 'Mostly Sunny'),
+         weather = replace(weather, weather == '3', 'Partly Cloudy'),
+         weather = replace(weather, weather == '4', 'Cloudy'),
+         weather = replace(weather, weather == '5', 'Rainy'),
+         weather = replace(weather, weather == '6', 'Heavy Rainy'),
+         weather = replace(weather, weather == '7', 'Foggy'),
+         weather = replace(weather, weather == '8', 'Snowy'),
+         weather = replace(weather, weather == '9', 'Heavy Snowy'),
+         weather = replace(weather, weather == '10', 'Frost'),
+         airport_status = replace(airport_status, airport_status == '1', 'Free'), 
+         airport_status = replace(airport_status, airport_status == '2', 'Normal'),
+         airport_status = replace(airport_status, airport_status == '3', 'Busy'),
+         airport_status = replace(airport_status, airport_status == '4', 'Small-Scale Delay'),
+         airport_status = replace(airport_status, airport_status == '5', 'Large-Scale Delay')
+  )
+
+final_airports_data <- iata_airport_rename %>% 
+  select(iata_code, airport_name, country, weather, airport_status)
+
+# Export the `Airport` Data. 
+write.csv(final_airports_data, "C:/Users/luke_/OneDrive/Desktop/csds341-project-airlineDatabase/CSDS341_Project_Data_Retrieval/csv_data/airports.csv",row.names = FALSE)
+
+# Airlines and Hub Table Data - Load the raw airlines table data.
+raw_airline_data <- read.csv("C:/Users/luke_/OneDrive/Desktop/csds341-project-airlineDatabase/CSDS341_Project_Data_Retrieval/raw_data/raw_airlines_data.csv", header = TRUE, sep =",")
+
+# The final airline table should have the following attributes: `company_id` and `company_name`.   
+airline <- raw_airline_data %>% 
+  filter(Active == "Y") %>%
+  rename(company_name = X.Name, country_name = Country) %>% 
+  select(company_name, country_name)
+
+# Load the `raw_country_code` dataset for matching the airlines to their country.
+raw_country_code <- read.csv("C:/Users/luke_/OneDrive/Desktop/csds341-project-airlineDatabase/CSDS341_Project_Data_Retrieval/raw_data/raw_country_code.csv")
+
+country_code <- raw_country_code %>%
+  rename(country_name = ï..name) %>% 
+  filter(complete.cases(country_name, code)) %>%
+  filter(country_name != "" | code != "") %>%
+  select(country_name, code)
+
+# Merge the `country_code` and `airline` table. 
+airline_country <- merge(airline, country_code, by = "country_name", all = FALSE) %>% 
+  select(company_name,code) %>% 
+  filter(code != "CN")
+
+airline_country[nrow(airline_country)+1,] = c("China Eastern Airlines","CN")
+airline_country[nrow(airline_country)+1,] = c("China Southern Airlines","CN")
+airline_country[nrow(airline_country)+1,] = c("Air China","CN")
+airline_country[nrow(airline_country)+1,] = c("Hainan Airlines","CN")
+airline_country[nrow(airline_country)+1,] = c("Delta","US")
+airline_country[nrow(airline_country)+1,] = c("United","US")
+airline_country[nrow(airline_country)+1,] = c("American Airlines","US")
+
+# Create `id` for airline companies.
+set.seed(2022341)
+company_id <- sample(101:999,nrow(airline_country), replace = FALSE)
+
+airport_country_id <- cbind(company_id, airline_country)
+
+# Export the Airlines Data.
+final_airlines_data <- airport_country_id %>% 
+  select(company_id, company_name)
+
+write.csv(final_airlines_data, "C:/Users/luke_/OneDrive/Desktop/csds341-project-airlineDatabase/CSDS341_Project_Data_Retrieval/csv_data/airlines.csv",row.names = FALSE)
+
+# Merge the `airport_country_id`(`code`) with `final_airports_data`(`country`).
+airport_country_id_rename <- airport_country_id %>% 
+  rename(country = code)
+
+set.seed(2022341)
+raw_hub <- merge(airport_country_id_rename, final_airports_data, by = "country") %>%
+  slice_sample(., prop =3/4)
+final_hub_data <- raw_hub %>%
+  select(company_id, iata_code)
+
+# Export the hub data.
+write.csv(final_hub_data, "C:/Users/luke_/OneDrive/Desktop/csds341-project-airlineDatabase/CSDS341_Project_Data_Retrieval/csv_data/hub.csv",row.names = FALSE)
+
+# Travelers and Crew Table Data - Create Traveler Data and Attributes.
+raw_travlers <- randomNames(8000,return.complete.data = TRUE)
+set.seed(2022341)
+# attribute user_id
+traveler_id <- sample(2000001:9999999,nrow(raw_travlers), replace = FALSE)
+# attribute dob
+traveler_dob <- sample(seq(as.Date('1949/01/01'), as.Date('2012/12/31'), by="day"),nrow(raw_travlers))
+# attribute credits
+credits <- sample(0:10000,nrow(raw_travlers))
+# attribute passport_no
+passport_no <- stri_paste(
+  stri_rand_strings(nrow(raw_travlers),1, pattern = "[A-Z]"),
+  stri_rand_strings(nrow(raw_travlers),1, pattern = "[A-Z]"),
+  stri_rand_strings(nrow(raw_travlers),9, pattern = "[0-9]"))
+# attribute citizenship
+citizenship <- sample(country_code$code,nrow(raw_travlers), replace = TRUE)
+# attribute traveler_middle_name
+traveler_middle_name <- stri_paste(
+  stri_rand_strings(nrow(raw_travlers),1, pattern = "[A-Z]"),
+  ".")
+
+# Import the Attributes and Rename.
+final_travelers_data <- cbind(traveler_id,raw_travlers,traveler_dob,
+                              credits,passport_no,citizenship,traveler_middle_name) %>%
+  mutate(gender = replace(gender, gender == '0', 'M'), 
+         gender = replace(gender, gender == '1', 'F')) %>% 
+  rename(user_id = traveler_id, middle_name = traveler_middle_name, 
+         dob = traveler_dob) %>% 
+  select(user_id, first_name, middle_name, last_name, gender, dob, credits, passport_no, citizenship)
+
+# Export the travelers data.
+write.csv(final_travelers_data, "C:/Users/luke_/OneDrive/Desktop/csds341-project-airlineDatabase/CSDS341_Project_Data_Retrieval/csv_data/travelers.csv",row.names = FALSE)
+
+# Crew Table Data
+set.seed(2022341)
+raw_crew <- randomNames(500,return.complete.data = TRUE) %>% 
+  mutate(gender = replace(gender, gender == '0', 'M'), 
+         gender = replace(gender, gender == '1', 'F')) %>%
+  select(-ethnicity)
+
+# attribute crew_middle_name
+crew_middle_name <- stri_paste(
+  stri_rand_strings(nrow(raw_crew),1, pattern = "[A-Z]"),
+  ".")
+
+# attribute user_id 
+crew_id <- sample(1000001:1999999,nrow(raw_crew), replace = FALSE)
+# attribute dob
+crew_dob <- sample(seq(as.Date('1949/01/01'), as.Date('1999/12/31'), by="day"),nrow(raw_crew))
+# attribute ssn
+ssn <- sample(123456789:987654321,nrow(raw_crew), replace = FALSE)
+# attribute salary
+salary <- sample(60000:250000,nrow(raw_crew), replace = TRUE)
+# total distance
+total_distance <- sample(5000:1000000000,nrow(raw_crew), replace = TRUE)
+
+# Merge and clean the data. 
+final_crew_data <- cbind(raw_crew, crew_middle_name, crew_id, crew_dob, salary, total_distance, ssn)%>% 
+  rename(user_id = crew_id, dob = crew_dob, middle_name = crew_middle_name) %>% 
+  select(user_id, first_name, middle_name, last_name, gender, dob, ssn, salary, total_distance)
+
+# Export the data. 
+write.csv(final_crew_data, "C:/Users/luke_/OneDrive/Desktop/csds341-project-airlineDatabase/CSDS341_Project_Data_Retrieval/csv_data/crew.csv",row.names = FALSE)
