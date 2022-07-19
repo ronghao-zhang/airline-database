@@ -1,0 +1,32 @@
+---
+title: "CSDS341_Project_accessingMySQL"
+author: "Luke Zhang (rxz330)"
+date: "`r Sys.Date()`"
+output: html_document
+---
+# Preliminaries 
+```{r}
+library(RMySQL)
+```
+
+## Preliminaries
+```{r}
+# create connection to mySQl
+mysql_connection <- dbConnect(RMySQL::MySQL(),
+                              dbname='airline',
+                              host='localhost', 
+                              port=3306,
+                              user='root', 
+                              password='')
+# call the tables 
+dbListTables(mysql_connection)
+```
+
+```{r}
+
+#result = dbSendQuery(mysqlconnection, "select * from course") # write query to acces the records from a particular table.
+
+#data.frame = fetch(result, n = 5)
+#print(data.frame)                # Store the result in a R data frame object. n = 5 is used to fetch first 5 rows.
+```
+
