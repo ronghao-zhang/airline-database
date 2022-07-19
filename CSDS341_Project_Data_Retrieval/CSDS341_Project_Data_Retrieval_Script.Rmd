@@ -240,7 +240,6 @@ ssn <- sample(123456789:987654321,nrow(raw_crew), replace = FALSE)
 salary <- sample(60000:250000,nrow(raw_crew), replace = TRUE)
 # total distance
 total_distance <- sample(5000:1000000000,nrow(raw_crew), replace = TRUE)
-
 ```
 
 Merge and clean the data. 
@@ -255,5 +254,12 @@ Export the data.
 write.csv(final_crew_data, "C:/Users/luke_/OneDrive/Desktop/csds341-project-airlineDatabase/CSDS341_Project_Data_Retrieval/csv_data/crew.csv",row.names = FALSE)
 ```
 
+# Aeroplanes_blong Table
+
+We need to have the following attributes: `regis_no`, `fir_capacity`, `bus_capacity`, `eco_capacity`, `aircraft_type`, `company_id`.
+```{r}
+# candidate_company_id <- final_airlines_data$company_id
+# view(final_airlines_data)
+```
 
 
