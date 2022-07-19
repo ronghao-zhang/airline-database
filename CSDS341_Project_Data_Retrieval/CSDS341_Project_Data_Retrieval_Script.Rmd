@@ -12,7 +12,7 @@ library(dplyr)
 library(tidyverse)
 ```
 
-# IATA Code & Airports
+# Airports Table Data 
 This section retrieves iata code and corresponding name of airports in the United States. 
 ```{r, warning=FALSE}
 install.packages("jsonlite", repos="https://cran.rstudio.com/")
@@ -26,7 +26,7 @@ json_data <- fromJSON(paste(readLines(json_file), collapse = ""))
 for(i in 1:length(json_data$resources$datahub$type)){
   if(json_data$resources$datahub$type[i]=='derived/csv'){
     path_to_file = json_data$resources$path[i]
-    raw_data <- read.csv(url(path_to_file))
+    raw_iata_data <- read.csv(url(path_to_file))
     print(data)
   }
 }
@@ -36,7 +36,7 @@ This section perform data pre-processing (i.e. selecting the airports which has 
 Use the code `iata_airport %>% group_by(type) %>% count(type)` we can find out that there are 6 different airports: `closed`($$n = 262$$), `heliport` ($$n = 82$$), `seaplane_base` ($$n = 147$$), `small_airport`($$n = 4249$$), `medium_airport`($$n = 3849$$), `large_airport`($$n = 602$$). We only want to include the large airports.
 
 ```{r, warning=FALSE}
-iata_airport <- raw_data %>% 
+iata_airport <- raw_iata_data %>% 
   filter(complete.cases(name,iata_code,iso_country,type)) %>%
   filter(iata_code != "" & nchar(iso_country) == 2 ) %>%
   filter(type =="large_airport") %>% 
@@ -73,7 +73,7 @@ airport_status <- round(runif(floor(iata_num),1,5))
 # combine the weather and status with the original data
 iata_airport_bind <- cbind(iata_airport, weather, airport_status)
 
-iata_airport_final <- iata_airport_bind %>% 
+iata_airport_rename <- iata_airport_bind %>% 
   mutate(weather = replace(weather, weather == '1', 'Sunny'), 
          weather = replace(weather, weather == '2', 'Mostly Sunny'),
          weather = replace(weather, weather == '3', 'Partly Cloudy'),
@@ -90,10 +90,86 @@ iata_airport_final <- iata_airport_bind %>%
          airport_status = replace(airport_status, airport_status == '4', 'Small-Scale Delay'),
          airport_status = replace(airport_status, airport_status == '5', 'Large-Scale Delay')
          )
+
+final_airports_data <- iata_airport_rename %>% 
+  select(iata_code, airport_name, country, weather, airport_status)
 ```
 
 Export the `Airport` Data. 
 ```{r}
-write.csv(iata_airport_final, "C:/Users/luke_/OneDrive/Desktop/csds341-project-airlineDatabase/CSDS341_Project_Data_Retrieval/csv_data/airport.csv",row.names = FALSE)
+write.csv(final_airports_data, "C:/Users/luke_/OneDrive/Desktop/csds341-project-airlineDatabase/CSDS341_Project_Data_Retrieval/csv_data/airports.csv",row.names = FALSE)
 ```
+
+## Airlines and Hub Table Data
+
+Load the raw airlines table data.
+```{r}
+raw_airline_data <- read.csv("C:/Users/luke_/OneDrive/Desktop/csds341-project-airlineDatabase/CSDS341_Project_Data_Retrieval/raw_data/raw_airlines_data.csv", header = TRUE, sep =",")
+```
+
+The final airline table should have the following attributes: `company_id` and `company_name`.   
+```{r}
+airline <- raw_airline_data %>% 
+  filter(Active == "Y") %>%
+  rename(company_name = X.Name, country_name = Country) %>% 
+  select(company_name, country_name)
+```
+
+Load the `raw_country_code` dataset for matching the airlines to their country.
+```{r}
+raw_country_code <- read.csv("C:/Users/luke_/OneDrive/Desktop/csds341-project-airlineDatabase/CSDS341_Project_Data_Retrieval/raw_data/raw_country_code.csv")
+
+country_code <- raw_country_code %>%
+  rename(country_name = ï..name) %>% 
+  filter(complete.cases(country_name, code)) %>%
+  filter(country_name != "" | code != "") %>%
+  select(country_name, code)
+```
+
+Merge the `country_code` and `airline` table. 
+```{r}
+airline_country <- merge(airline, country_code, by = "country_name", all = FALSE) %>% 
+  select(company_name,code) %>% 
+  filter(code != "CN")
+
+airline_country[nrow(airline_country)+1,] = c("China Eastern Airlines","CN")
+airline_country[nrow(airline_country)+1,] = c("China Southern Airlines","CN")
+airline_country[nrow(airline_country)+1,] = c("Air China","CN")
+airline_country[nrow(airline_country)+1,] = c("Hainan Airlines","CN")
+```
+
+Create `id` for airline companies.
+```{r}
+set.seed(2022341)
+company_id <- sample(101:999,nrow(airline_country), replace = FALSE)
+
+airport_country_id <- cbind(company_id, airline_country)
+```
+
+Export the Airlines Data
+```{r}
+final_airlines_data <- airport_country_id %>% 
+  select(company_id, company_name)
+
+write.csv(final_airlines_data, "C:/Users/luke_/OneDrive/Desktop/csds341-project-airlineDatabase/CSDS341_Project_Data_Retrieval/csv_data/airlines.csv",row.names = FALSE)
+```
+
+Merge the `airport_country_id`(`code`) with `final_airports_data`(`country`). 
+```{r}
+airport_country_id_rename <- airport_country_id %>% 
+  rename(country = code)
+
+set.seed(2022341)
+raw_hub <- merge(airport_country_id_rename, final_airports_data, by = "country") %>%
+  slice_sample(., prop =3/4)
+
+final_hub_data <- raw_hub %>%
+  select(company_id, iata_code)
+```
+
+Export the hub data.
+```{r}
+write.csv(final_hub_data, "C:/Users/luke_/OneDrive/Desktop/csds341-project-airlineDatabase/CSDS341_Project_Data_Retrieval/csv_data/hub.csv",row.names = FALSE)
+```
+
 
