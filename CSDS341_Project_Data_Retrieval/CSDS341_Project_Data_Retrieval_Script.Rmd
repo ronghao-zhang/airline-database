@@ -138,6 +138,9 @@ airline_country[nrow(airline_country)+1,] = c("China Eastern Airlines","CN")
 airline_country[nrow(airline_country)+1,] = c("China Southern Airlines","CN")
 airline_country[nrow(airline_country)+1,] = c("Air China","CN")
 airline_country[nrow(airline_country)+1,] = c("Hainan Airlines","CN")
+airline_country[nrow(airline_country)+1,] = c("Delta","US")
+airline_country[nrow(airline_country)+1,] = c("United","US")
+airline_country[nrow(airline_country)+1,] = c("American Airlines","US")
 ```
 
 Create `id` for airline companies.
@@ -164,7 +167,6 @@ airport_country_id_rename <- airport_country_id %>%
 set.seed(2022341)
 raw_hub <- merge(airport_country_id_rename, final_airports_data, by = "country") %>%
   slice_sample(., prop =3/4)
-
 final_hub_data <- raw_hub %>%
   select(company_id, iata_code)
 ```
@@ -178,7 +180,7 @@ write.csv(final_hub_data, "C:/Users/luke_/OneDrive/Desktop/csds341-project-airli
 
 ## Travelers Table Data 
 
-Creat Traveler Data and Attributes
+Create Traveler Data and Attributes
 ```{r}
 raw_travlers <- randomNames(3000,return.complete.data = TRUE)
 set.seed(2022341)
@@ -205,8 +207,8 @@ Import the Attributes and Rename
 ```{r}
 final_travelers_data <- cbind(traveler_id,raw_travlers,traveler_dob,
                        credits,passport_no,citizenship,traveler_middle_name) %>%
-  mutate(gender = replace(gender, weather == '1', 'F'), 
-         gender = replace(gender, weather == '0', 'M')) %>% 
+  mutate(gender = replace(gender, gender == '0', 'M'), 
+         gender = replace(gender, gender == '1', 'F')) %>% 
   rename(user_id = traveler_id, middle_name = traveler_middle_name, 
          dob = traveler_dob) %>% 
   select(user_id, first_name, middle_name, last_name, gender, dob, credits, passport_no, citizenship)
@@ -217,6 +219,7 @@ Export the travelers data
 write.csv(final_travelers_data, "C:/Users/luke_/OneDrive/Desktop/csds341-project-airlineDatabase/CSDS341_Project_Data_Retrieval/csv_data/travelers.csv",row.names = FALSE)
 ```
 
+## Crew Table Data
 
 
 
