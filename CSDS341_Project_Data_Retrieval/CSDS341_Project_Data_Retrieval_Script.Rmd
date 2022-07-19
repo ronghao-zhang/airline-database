@@ -9,6 +9,8 @@ output: html_document
 ```{r}
 library(knitr)
 library(dplyr)
+library(randomNames)
+library(stringi)
 library(tidyverse)
 ```
 
@@ -100,7 +102,7 @@ Export the `Airport` Data.
 write.csv(final_airports_data, "C:/Users/luke_/OneDrive/Desktop/csds341-project-airlineDatabase/CSDS341_Project_Data_Retrieval/csv_data/airports.csv",row.names = FALSE)
 ```
 
-## Airlines and Hub Table Data
+# Airlines and Hub Table Data
 
 Load the raw airlines table data.
 ```{r}
@@ -154,7 +156,7 @@ final_airlines_data <- airport_country_id %>%
 write.csv(final_airlines_data, "C:/Users/luke_/OneDrive/Desktop/csds341-project-airlineDatabase/CSDS341_Project_Data_Retrieval/csv_data/airlines.csv",row.names = FALSE)
 ```
 
-Merge the `airport_country_id`(`code`) with `final_airports_data`(`country`). 
+Merge the `airport_country_id`(`code`) with `final_airports_data`(`country`).
 ```{r}
 airport_country_id_rename <- airport_country_id %>% 
   rename(country = code)
@@ -171,5 +173,50 @@ Export the hub data.
 ```{r}
 write.csv(final_hub_data, "C:/Users/luke_/OneDrive/Desktop/csds341-project-airlineDatabase/CSDS341_Project_Data_Retrieval/csv_data/hub.csv",row.names = FALSE)
 ```
+
+# Travelers and Crew Table Data
+
+## Travelers Table Data 
+
+Creat Traveler Data and Attributes
+```{r}
+raw_travlers <- randomNames(3000,return.complete.data = TRUE)
+set.seed(2022341)
+# attribute user_id
+traveler_id <- sample(1000001:9999999,nrow(raw_travlers), replace = FALSE)
+# attribute dob
+traveler_dob <- sample(seq(as.Date('1949/01/01'), as.Date('2012/12/31'), by="day"),nrow(raw_travlers))
+# attribute credits
+credits <- sample(0:10000,nrow(raw_travlers))
+# attribute passport_no
+passport_no <- stri_paste(
+    stri_rand_strings(nrow(raw_travlers),1, pattern = "[A-Z]"),
+    stri_rand_strings(nrow(raw_travlers),1, pattern = "[A-Z]"),
+    stri_rand_strings(nrow(raw_travlers),9, pattern = "[0-9]"))
+# attribute citizenship
+citizenship <- sample(country_code$code,nrow(raw_travlers), replace = TRUE)
+# attribute traveler_middle_name
+traveler_middle_name <- stri_paste(
+  stri_rand_strings(nrow(raw_travlers),1, pattern = "[A-Z]"),
+  ".")
+```
+
+Import the Attributes and Rename
+```{r}
+final_travelers_data <- cbind(traveler_id,raw_travlers,traveler_dob,
+                       credits,passport_no,citizenship,traveler_middle_name) %>%
+  mutate(gender = replace(gender, weather == '1', 'F'), 
+         gender = replace(gender, weather == '0', 'M')) %>% 
+  rename(user_id = traveler_id, middle_name = traveler_middle_name, 
+         dob = traveler_dob) %>% 
+  select(user_id, first_name, middle_name, last_name, gender, dob, credits, passport_no, citizenship)
+```
+
+Export the travelers data
+```{r}
+write.csv(final_travelers_data, "C:/Users/luke_/OneDrive/Desktop/csds341-project-airlineDatabase/CSDS341_Project_Data_Retrieval/csv_data/travelers.csv",row.names = FALSE)
+```
+
+
 
 
