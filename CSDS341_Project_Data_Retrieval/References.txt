@@ -1,0 +1,3 @@
+airport iata code data is retrieved from and built based on: datahub.io/core/airport-codes#r
+
+airline data and hub data is build based on: https://github.com/tugraz-isds/datasets/tree/master/airports_airlines
