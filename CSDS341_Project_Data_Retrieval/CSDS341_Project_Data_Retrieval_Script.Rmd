@@ -7,8 +7,9 @@ output: html_document
 
 # Preliminaries
 ```{r}
-library(tidyverse)
 library(knitr)
+library(dplyr)
+library(tidyverse)
 ```
 
 # IATA Code & Airports
@@ -32,26 +33,19 @@ for(i in 1:length(json_data$resources$datahub$type)){
 ```
 
 This section perform data pre-processing (i.e. selecting the airports which has the iata code). 
-Use the code `iata_airport %>% group_by(type) %>% count(type)` we can find out that there are 6 different airports: `closed`($$n = 262$$), `heliport` ($$n = 82$$), `seaplane_base` ($$n = 147$$), `small_airport`($$n = 4249$$), `medium_airport`($$n = 3849$$), `large_airport`($$n = 602$$). We do not need to save `closed`, `heliport`,`seaplane_base` airports, which means that we only keep small, medium, and large airports.
+Use the code `iata_airport %>% group_by(type) %>% count(type)` we can find out that there are 6 different airports: `closed`($$n = 262$$), `heliport` ($$n = 82$$), `seaplane_base` ($$n = 147$$), `small_airport`($$n = 4249$$), `medium_airport`($$n = 3849$$), `large_airport`($$n = 602$$). We only want to include the large airports.
 
-```{r}
+```{r, warning=FALSE}
 iata_airport <- raw_data %>% 
   filter(complete.cases(name,iata_code,iso_country,type)) %>%
   filter(iata_code != "" & nchar(iso_country) == 2 ) %>%
-  filter(type == "small_airport" | type =="medium_airport" | type =="large_airport") %>% 
+  filter(type =="large_airport") %>% 
   rename(airport_name = name, country = iso_country) %>% 
-  select(airport_name, iata_code, country, type) 
-
-iata_airport %>% group_by(type) %>% count(type) %>% kable()
+  select(airport_name, iata_code, country) 
 ```
 
-```{r}
-fucking_error <- iata_airport %>% 
-  filter(country == 'TW' | country == 'HK' |country == 'MO')
-count(fucking_error)
-```
-
-```{r}
+The `country` label is not correct for some airports. The following code help to fix it. 
+```{r, warning=FALSE}
 iata_airport <- iata_airport %>% 
   filter(country == replace(country, country == 'HK', 'CN'))
 iata_airport <- iata_airport %>% 
@@ -60,10 +54,46 @@ iata_airport <- iata_airport %>%
   filter(country == replace(country, country == 'MO', 'CN'))
 ```
 
+`weather` can have 10 different values: `Sunny`, `Mostly Sunny`, `Partly Cloudy`, `Cloudy`, `Rainy`, `Heavy Rainy`, `Foggy`, `Snowy`, `Heavy Snowy`, `Frost`. Additionally, `airport_status` can have 5 different values: `Free`, `Normal`, `Busy`, `Small-Scale Delay`, `Large-Scale Delay`. 
 ```{r}
-error_solved <- iata_airport %>% 
-  filter(country == 'TW' | country == 'HK')
-count(error_solved)
+set.seed(2022341)
+iata_num <- dim(iata_airport)[1]
+
+# set up weather data - randomly simulated 
+weather1 <- round(runif(floor(iata_num),1,4))
+weather2 <- round(runif(ceiling(iata_num*1/10),5,10))
+weather <- c(weather1, weather2)
+
+weather <- as.data.frame(weather) %>%
+  slice_sample(., prop = iata_num/length(weather))
+
+# set up status data
+airport_status <- round(runif(floor(iata_num),1,5))
+
+# combine the weather and status with the original data
+iata_airport_bind <- cbind(iata_airport, weather, airport_status)
+
+iata_airport_final <- iata_airport_bind %>% 
+  mutate(weather = replace(weather, weather == '1', 'Sunny'), 
+         weather = replace(weather, weather == '2', 'Mostly Sunny'),
+         weather = replace(weather, weather == '3', 'Partly Cloudy'),
+         weather = replace(weather, weather == '4', 'Cloudy'),
+         weather = replace(weather, weather == '5', 'Rainy'),
+         weather = replace(weather, weather == '6', 'Heavy Rainy'),
+         weather = replace(weather, weather == '7', 'Foggy'),
+         weather = replace(weather, weather == '8', 'Snowy'),
+         weather = replace(weather, weather == '9', 'Heavy Snowy'),
+         weather = replace(weather, weather == '10', 'Frost'),
+         airport_status = replace(airport_status, airport_status == '1', 'Free'), 
+         airport_status = replace(airport_status, airport_status == '2', 'Normal'),
+         airport_status = replace(airport_status, airport_status == '3', 'Busy'),
+         airport_status = replace(airport_status, airport_status == '4', 'Small-Scale Delay'),
+         airport_status = replace(airport_status, airport_status == '5', 'Large-Scale Delay')
+         )
 ```
 
+Export the `Airport` Data. 
+```{r}
+write.csv(iata_airport_final, "C:/Users/luke_/OneDrive/Desktop/csds341-project-airlineDatabase/CSDS341_Project_Data_Retrieval/csv_data/airport.csv",row.names = FALSE)
+```
 
