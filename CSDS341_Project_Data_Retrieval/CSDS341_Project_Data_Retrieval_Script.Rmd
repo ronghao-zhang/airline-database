@@ -151,7 +151,7 @@ company_id <- sample(101:999,nrow(airline_country), replace = FALSE)
 airport_country_id <- cbind(company_id, airline_country)
 ```
 
-Export the Airlines Data
+Export the Airlines Data.
 ```{r}
 final_airlines_data <- airport_country_id %>% 
   select(company_id, company_name)
@@ -180,12 +180,12 @@ write.csv(final_hub_data, "C:/Users/luke_/OneDrive/Desktop/csds341-project-airli
 
 ## Travelers Table Data 
 
-Create Traveler Data and Attributes
+Create Traveler Data and Attributes.
 ```{r}
-raw_travlers <- randomNames(3000,return.complete.data = TRUE)
+raw_travlers <- randomNames(8000,return.complete.data = TRUE)
 set.seed(2022341)
 # attribute user_id
-traveler_id <- sample(1000001:9999999,nrow(raw_travlers), replace = FALSE)
+traveler_id <- sample(2000001:9999999,nrow(raw_travlers), replace = FALSE)
 # attribute dob
 traveler_dob <- sample(seq(as.Date('1949/01/01'), as.Date('2012/12/31'), by="day"),nrow(raw_travlers))
 # attribute credits
@@ -203,7 +203,7 @@ traveler_middle_name <- stri_paste(
   ".")
 ```
 
-Import the Attributes and Rename
+Import the Attributes and Rename.
 ```{r}
 final_travelers_data <- cbind(traveler_id,raw_travlers,traveler_dob,
                        credits,passport_no,citizenship,traveler_middle_name) %>%
@@ -214,12 +214,46 @@ final_travelers_data <- cbind(traveler_id,raw_travlers,traveler_dob,
   select(user_id, first_name, middle_name, last_name, gender, dob, credits, passport_no, citizenship)
 ```
 
-Export the travelers data
+Export the travelers data.
 ```{r}
 write.csv(final_travelers_data, "C:/Users/luke_/OneDrive/Desktop/csds341-project-airlineDatabase/CSDS341_Project_Data_Retrieval/csv_data/travelers.csv",row.names = FALSE)
 ```
 
 ## Crew Table Data
+```{r}
+set.seed(2022341)
+raw_crew <- randomNames(500,return.complete.data = TRUE) %>% 
+  mutate(gender = replace(gender, gender == '0', 'M'), 
+         gender = replace(gender, gender == '1', 'F')) %>%
+  select(-ethnicity)
+# attribute crew_middle_name
+crew_middle_name <- stri_paste(
+  stri_rand_strings(nrow(raw_crew),1, pattern = "[A-Z]"),
+  ".")
+# attribute user_id 
+crew_id <- sample(1000001:1999999,nrow(raw_crew), replace = FALSE)
+# attribute dob
+crew_dob <- sample(seq(as.Date('1949/01/01'), as.Date('1999/12/31'), by="day"),nrow(raw_crew))
+# attribute ssn
+ssn <- sample(123456789:987654321,nrow(raw_crew), replace = FALSE)
+# attribute salary
+salary <- sample(60000:250000,nrow(raw_crew), replace = TRUE)
+# total distance
+total_distance <- sample(5000:1000000000,nrow(raw_crew), replace = TRUE)
+
+```
+
+Merge and clean the data. 
+```{r}
+final_crew_data <- cbind(raw_crew, crew_middle_name, crew_id, crew_dob, salary, total_distance, ssn)%>% 
+  rename(user_id = crew_id, dob = crew_dob, middle_name = crew_middle_name) %>% 
+  select(user_id, first_name, middle_name, last_name, gender, dob, ssn, salary, total_distance)
+```
+
+Export the data. 
+```{r}
+write.csv(final_crew_data, "C:/Users/luke_/OneDrive/Desktop/csds341-project-airlineDatabase/CSDS341_Project_Data_Retrieval/csv_data/crew.csv",row.names = FALSE)
+```
 
 
 
