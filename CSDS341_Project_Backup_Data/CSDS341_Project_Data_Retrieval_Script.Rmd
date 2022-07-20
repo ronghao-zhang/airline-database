@@ -17,21 +17,7 @@ library(tidyverse)
 # Airports Table Data 
 This section retrieves iata code and corresponding name of airports in the United States. 
 ```{r, warning=FALSE}
-install.packages("jsonlite", repos="https://cran.rstudio.com/")
-library("jsonlite")
-
-# get list of all resources
-json_file <- 'https://datahub.io/core/airport-codes/datapackage.json'
-json_data <- fromJSON(paste(readLines(json_file), collapse = "")) 
-
-# print all tabular data(if exists any)
-for(i in 1:length(json_data$resources$datahub$type)){
-  if(json_data$resources$datahub$type[i]=='derived/csv'){
-    path_to_file = json_data$resources$path[i]
-    raw_iata_data <- read.csv(url(path_to_file))
-    print(data)
-  }
-}
+raw_iata_data <- read.csv("C:/Users/luke_/OneDrive/Desktop/csds341-project-airlineDatabase/CSDS341_Project_Backup_Data/raw_data/raw_iata.csv")
 ```
 
 This section perform data pre-processing (i.e. selecting the airports which has the iata code). 
@@ -406,5 +392,110 @@ Export the data.
 ```{r}
 write.csv(final_aeroplanes_belong_data, "C:/Users/luke_/OneDrive/Desktop/csds341-project-airlineDatabase/CSDS341_Project_Backup_Data/csv_data/aeroplanes_belong.csv",row.names = FALSE)
 ```
+
+# Flights_ariv_dept Table
+```{r}
+#
+flight_chr <- read.csv("C:/Users/luke_/OneDrive/Desktop/csds341-project-airlineDatabase/CSDS341_Project_Backup_Data/raw_data/raw_flight_num.csv")
+final_airlines_data_2 <- cbind(final_airlines_data, as.data.frame(flight_chr)) %>%
+  rename(flight_no_chr = ï..flight_no_char)
+final_aeroplanes_belong_data_2 <- merge(final_airlines_data_2, final_aeroplanes_belong_data, by = "company_id", all = FALSE)
+
+# fk: regis_no, iata_code
+candidate_regis_no <- final_aeroplanes_belong_data_2$regis_no
+
+# create flight number
+set.seed(2022341)
+flight_no_1 <- stri_paste(
+    final_aeroplanes_belong_data_2$flight_no_chr,
+    as.character(sample(101:999,length(candidate_regis_no), replace = FALSE))
+    )
+
+flight_no_1_combine <- cbind(final_aeroplanes_belong_data_2, flight_no_1) %>% 
+  rename(flight_no = flight_no_1) %>%
+  select(regis_no, flight_no)
+
+temp <- final_aeroplanes_belong_data_2 %>% 
+  filter(flight_no_chr == 'MU' | flight_no_chr == 'DL' | 
+         flight_no_chr == 'HU' | flight_no_chr == 'AA' |
+         flight_no_chr == 'CA' | flight_no_chr == 'UA') %>% 
+  select(flight_no_chr, regis_no)
+
+flight_no_chr_2 <- as.data.frame(rbind(temp,temp,temp,temp,temp,temp,temp,temp,temp,temp))
+num_flight_no_2 <- nrow(flight_no_chr_2)
+flight_no_2 <- stri_paste(
+    temp$flight_no_chr,
+    as.character(sample(1001:9999,num_flight_no_2, replace = FALSE))
+    )
+
+flight_no_2_combine <- cbind(flight_no_chr_2, flight_no_2) %>%
+  rename(flight_no = flight_no_2) %>%
+  select(regis_no, flight_no)
+
+raw_flights_data <- rbind(flight_no_1_combine, flight_no_2_combine)
+```
+
+```{r}
+set.seed(2022341)
+num_status <- nrow(raw_flights_data)
+
+# set up weather data - randomly simulated 
+status_numeric <- sample(1:3,num_status, replace = TRUE)
+
+flights_status_numeric <- cbind(raw_flights_data, status_numeric)
+
+flights_status <- flights_status_numeric %>% 
+  mutate(status_numeric = replace(status_numeric, status_numeric == '1', 'On-Time'), 
+         status_numeric = replace(status_numeric, status_numeric == '2', 'Delay'),
+         status_numeric = replace(status_numeric, status_numeric == '3', 'Cancel')
+         )
+
+# Depart IATA Code Candidate
+candidate_dept_iata_1 <- iata_airport_rename %>% 
+  filter(country == 'US') %>% 
+  select(iata_code) %>%
+  slice_sample(., prop = 1/8)
+candidate_dept_iata_2 <- iata_airport_rename %>% 
+  filter(country == 'CN') %>% 
+  select(iata_code) %>%
+  slice_sample(., prop = 1/2)
+candidate_dept_iata <- rbind(candidate_dept_iata_1, candidate_dept_iata_2)
+
+# ARRIVAl IATA Code Candidate
+candidate_ariv_iata <- iata_airport_rename %>% 
+  select(iata_code) %>%
+  slice_sample(., prop = 1/5)
+
+# dept_iata
+temp <- sample(1:nrow(candidate_dept_iata), num_status, replace = TRUE)
+dept_iata <- data.frame(matrix(ncol = 1, nrow = num_status))
+for (i in 1:num_status){
+  row_idx = temp[i]
+  dept_iata[i,1] = candidate_dept_iata[row_idx,1]
+}
+
+# ariv_iata
+temp <- sample(1:nrow(candidate_ariv_iata), num_status, replace = TRUE)
+ariv_iata <- data.frame(matrix(ncol = 1, nrow = num_status))
+for (i in 1:num_status){
+  row_idx = temp[i]
+  ariv_iata[i,1] = candidate_ariv_iata[row_idx,1]
+}
+ariv_iata <- as.data.frame(ariv_iata)
+```
+
+```{r}
+flights_ariv_dept <- cbind(flights_status, dept_iata) %>% 
+  rename(dept_iata = matrix.ncol...1..nrow...num_status.)
+
+final_flights_ariv_dept <- cbind(flights_ariv_dept, ariv_iata) %>% 
+  rename(ariv_iata = matrix.ncol...1..nrow...num_status.,
+         flight_status = status_numeric)
+
+write.csv(final_flights_ariv_dept, "C:/Users/luke_/OneDrive/Desktop/csds341-project-airlineDatabase/CSDS341_Project_Backup_Data/csv_data/flights_ariv_dept.csv",row.names = FALSE)
+```
+
+# Tickets_book_for Table
+
 
 
