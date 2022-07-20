@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS Aeroplanes_belong (
     fir_capacity INT,
     bus_capacity INT,
     eco_capacity INT,
-    aircraft_type VARCHAR(10),
+    aircraft_type VARCHAR(50),
     company_id INT NOT NULL,
     PRIMARY KEY (regis_no),
     FOREIGN KEY (company_id)

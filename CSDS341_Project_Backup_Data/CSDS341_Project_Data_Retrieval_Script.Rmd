@@ -350,12 +350,61 @@ raw_plane <- read.csv("C:/Users/luke_/OneDrive/Desktop/csds341-project-airlineDa
 plane_type <- raw_plane %>% 
   rename(aircraft_type = X.Name) %>% 
   filter(grepl('Boeing',aircraft_type) | grepl('Airbus',aircraft_type)) %>% 
-  select(aircraft_type)
+  filter(complete.cases(total_capacity)) %>% 
+  select(aircraft_type, total_capacity)
 
 # select candidate company_id
 candidate_company_id <- final_airlines_data$company_id
-fake_flight_chr <- c('EA','')
+
+plane_company_id <- rep(candidate_company_id,15)
+plane_company_id <- as.data.frame(plane_company_id)
+
+# create aeroplane data with different type & capacity
+plane_num <- nrow(final_airlines_data)*15
+
+set.seed(2022341)
+row_num <- sample(1:nrow(plane_type), plane_num, replace = TRUE)
+
+aeroplane <- data.frame(matrix(ncol = 2, nrow = plane_num))
+for (i in 1:plane_num){
+  row_idx = row_num[i]
+  aeroplane[i,1:2] = plane_type[row_idx,1:2]
+}
+
+# create regis_no
+set.seed(2022341)
+regis_no <- stri_paste(
+    stri_rand_strings(plane_num,1, pattern = "[A-Z]"),
+    stri_rand_strings(plane_num,1, pattern = "[A-Z0-9]"),
+    as.character(sample(10001:99999, plane_num, replace = FALSE))
+    )
+
+# combine and rename data
+aeroplane_combine <- cbind(regis_no, aeroplane, plane_company_id) %>% 
+  rename(aircraft_type = X1, aircraft_capacity = X2, company_id = plane_company_id) %>% 
+  select(regis_no, aircraft_capacity, aircraft_type, company_id)
 ```
 
+```{r}
+# create capacity for each cabin
+set.seed(2022341)
+fir_capacity <- sample(0:30, plane_num, replace = TRUE) 
+bus_capacity <- sample(10:40, plane_num, replace = TRUE) 
+eco_capacity <- NULL
+for (i in 1:plane_num){
+  eco_capacity[i] <- aeroplane_combine$aircraft_capacity[i] - 
+    fir_capacity[i] - bus_capacity[i]
+}
+
+# combine and export
+final_aeroplanes_belong_data <- 
+  cbind(aeroplane_combine, fir_capacity, bus_capacity, eco_capacity) %>%
+  select(regis_no, fir_capacity, bus_capacity, eco_capacity, aircraft_type, company_id)
+```
+
+Export the data.
+```{r}
+write.csv(final_aeroplanes_belong_data, "C:/Users/luke_/OneDrive/Desktop/csds341-project-airlineDatabase/CSDS341_Project_Backup_Data/csv_data/aeroplanes_belong.csv",row.names = FALSE)
+```
 
 
