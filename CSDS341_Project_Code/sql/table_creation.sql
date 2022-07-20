@@ -64,8 +64,9 @@ CREATE TABLE IF NOT EXISTS Airlines (
 
 CREATE TABLE IF NOT EXISTS Schedules (
     schedule_id INT NOT NULL,
-    operate_date DATE,
+    dept_date DATE,
     dept_time TIME,
+    ariv_date DATE, 
     ariv_time TIME,
     PRIMARY KEY (schedule_id)
 );

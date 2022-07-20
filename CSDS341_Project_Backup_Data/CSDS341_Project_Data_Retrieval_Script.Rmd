@@ -99,14 +99,14 @@ final_airports_data <- iata_airport_rename %>%
 
 Export the `Airport` Data. 
 ```{r}
-write.csv(final_airports_data, "C:/Users/luke_/OneDrive/Desktop/csds341-project-airlineDatabase/CSDS341_Project_Data_Retrieval/csv_data/airports.csv",row.names = FALSE)
+write.csv(final_airports_data, "C:/Users/luke_/OneDrive/Desktop/csds341-project-airlineDatabase/CSDS341_Project_Backup_Data/csv_data/airports.csv",row.names = FALSE)
 ```
 
 # Airlines and Hub Table Data
 
 Load the raw airlines table data.
 ```{r}
-raw_airline_data <- read.csv("C:/Users/luke_/OneDrive/Desktop/csds341-project-airlineDatabase/CSDS341_Project_Data_Retrieval/raw_data/raw_airlines_data.csv", header = TRUE, sep =",")
+raw_airline_data <- read.csv("C:/Users/luke_/OneDrive/Desktop/csds341-project-airlineDatabase/CSDS341_Project_Backup_Data/raw_data/raw_airlines_data.csv", header = TRUE, sep =",")
 ```
 
 The final airline table should have the following attributes: `company_id` and `company_name`.   
@@ -119,7 +119,7 @@ airline <- raw_airline_data %>%
 
 Load the `raw_country_code` dataset for matching the airlines to their country.
 ```{r}
-raw_country_code <- read.csv("C:/Users/luke_/OneDrive/Desktop/csds341-project-airlineDatabase/CSDS341_Project_Data_Retrieval/raw_data/raw_country_code.csv")
+raw_country_code <- read.csv("C:/Users/luke_/OneDrive/Desktop/csds341-project-airlineDatabase/CSDS341_Project_Backup_Data/raw_data/raw_country_code.csv")
 
 country_code <- raw_country_code %>%
   rename(country_name = ï..name) %>% 
@@ -156,7 +156,7 @@ Export the Airlines Data.
 final_airlines_data <- airport_country_id %>% 
   select(company_id, company_name)
 
-write.csv(final_airlines_data, "C:/Users/luke_/OneDrive/Desktop/csds341-project-airlineDatabase/CSDS341_Project_Data_Retrieval/csv_data/airlines.csv",row.names = FALSE)
+write.csv(final_airlines_data, "C:/Users/luke_/OneDrive/Desktop/csds341-project-airlineDatabase/CSDS341_Project_Backup_Data/csv_data/airlines.csv",row.names = FALSE)
 ```
 
 Merge the `airport_country_id`(`code`) with `final_airports_data`(`country`).
@@ -173,7 +173,7 @@ final_hub_data <- raw_hub %>%
 
 Export the hub data.
 ```{r}
-write.csv(final_hub_data, "C:/Users/luke_/OneDrive/Desktop/csds341-project-airlineDatabase/CSDS341_Project_Data_Retrieval/csv_data/hub.csv",row.names = FALSE)
+write.csv(final_hub_data, "C:/Users/luke_/OneDrive/Desktop/csds341-project-airlineDatabase/CSDS341_Project_Backup_Data/csv_data/hub.csv",row.names = FALSE)
 ```
 
 # Travelers and Crew Table Data
@@ -216,7 +216,7 @@ final_travelers_data <- cbind(traveler_id,raw_travlers,traveler_dob,
 
 Export the travelers data.
 ```{r}
-write.csv(final_travelers_data, "C:/Users/luke_/OneDrive/Desktop/csds341-project-airlineDatabase/CSDS341_Project_Data_Retrieval/csv_data/travelers.csv",row.names = FALSE)
+write.csv(final_travelers_data, "C:/Users/luke_/OneDrive/Desktop/csds341-project-airlineDatabase/CSDS341_Project_Backup_Data/csv_data/travelers.csv",row.names = FALSE)
 ```
 
 ## Crew Table Data
@@ -251,7 +251,7 @@ final_crew_data <- cbind(raw_crew, crew_middle_name, crew_id, crew_dob, salary, 
 
 Export the data. 
 ```{r}
-write.csv(final_crew_data, "C:/Users/luke_/OneDrive/Desktop/csds341-project-airlineDatabase/CSDS341_Project_Data_Retrieval/csv_data/crew.csv",row.names = FALSE)
+write.csv(final_crew_data, "C:/Users/luke_/OneDrive/Desktop/csds341-project-airlineDatabase/CSDS341_Project_Backup_Data/csv_data/crew.csv",row.names = FALSE)
 ```
 
 # Aeroplanes_blong Table
@@ -261,5 +261,101 @@ We need to have the following attributes: `regis_no`, `fir_capacity`, `bus_capac
 # candidate_company_id <- final_airlines_data$company_id
 # view(final_airlines_data)
 ```
+
+# Schedules Table
+
+We have five different attribute that we need to create: `schedule_id`, `dept_date`, `dept_time`, `ariv_date`, `ariv_time`.
+```{r}
+# create 5000 sample in total
+set.seed(2022341)
+sche_num_1 <- 2000
+sche_num_2 <- 4000
+
+# dept_date for domestic and international
+dept_date_1 <- sample(seq(as.Date('2019/01/01'), as.Date('2022/12/31'), by="day"),sche_num_1, replace = TRUE)
+dept_date_2 <- sample(seq(as.Date('2019/01/01'), as.Date('2022/12/31'), by="day"),sche_num_2, replace = TRUE)
+
+# ariv_date for domestic and international
+ariv_date_1 <- dept_date_1 + 1 # add one day due to international flight
+ariv_date_2 <- dept_date_2 
+
+dept_date <- c(dept_date_1, dept_date_2)
+ariv_date <- c(ariv_date_1, ariv_date_2)
+```
+
+Simulate departure and arrival time. 
+```{r}
+# simulate time for departure
+set.seed(2022341)
+candidate_min <- seq(0,55,5)
+hour_1 <- sample(19:23, sche_num_1, replace = TRUE) 
+hour_2 <- sample(9:11, sche_num_2, replace = TRUE)
+minutes_1 <- sample(candidate_min, sche_num_1, replace = TRUE)
+minutes_2 <- sample(candidate_min, sche_num_2, replace = TRUE)
+
+dept_time_1 <- NULL
+for (i in 1:length(hour_1)){
+  dept_time_1[i] = paste(hour_1[i],minutes_1[i],"00",sep=":")
+}
+
+dept_time_2 <- NULL
+for (i in 1:length(hour_2)){
+  dept_time_2[i] = paste(hour_2[i],minutes_2[i],"00",sep=":")
+}
+
+dept_time <- c(dept_time_1, dept_time_2)
+
+# simulate time for arrival
+set.seed(20223412)
+candidate_min <- seq(0,55,5)
+hour_1 <- sample(07:09, sche_num_1, replace = TRUE) 
+hour_2 <- sample(12:14, sche_num_2, replace = TRUE)
+minutes_1 <- sample(candidate_min, sche_num_1, replace = TRUE)
+minutes_2 <- sample(candidate_min, sche_num_2, replace = TRUE)
+ariv_time_1 <- NULL
+for (i in 1:length(hour_1)){
+  ariv_time_1[i] = paste(hour_1[i],minutes_1[i],"00",sep=":")
+}
+
+ariv_time_2 <- NULL
+for (i in 1:length(hour_2)){
+  ariv_time_2[i] = paste(hour_2[i],minutes_2[i],"00",sep=":")
+}
+
+ariv_time <- c(ariv_time_1, ariv_time_2)
+```
+
+Merge the schedule data. 
+```{r}
+schedule <- cbind(as.data.frame(dept_date),as.data.frame(dept_time),as.data.frame(ariv_date),as.data.frame(ariv_time))
+
+set.seed(2022341)
+schedule_id_1 <- sample(70001:99999,sche_num_1, replace = FALSE)
+schedule_id_2 <- sample(10001:39999,sche_num_2, replace = FALSE)
+schedule_id <- c(schedule_id_1,schedule_id_2)
+final_schedule_data <- as.data.frame(cbind(schedule_id, schedule)) %>% 
+  slice_sample(., prop = 5000/(sche_num_1+sche_num_2))
+```
+
+Export the data.
+```{r}
+write.csv(final_schedule_data, "C:/Users/luke_/OneDrive/Desktop/csds341-project-airlineDatabase/CSDS341_Project_Backup_Data/csv_data/schedules.csv",row.names = FALSE)
+```
+
+# Aeroplanes_belong Table
+```{r}
+raw_plane <- read.csv("C:/Users/luke_/OneDrive/Desktop/csds341-project-airlineDatabase/CSDS341_Project_Backup_Data/raw_data/raw_flights.csv",sep=",")
+
+# only select airbus or boeing
+plane_type <- raw_plane %>% 
+  rename(aircraft_type = X.Name) %>% 
+  filter(grepl('Boeing',aircraft_type) | grepl('Airbus',aircraft_type)) %>% 
+  select(aircraft_type)
+
+# select candidate company_id
+candidate_company_id <- final_airlines_data$company_id
+fake_flight_chr <- c('EA','')
+```
+
 
 
