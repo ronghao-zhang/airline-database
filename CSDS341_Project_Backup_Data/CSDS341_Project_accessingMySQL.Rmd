@@ -46,9 +46,11 @@ Query 01: Find the first name(`first_name`), last name(`last_name`), date of bir
 ```{r}
 sql_01 <- "SELECT first_name, last_name, dob, credits
            FROM   travelers
-           WHERE      citizenship = 'US' 
-                  AND gender = 'M'
-                  AND dob < '1985-01-01'"
+           WHERE  citizenship = 'US' 
+                  AND 
+                  gender = 'M'
+                  AND 
+                  dob < '1985-01-01'"
 
 result_01 <- dbSendQuery(sql_link, sql_01)
 
@@ -58,18 +60,34 @@ output_01 %>% kable()
 
 Query 02: Find the passport number(`passport_no`) and first name(`first_name`) of all Chinese Traveler who has already booked at least one Plane Ticket. The result table should also include `citizenship` as a check.
 ```{r}
-
 sql_02 <-	"SELECT passport_no, first_name, citizenship
 		       FROM   Travelers
-		       WHERE     (Citizenship = 'CN') 
+		       WHERE  (Citizenship = 'CN') 
 		              AND 
-		                 (user_id IN (SELECT    traveler_id
-		                              FROM      Tickets_book_for
-		                              GROUP BY  traveler_id
-		                              HAVING    count(ticket_id) >= 1))"
+		              (user_id IN (SELECT    traveler_id
+		                           FROM      Tickets_book_for
+		                           GROUP BY  traveler_id
+		                           HAVING    count(ticket_id) >= 1))"
 
 result_02 <- dbSendQuery(sql_link, sql_02)
 
 output_02 <- fetch(result_02)
 output_02 %>% kable()
+```
+
+Query 02: Find the flight number(`flight_no`), departure airport(`dept_iata_code`), arrival airport(`ariv_iata_code`) of all flights that operated by China Eastern Airlines and has a capacity of 30 seats in first class cabin. 
+	% query starts here
+```{r}
+sql_03 <- "SELECT flight_no, dept_iata_code, ariv_iata_code
+           FROM   Flights_ariv_dept NATURAL JOIN Aeroplanes_belong
+           WHERE  (Aeroplanes_belong.fir_capacity = 30) 
+           AND    (regis_no IN (
+              SELECT regis_no
+              FROM   Aeroplanes_belong NATURAL JOIN Airlines
+              WHERE  Airlines.company_name = 'China Eastern Airlines'))"
+
+result_03 <- dbSendQuery(sql_link, sql_03)
+
+output_03 <- fetch(result_03)
+output_03 %>% kable()
 ```
