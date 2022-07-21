@@ -622,37 +622,3 @@ final_serve_data <- rbind(serve_bind, serve_bind_2)
 
 write.csv(final_serve_data, "C:/Users/luke_/OneDrive/Desktop/csds341-project-airlineDatabase/CSDS341_Project_Backup_Data/csv_data/serve.csv",row.names = FALSE)
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
