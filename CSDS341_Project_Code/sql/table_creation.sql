@@ -36,10 +36,10 @@ CREATE TABLE IF NOT EXISTS Crew (
 
 CREATE TABLE IF NOT EXISTS Airports (
     iata_code CHAR(3) NOT NULL,
-    airport_name CHAR, 
+    airport_name VARCHAR(100), 
     country CHAR(2),
-    weather CHAR,
-    airport_status CHAR,
+    weather VARCHAR(30),
+    airport_status VARCHAR(30),
     PRIMARY KEY (iata_code),
     CHECK (weather IN ('Sunny' , 'Mostly Sunny',
         'Partly Cloudy',
@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS Airports (
         'Snowy',
         'Heavy Snowy',
         'Frost')),
-    CHECK (airport_status IN ('Free' , 'Normal',
+    CHECK (airport_status IN ('Free', 'Normal',
         'Busy',
         'Small-Scale Delay',
         'Large-Scale Delay'))
@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS Airports (
 
 CREATE TABLE IF NOT EXISTS Airlines (
     company_id INT NOT NULL,
-    company_name VARCHAR(30),
+    company_name VARCHAR(50),
     PRIMARY KEY (company_id)
 );
 
@@ -102,7 +102,7 @@ CREATE TABLE IF NOT EXISTS Flights_ariv_dept (
 CREATE TABLE IF NOT EXISTS Tickets_book_for (
     ticket_id INT NOT NULL,
     seat_location CHAR(4),
-    seat_class CHAR,
+    seat_class CHAR(1),
     luggage_no INT,
     regis_no VARCHAR(10) NOT NULL,
     flight_no VARCHAR(7) NOT NULL,
@@ -112,7 +112,7 @@ CREATE TABLE IF NOT EXISTS Tickets_book_for (
         REFERENCES Travelers(user_id),
 	FOREIGN KEY (regis_no, flight_no)
         REFERENCES Flights_ariv_dept(regis_no, flight_no),
-    CHECK (seat_class IN ('First' , 'Business', 'Economic'))
+    CHECK (seat_class IN ('F' , 'B', 'E'))
 );
 
 CREATE TABLE IF NOT EXISTS serve (

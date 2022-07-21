@@ -13,4 +13,4 @@ The folder contains the following data:
 
 When importing data into MySQL Server, it will be good to inport the data using the following order: 
 
-travelers > crew > Airports > Airlines > Schedules > Aeroplanes_belong > Flights_ariv_dept > Tickets_book_for > serve > assign > Airports
+travelers > crew > Airports > Airlines > Schedules > Aeroplanes_belong > Flights_ariv_dept > Tickets_book_for > serve > assign 
