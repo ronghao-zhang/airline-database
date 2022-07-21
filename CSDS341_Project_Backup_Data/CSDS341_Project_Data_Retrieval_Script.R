@@ -38,33 +38,54 @@ airport_status <- round(runif(floor(iata_num),1,5))
 iata_airport_bind <- cbind(iata_airport, weather, airport_status)
 
 iata_airport_rename <- iata_airport_bind %>% 
-  mutate(weather = replace(weather, weather == '1', 'Sunny'), 
-         weather = replace(weather, weather == '2', 'Mostly Sunny'),
-         weather = replace(weather, weather == '3', 'Partly Cloudy'),
-         weather = replace(weather, weather == '4', 'Cloudy'),
-         weather = replace(weather, weather == '5', 'Rainy'),
-         weather = replace(weather, weather == '6', 'Heavy Rainy'),
-         weather = replace(weather, weather == '7', 'Foggy'),
-         weather = replace(weather, weather == '8', 'Snowy'),
-         weather = replace(weather, weather == '9', 'Heavy Snowy'),
-         weather = replace(weather, weather == '10', 'Frost'),
-         airport_status = replace(airport_status, airport_status == '1', 'Free'), 
-         airport_status = replace(airport_status, airport_status == '2', 'Normal'),
-         airport_status = replace(airport_status, airport_status == '3', 'Busy'),
-         airport_status = replace(airport_status, airport_status == '4', 'Small-Scale Delay'),
-         airport_status = replace(airport_status, airport_status == '5', 'Large-Scale Delay')
+  mutate(weather = replace(weather, weather == '1', "Sunny"), 
+         weather = replace(weather, weather == '2', "Mostly Sunny"),
+         weather = replace(weather, weather == '3', "Partly Cloudy"),
+         weather = replace(weather, weather == '4', "Cloudy"),
+         weather = replace(weather, weather == '5', "Rainy"),
+         weather = replace(weather, weather == '6', "Heavy Rainy"),
+         weather = replace(weather, weather == '7', "Foggy"),
+         weather = replace(weather, weather == '8', "Snowy"),
+         weather = replace(weather, weather == '9', "Heavy Snowy"),
+         weather = replace(weather, weather == '10', "Frost"),
+         airport_status = replace(airport_status, airport_status == '1', "Free"), 
+         airport_status = replace(airport_status, airport_status == '2', "Normal"),
+         airport_status = replace(airport_status, airport_status == '3', "Busy"),
+         airport_status = replace(airport_status, airport_status == '4', "Small-Scale Delay"),
+         airport_status = replace(airport_status, airport_status == '5', "Large-Scale Delay")
   )
 
 final_airports_data <- iata_airport_rename %>% 
-  select(iata_code, airport_name, country, weather, airport_status)%>% 
-  filter(country != 'BE' | country != 'BR' | country != 'CH' | country != 'CL' |
-         country != 'CU' | country != 'CY' | country != 'CZ' | country != 'DE' |
-         country != 'DO' | country != 'ES' | country != 'FR' | country != 'CU' |
-         country != 'GP' | country != 'IT' | country != 'MR' | country != 'MV' |
-         country != 'MX' | country != 'NO' | country != 'PE' | country != 'PL' |
-         country != 'RO' | country != 'SE' | country != 'SI' | country != 'SK' | 
-         country != 'SN' | country != 'SV' | country != 'TR' | country != 'VE' |
-         country != 'XK')
+  select(iata_code, airport_name, country, weather, airport_status) %>% 
+  filter(country != "BE") %>%
+  filter(country != "BR") %>%
+  filter(country != "CH") %>%
+  filter(country != "CL") %>%
+  filter(country != "CU") %>% 
+  filter(country != "CY") %>% 
+  filter(country != "CZ") %>%
+  filter(country != "DE") %>% 
+  filter(country != "DO") %>% 
+  filter(country != "ES") %>% 
+  filter(country != "FR") %>% 
+  filter(country != "CU") %>% 
+  filter(country != "GP") %>% 
+  filter(country != "IT") %>% 
+  filter(country != "MR") %>% 
+  filter(country != "MV") %>% 
+  filter(country != "MX") %>% 
+  filter(country != "NO") %>% 
+  filter(country != "PE") %>% 
+  filter(country != "PL") %>% 
+  filter(country != "RO") %>% 
+  filter(country != "SE") %>% 
+  filter(country != "SI") %>% 
+  filter(country != "SK") %>% 
+  filter(country != "SN") %>% 
+  filter(country != "SV") %>% 
+  filter(country != "TR") %>% 
+  filter(country != "VE") %>% 
+  filter(country != "XK") 
 
 write.csv(final_airports_data, "C:/Users/luke_/OneDrive/Desktop/csds341-project-airlineDatabase/CSDS341_Project_Backup_Data/csv_data/airports.csv",row.names = FALSE)
 
