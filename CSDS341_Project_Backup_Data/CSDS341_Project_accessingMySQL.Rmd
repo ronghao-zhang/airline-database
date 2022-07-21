@@ -2,50 +2,74 @@
 title: "CSDS341_Project_accessingMySQL"
 author: "Luke Zhang (rxz330)"
 date: "`r Sys.Date()`"
-output: html_document
+output:
+  pdf_document:
+    toc: yes
+  rmdformats::html_clean:
+    highlight: kate
+    toc: yes
+    toc_float: yes
+    number_sections: yes
+    thumbnails: no
+    fig_width: 8
 ---
 # Preliminaries 
+
+## Load Packages 
+The connection between `R` and `MySQL` will require the following packages.
 ```{r packages, message=FALSE, warning=FALSE}
 library(RMySQL)
 library(RODBC)
+library(knitr)
+library(tidyverse)
 ```
 
-## Preliminaries
+## Establish Connection to mySQL
+Before starting query the database, we need to set up a link about our connection. We stored our connection in variable `sql_link`. 
 ```{r connectio_to_sql, message=FALSE}
 # Establish Connection to MySQL
-mysql_connection <- dbConnect(RMySQL::MySQL(),
-                              dbname='airline',
-                              host='localhost', 
-                              port=3306,
-                              user='root', 
-                              password='')
+sql_link <- dbConnect(RMySQL::MySQL(),
+                      dbname='airline',
+                      host='localhost', 
+                      port=3306,
+                      user='root', 
+                      password='Lukezrh@010408')
 
 # List All the Tables in the Schema
-dbListTables(mysql_connection)
+dbListTables(sql_link)
 ```
 
-```{r print_table, message=FALSE}
-dbListFields(mysql_connection,"travelers")
-```
+# Queries & SQL
 
+## Easy Queries & SQL
+Query 01: Find the first name(`first_name`), last name(`last_name`), date of birth(`dob`), and the credits(`credits`) of all male travelers who are U.S. citizen. 
 ```{r}
-# Query 01: Find all male travelers who are U.S. citizen. 
-sql_01 <- "SELECT * 
-           FROM travelers
-           WHERE citizenship = 'US' AND gender = 'M'"
+sql_01 <- "SELECT first_name, last_name, dob, credits
+           FROM   travelers
+           WHERE      citizenship = 'US' 
+                  AND gender = 'M'
+                  AND dob < '1985-01-01'"
 
-result_01 <- dbSendQuery(mysql_connection, sql)
+result_01 <- dbSendQuery(sql_link, sql_01)
 
 output_01 <- fetch(result_01)
 output_01 %>% kable()
 ```
 
-
+Query 02: Find the passport number(`passport_no`) and first name(`first_name`) of all Chinese Traveler who has already booked at least one Plane Ticket. The result table should also include `citizenship` as a check.
 ```{r}
 
-#result = dbSendQuery(mysqlconnection, "select * from course") # write query to acces the records from a particular table.
+sql_02 <-	"SELECT passport_no, first_name, citizenship
+		       FROM   Travelers
+		       WHERE     (Citizenship = 'CN') 
+		              AND 
+		                 (user_id IN (SELECT    traveler_id
+		                              FROM      Tickets_book_for
+		                              GROUP BY  traveler_id
+		                              HAVING    count(ticket_id) >= 1))"
 
-#data.frame = fetch(result, n = 5)
-#print(data.frame)                # Store the result in a R data frame object. n = 5 is used to fetch first 5 rows.
+result_02 <- dbSendQuery(sql_link, sql_02)
+
+output_02 <- fetch(result_02)
+output_02 %>% kable()
 ```
-
