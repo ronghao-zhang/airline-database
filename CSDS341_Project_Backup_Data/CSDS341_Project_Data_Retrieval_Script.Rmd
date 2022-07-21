@@ -559,15 +559,72 @@ final_tickets_book_for <- cbind(ticket_id, raw_ticket_data, traveler_id, luggage
 write.csv(final_tickets_book_for, "C:/Users/luke_/OneDrive/Desktop/csds341-project-airlineDatabase/CSDS341_Project_Backup_Data/csv_data/tickets_book_for.csv",row.names = FALSE)
 ```
 
-# serve Table
+# assign Table
 ```{r}
+num_schedule <-  nrow(final_schedule_data)
+num_flights <- nrow(final_flights_ariv_dept)
+sch_id_candidate <- final_schedule_data %>% select(schedule_id) 
+raw_assign <- final_flights_ariv_dept %>% select(regis_no, flight_no)
 
+# random do assign relationship
+set.seed(2022341)
+assign_numeric <- sample(1:num_schedule, num_flights, replace = FALSE)
+assign_sch_id <- NULL
+for (i in 1:num_flights) {
+  idx = assign_numeric[i]
+  assign_sch_id[i] = sch_id_candidate[idx,1]
+}
+assign_sch_id <- as.data.frame(assign_sch_id)
+
+# Combine together and Export
+final_assign <- cbind(raw_assign, assign_sch_id) %>%
+  rename(schedule_id = assign_sch_id)
+
+write.csv(final_assign, "C:/Users/luke_/OneDrive/Desktop/csds341-project-airlineDatabase/CSDS341_Project_Backup_Data/csv_data/assign.csv",row.names = FALSE)
 ```
 
 # assign Table
 ```{r}
+set.seed(2022341)
+# create candidate crew id
+crew_id_candidate_1 <- final_crew_data %>% select(user_id) %>% 
+  slice_sample(., prop = 9/10)
 
+
+num_crew <- nrow(crew_id_candidate_1)
+serve_numeric <- sample(1:num_crew, num_flights, replace = TRUE)
+serve_crew_id_1 <- data.frame(matrix(ncol = 1, nrow = num_flights))
+for (i in 1:num_flights) {
+  idx = serve_numeric[i]
+  serve_crew_id_1[i,1] = crew_id_candidate_1[idx,1]
+}
+
+serve_crew_id_1 <- serve_crew_id_1 %>% rename(crew_id = matrix.ncol...1..nrow...num_flights.)
+
+serve_bind <- cbind(raw_assign, serve_crew_id_1)
+
+# create another version 
+raw_serve <- raw_assign %>% slice_sample(., prop = 1/5)
+num_flights <- nrow(raw_serve)
+
+serve_numeric <- sample(1:num_crew, num_flights, replace = FALSE)
+serve_crew_id_1 <- data.frame(matrix(ncol = 1, nrow = num_flights))
+for (i in 1:num_flights) {
+  idx = serve_numeric[i]
+  serve_crew_id_1[i,1] = crew_id_candidate_1[idx,1]
+}
+
+serve_crew_id_1 <- serve_crew_id_1 %>% rename(crew_id = matrix.ncol...1..nrow...num_flights.)
+
+serve_bind_2 <- cbind(raw_serve, serve_crew_id_1)
+
+final_serve_data <- rbind(serve_bind, serve_bind_2)
+
+write.csv(final_serve_data, "C:/Users/luke_/OneDrive/Desktop/csds341-project-airlineDatabase/CSDS341_Project_Backup_Data/csv_data/serve.csv",row.names = FALSE)
 ```
+
+
+
 
 
 
