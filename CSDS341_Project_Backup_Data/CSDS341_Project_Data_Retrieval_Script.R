@@ -56,7 +56,15 @@ iata_airport_rename <- iata_airport_bind %>%
   )
 
 final_airports_data <- iata_airport_rename %>% 
-  select(iata_code, airport_name, country, weather, airport_status)
+  select(iata_code, airport_name, country, weather, airport_status)%>% 
+  filter(country != 'BE' | country != 'BR' | country != 'CH' | country != 'CL' |
+         country != 'CU' | country != 'CY' | country != 'CZ' | country != 'DE' |
+         country != 'DO' | country != 'ES' | country != 'FR' | country != 'CU' |
+         country != 'GP' | country != 'IT' | country != 'MR' | country != 'MV' |
+         country != 'MX' | country != 'NO' | country != 'PE' | country != 'PL' |
+         country != 'RO' | country != 'SE' | country != 'SI' | country != 'SK' | 
+         country != 'SN' | country != 'SV' | country != 'TR' | country != 'VE' |
+         country != 'XK')
 
 write.csv(final_airports_data, "C:/Users/luke_/OneDrive/Desktop/csds341-project-airlineDatabase/CSDS341_Project_Backup_Data/csv_data/airports.csv",row.names = FALSE)
 
