@@ -5,7 +5,7 @@
 [-] Schedules Table Data
 [-] Aeroplanes_belong Table Data
 [-] Flights_ariv_dept Table Data
-[ ] Tickets_book_for Table Data
+[-] Tickets_book_for Table Data
 [ ] serve Table Data
 [ ] assign Table Data
 [-] hub Table Data 

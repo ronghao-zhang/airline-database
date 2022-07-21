@@ -496,6 +496,106 @@ write.csv(final_flights_ariv_dept, "C:/Users/luke_/OneDrive/Desktop/csds341-proj
 ```
 
 # Tickets_book_for Table
+```{r}
+set.seed(2022341)
+num_ticket <- 10000
+# ticket_id
+ticket_id <- sample(1000000001:9999999999, num_ticket, replace = FALSE)
+ticket_id <- as.data.frame(ticket_id)
+# seat_location
+seat_location <- stri_paste(
+    as.character(sample(1:50,num_ticket, replace = TRUE)),
+    stri_rand_strings(num_ticket,1, pattern = "[A-F]")
+  )
+seat_location <- as.data.frame(seat_location)
+
+# seat_class
+class_candidate <- c('First', 'Business', 'Economic')
+class_numeric <- sample(1:3, num_ticket, replace = TRUE)
+seat_class <- NULL
+for (i in 1:num_ticket) {
+  idx = class_numeric[i]
+  seat_class[i] = class_candidate[idx]
+}
+seat_class <- as.data.frame(seat_class) 
+
+# regis_no & flight_no
+flight_no_candidate <- final_flights_ariv_dept %>% 
+  select(regis_no,flight_no)
+fn_select <- sample(1:nrow(flight_no_candidate),num_ticket, replace = TRUE)
+fn_ticket <- data.frame(matrix(ncol = 2, nrow = num_ticket))
+for (i in 1:num_ticket) {
+  idx = fn_select[i]
+  fn_ticket[i,1:2] = flight_no_candidate[idx,1:2]
+}
+fn_ticket <- fn_ticket %>% rename(regis_no = X1, flight_no = X2)
+
+# bind and check if there is duplication
+raw_ticket_data <- cbind(seat_location, seat_class, fn_ticket) %>% 
+  group_by(seat_location,seat_class,regis_no,flight_no) %>%
+  count() %>% filter(n == "1") %>% select(-n)
+
+# traveler_id
+traveler_id_candidate <- final_travelers_data %>% select(user_id) 
+tid_numeric <- sample(1:nrow(traveler_id_candidate),nrow(raw_ticket_data),replace = TRUE)
+traveler_id <- data.frame(matrix(ncol = 1, nrow = nrow(raw_ticket_data)))
+for (i in 1:nrow(raw_ticket_data)) {
+  idx = tid_numeric[i]
+  traveler_id[i,1] = traveler_id_candidate[idx,1]
+}
+traveler_id <- traveler_id %>% rename(traveler_id = matrix.ncol...1..nrow...nrow.raw_ticket_data.. )
+# luggage_no
+luggage_no <- sample(1:3,nrow(raw_ticket_data),replace = TRUE)
+luggage_no <- as.data.frame(luggage_no)
+
+# tickets_combine 
+ticket_id <- ticket_id[1:nrow(raw_ticket_data),1]
+ticket_id <- as.data.frame(ticket_id)
+final_tickets_book_for <- cbind(ticket_id, raw_ticket_data, traveler_id, luggage_no) %>% 
+  select(ticket_id, seat_location, seat_class, luggage_no, regis_no, flight_no, traveler_id)
+```
+
+```{r}
+write.csv(final_tickets_book_for, "C:/Users/luke_/OneDrive/Desktop/csds341-project-airlineDatabase/CSDS341_Project_Backup_Data/csv_data/tickets_book_for.csv",row.names = FALSE)
+```
+
+# serve Table
+```{r}
+
+```
+
+# assign Table
+```{r}
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

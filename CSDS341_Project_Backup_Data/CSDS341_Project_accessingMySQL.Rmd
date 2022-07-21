@@ -5,22 +5,41 @@ date: "`r Sys.Date()`"
 output: html_document
 ---
 # Preliminaries 
-```{r}
+```{r packages, message=FALSE, warning=FALSE}
 library(RMySQL)
+library(RODBC)
 ```
 
 ## Preliminaries
-```{r}
-# create connection to mySQl
+```{r connectio_to_sql, message=FALSE}
+# Establish Connection to MySQL
 mysql_connection <- dbConnect(RMySQL::MySQL(),
                               dbname='airline',
                               host='localhost', 
                               port=3306,
                               user='root', 
                               password='')
-# call the tables 
+
+# List All the Tables in the Schema
 dbListTables(mysql_connection)
 ```
+
+```{r print_table, message=FALSE}
+dbListFields(mysql_connection,"travelers")
+```
+
+```{r}
+# Query 01: Find all male travelers who are U.S. citizen. 
+sql_01 <- "SELECT * 
+           FROM travelers
+           WHERE citizenship = 'US' AND gender = 'M'"
+
+result_01 <- dbSendQuery(mysql_connection, sql)
+
+output_01 <- fetch(result_01)
+output_01 %>% kable()
+```
+
 
 ```{r}
 
