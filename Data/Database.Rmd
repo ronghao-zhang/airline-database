@@ -1,0 +1,369 @@
+---
+title: "Database"
+author: 'Quynh Nguyen'
+email: --
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r packages}
+library("readxl")
+library("stringr")
+library("randomNames")
+library("stringr")
+library(readr)
+library(dplyr)
+library(tibble)
+library("data.table")
+library(lubridate)
+library("xlsx")
+library(nycflights13)
+```
+
+```{r 1. TRAVELERS}
+country <- data.frame(read_excel("Downloads/country_code.xlsx"))
+genders <- c("F", "M", "U")
+df <- data.frame(GENDER=sample(genders, 50000, replace=TRUE))
+names <- randomNames(gender=df$GENDER, name.sep = " ")
+travelers <- data.frame(str_split_fixed(names, " ", 2))
+colnames(travelers) <- c("first_name", "last_name")
+travelers$middle_name<- randomNames(gender=df$GENDER, name.sep = " ", which.names = "first")
+travelers$gender <- df$GENDER
+travelers$dob <- sample(seq(as.Date('1903/01/01'), as.Date('2022/02/01'), by="day"), nrow(travelers), replace = TRUE)
+travelers$credits <- sample(0:6000, size = 50000, replace = TRUE)
+
+myFun <- function(n = 100000) {
+  a <- do.call(paste0, replicate(1, sample(LETTERS, n, TRUE), FALSE))
+  paste0(a, sprintf("%04d", sample(99999999, n, TRUE)))
+}
+
+travelers$user_id <- sample(100000:9999999999,nrow(travelers), replace = FALSE)
+travelers$passport_no <- myFun(nrow(travelers))
+
+travelers$citizenship <- sample(country$Alpha.2.code,nrow(travelers), replace = TRUE)
+travelers <- travelers[,c("user_id","first_name", "middle_name", "gender", "dob", "credits", "passport_no", "citizenship" )]
+
+head(travelers)
+
+write.xlsx(travelers, file = 'travelers.xlsx', row.names = FALSE)
+```
+
+```{r 2. CREW}
+genders <- c("F", "M", "U")
+df <- data.frame(GENDER=sample(genders, 5000, replace=TRUE))
+names <- randomNames(gender=df$GENDER, name.sep = " ")
+crew <- data.frame(str_split_fixed(names, " ", 2))
+colnames(crew) <- c("first_name", "last_name")
+crew$middle_name<- randomNames(gender=df$GENDER, name.sep = " ", which.names = "first")
+crew$gender <- df$GENDER
+crew$dob <- sample(seq(as.Date('1962/01/01'), as.Date('1999/12/31'), by="day"), nrow(crew), replace = TRUE)
+crew$ssn <- sample(10000000:99999999, size = nrow(crew), replace = FALSE)
+crew$user_id <- sample(0:99999, nrow(crew), replace = FALSE) 
+crew$total_distance <- sample(0:430000, nrow(crew), replace = TRUE)
+crew['salary'] <-NA
+for (i in 1: nrow(crew)) {
+  if (crew[i,]$total_distance <= 1000) {
+    crew[i,]$salary <- 100000
+  }
+  if(crew[i,]$total_distance > 1000 & crew[i,]$total_distance <= 50000){
+    crew[i,]$salary <- 150000
+  }
+  if(crew[i,]$total_distance > 50000 & crew[i,]$total_distance <= 100000){
+    crew[i,]$salary <- 180000
+  }
+  else{
+    crew[i,]$salary <- 200000
+  }
+}
+
+crew <- crew[,c("user_id", "first_name", "middle_name", "last_name", "gender", "dob", "ssn", "salary", "total_distance")]
+
+write.xlsx(crew, file = 'update_crew.xlsx', row.names = FALSE)
+```
+
+```{r 3. US Airports}
+raw_airport <- read.csv("https://davidmegginson.github.io/ourairports-data/airports.csv")
+
+#keep large airport 
+ra <- raw_airport[which(raw_airport$type == 'medium_airport' | raw_airport$type == 'large_airport'),]
+
+##only keep airport that have IATA code
+ra <- ra[!(ra$iata_code == ""),]
+
+#create data frame 
+airport <- data.frame(ra$iata_code, ra$name, ra$iso_country)
+colnames(airport) <- c("iata_code", "airport_name", "country")
+
+##Remove airport that has no country
+airport <- airport[!is.na(airport$country), ]
+
+##Remove army air field, air force, and air station
+airport <- airport %>% filter(!grepl('Army', airport_name))
+airport <- airport %>% filter(!grepl('Station', airport_name))
+airport <- airport %>% filter(!grepl('Air Force', airport_name))
+airport <- airport %>% filter(!grepl('Airfield', airport_name))
+airport <- airport %>% filter(!grepl('Carr Field', airport_name))
+
+#random assign weather for each airport
+weather <- c('Sunny' , 'Mostly Sunny', 'Partly Cloudy', 'Cloudy', 'Rainy', 'Heavy Rainy', 'Foggy', 'Snowy', 'Heavy Snowy', 'Frost')
+
+weather <- data.frame(weather)
+
+airport$weather <- sample(weather$weather, nrow(airport), replace = TRUE)
+
+#random assign status of the airport
+status <- c('Free' , 'Normal', 'Busy', 'Small-Scale Delay', 'Large-Scale Delay')
+status <- data.frame(status)
+airport$airport_status <- sample(status$status, nrow(airport), replace = TRUE)
+
+##Only get US International Airport
+us_airport <- airport[airport$country == 'US', ]
+a1 <- us_airport %>% filter(grepl('International', airport_name))
+a2 <- us_airport %>% filter(grepl('Alliance', airport_name))
+
+us_intl_airport <- data.frame(rbind(a1, a2))
+write.xlsx(us_airport, file = 'us_airport.xlsx', row.names = FALSE)
+write.xlsx(us_intl_airport, file = 'us_intl_airport.xlsx', row.names = FALSE)
+```
+
+```{r 4. US Airlines}
+##US Airlines only
+raw_us_airline <- read_excel("Downloads/us_airline.xlsx")
+raw_us_airline <- data.frame(na.omit(raw_us_airline))
+colnames(raw_us_airline) <- c("company_name", "IATA", "ICAO")
+
+cape_air <- c("Cape Air", "9K", "KAP")
+republic_air <- c("Republic Airline", "YX", "RPA")
+raw_us_airline <- rbind(raw_us_airline, cape_air)
+raw_us_airline <- rbind(raw_us_airline, republic_air)
+
+##Conver letter to number
+LETTER2num <- function(x) {utf8ToInt(x) - utf8ToInt("A") + 1L}
+icao <- raw_us_airline[,3]
+id <- c()
+a <- c()
+
+##convert ICAO of each airlines into its id
+for (i in 1: length(icao)){
+  a <- icao[i]
+  a <- strsplit(a, split ="")
+  a <- unlist(a)
+  b1 <- LETTER2num(a[1])
+  b2 <- LETTER2num(a[2])
+  b3 <- LETTER2num(a[3])
+  id[i] <- strtoi(paste(b1, b2, b3, sep =""))
+}
+
+raw_us_airline$company_id <- id
+
+
+us_airline <- raw_us_airline[, c("company_id", "company_name")] ##export this to excel file later
+write.xlsx(us_airline, file = 'us_airline.xlsx', row.names = FALSE)
+```
+
+```{5. Schedules}
+dat_airport <- data.frame(read_csv("Downloads/Airports2.csv", show_col_types = FALSE))
+dat_airport <- dat_airport[!(dat_airport$Distance == 0),]
+
+dis_between <- unique(dat_airport[c("Origin_airport", "Destination_airport", "Distance")])
+dis_between <- dis_between[dis_between$Origin_airport %in% us_airport$iata_code,]
+dis_between <- dis_between[dis_between$Destination_airport%in% us_airport$iata_code,]
+
+dt <-  as.data.table(dis_between)
+dis_between <- data.frame(dt[, mean(Distance), by = list(Origin_airport, Destination_airport)])
+colnames(dis_between) <- c("Origin Airport", "Destination Airport", "Distance")
+
+##calculation between two airports
+dis_between$duration <- round((dis_between$Distance*18)/60)
+
+d
+##create flights
+is_between$freq <- sample(1:3, nrow(dis_between), replace = TRUE)
+flight  <- data.frame('Origin Airport' = character(), 
+                      'Destination Airport' = character(), 
+                       'Distance' = integer(),
+                        stringsAsFactors=FALSE)
+for (i in 1: nrow(dis_between)){
+  row <- i
+  time <- dis_between[i,]$freq
+  data <- dis_between[rep(row, time),]
+  flight <- rbind(flight, data)
+}
+
+
+##Create depature date + time
+
+possible_dates <- seq(as.POSIXct('2019/01/01'), as.POSIXct('2022/05/31'), by="15 mins")
+possible_dates <- possible_dates[hour(possible_dates) < 21 & hour(possible_dates) >= 9]
+depature <- sample(possible_dates, nrow(flight), replace = TRUE)
+dept_time<- data.frame(str_split_fixed(depature, " ", 2))
+
+flight <- cbind(flight, dept_time)
+colnames(flight) <- c('Origin Airport', 'Destination Airport', 'Distance', 'Duration', 'Frequency', 'Depature Day', 'Depature Time')
+
+flight$flight_id <- sample(1000:999999, nrow(flight), replace = FALSE)
+
+##create schedule table - but still lack of arrival time and arrival day
+schedule <- flight[,c("flight_id", 'Depature Day', 'Depature Time')]
+write.xlsx(schedule, file = 'schedule.xlsx', row.names = FALSE)
+```
+
+```{r 6. US Aeroplanes_belong}
+```{r 6. US Aeroplanes_belong}
+us_fleet_raw <-  data.frame(read_excel("Downloads/us_fleet.xlsx"))
+colnames(us_fleet_raw) <- c("Customer.Name", "Model.Series", "Order.Total")
+us_fleet <- data.frame('Customer' = character(), 
+                             'Model.Series' = character(), 
+                             'Order.Total' = integer(),
+                             stringsAsFactors=FALSE)
+for (i in 1: nrow(us_fleet_raw)){
+  row <- i
+  time <- us_fleet_raw[i,]$Order.Total
+  data <- us_fleet_raw[rep(row, time),]
+  us_fleet <- rbind(us_fleet, data)
+}
+
+us_fleet <- us_fleet[, c("Customer.Name", "Model.Series")]
+
+us_fleet['fir_capacity'] <- NA
+us_fleet['bus_capacity'] <- NA
+us_fleet['eco_capacity'] <- NA
+
+##assign capacity for each type of fleets
+for (i in 1: nrow(us_fleet)){
+  if(str_detect(us_fleet[i,]$Model.Series,'Boeing 737')){
+     us_fleet[i,]$fir_capacity <- 16
+     us_fleet[i,]$bus_capacity <- 24
+    us_fleet[i,]$eco_capacity <- 138
+  }
+  
+  if(str_detect(us_fleet[i,]$Model.Series,'Boeing 757')){
+    us_fleet[i,]$fir_capacity <- 16
+    us_fleet[i,]$bus_capacity <- 45
+    us_fleet[i,]$eco_capacity <- 108
+  }
+  if(str_detect(us_fleet[i,]$Model.Series,'Boeing 767')){
+      us_fleet[i,]$fir_capacity <- 30
+      us_fleet[i,]$bus_capacity <- 49
+      us_fleet[i,]$eco_capacity <- 135
+  }
+  if(str_detect(us_fleet[i,]$Model.Series,'Boeing 777')){
+      us_fleet[i,]$fir_capacity <- 60
+      us_fleet[i,]$bus_capacity <- 24
+      us_fleet[i,]$eco_capacity <- 266
+  }
+  if(str_detect(us_fleet[i,]$Model.Series,'Boeing 787')){
+      us_fleet[i,]$fir_capacity <- 36
+      us_fleet[i,]$bus_capacity <- 70
+      us_fleet[i,]$eco_capacity <- 113
+  }
+  
+  if(str_detect(us_fleet[i,]$Model.Series,'Embraer 195')){
+      us_fleet[i,]$fir_capacity <- 0
+      us_fleet[i,]$bus_capacity <- 18
+      us_fleet[i,]$eco_capacity <- 100
+  }
+  
+   if(str_detect(us_fleet[i,]$Model.Series,'Embraer')){
+      us_fleet[i,]$fir_capacity <- 0
+      us_fleet[i,]$bus_capacity <- 18
+      us_fleet[i,]$eco_capacity <- 100
+   }
+  
+  if(str_detect(us_fleet[i,]$Model.Series,'Airbus A320')){
+      us_fleet[i,]$fir_capacity <- 12
+      us_fleet[i,]$bus_capacity <- 42
+      us_fleet[i,]$eco_capacity <- 96
+  }
+  
+  if(str_detect(us_fleet[i,]$Model.Series,'Airbus A321')){
+      us_fleet[i,]$fir_capacity <- 16
+      us_fleet[i,]$bus_capacity <- 15
+      us_fleet[i,]$eco_capacity <- 156
+  }
+  if(str_detect(us_fleet[i,]$Model.Series,'Airbus A319')){
+      us_fleet[i,]$fir_capacity <- 12
+      us_fleet[i,]$bus_capacity <- 36
+      us_fleet[i,]$eco_capacity <- 78
+   }
+  
+  if(str_detect(us_fleet[i,]$Model.Series,'Airbus A220')){
+      us_fleet[i,]$fir_capacity <- 12
+      us_fleet[i,]$bus_capacity <- 15
+      us_fleet[i,]$eco_capacity <- 82
+  }
+  
+  if(str_detect(us_fleet[i,]$Model.Series,'Airbus A330')){
+      us_fleet[i,]$fir_capacity <- 34
+      us_fleet[i,]$bus_capacity <- 40
+      us_fleet[i,]$eco_capacity <- 219
+  }
+  
+  if(str_detect(us_fleet[i,]$Model.Series,'Airbus A350')){
+      us_fleet[i,]$fir_capacity <- 48
+      us_fleet[i,]$bus_capacity <- 21
+      us_fleet[i,]$eco_capacity <- 224
+  }
+  if(str_detect(us_fleet[i,]$Model.Series,'Boeing 717')){
+      us_fleet[i,]$fir_capacity <- 12
+      us_fleet[i,]$bus_capacity <- 20
+      us_fleet[i,]$eco_capacity <- 78
+   }
+  
+  if(str_detect(us_fleet[i,]$Model.Series,'De Havilland Canada Dash 8-400')) {
+    us_fleet[i,]$fir_capacity <- 0
+    us_fleet[i,]$bus_capacity <- 7
+    us_fleet[i,]$eco_capacity <- 60
+   }
+}
+
+##match id with its airline
+id <- c()
+name <- NA
+for (a in 1:nrow(us_fleet)) {
+  for (b in 1:nrow(us_airline)){
+    if(us_fleet[a,]$Customer.Name == us_airline[b,]$company_name){
+      name <- us_airline[b,]$company_name
+      id[a] <- us_airline$company_id[ us_airline$company_name == name]
+    }
+  }
+}
+
+us_fleet$company_id <- id
+
+##generate random regis no number
+myFun <- function(n = 100000) {
+  a <- do.call(paste0, replicate(1, sample(LETTERS, n, TRUE), FALSE))
+  paste0(a, sprintf("%04d", sample(999999, n, TRUE)))
+}
+
+us_fleet$regis_no <- myFun(nrow(us_fleet))
+
+##rename columns
+colnames(us_fleet) <- c("Customer.Name", "aircratft_type", "fir_capacity", "bus_capacity", "eco_capacity", "company_id", "regis_no")
+
+##reordercolumns
+us_fleet <- us_fleet[,c("regis_no", "fir_capacity", "bus_capacity", "eco_capacity", "aircratft_type", "company_id")]
+
+
+write.xlsx(us_fleet, file = 'us_aeroplanes.xlsx', row.names = FALSE)
+```
+
+```{r 7.Flights_ariv_dept}
+status <- c("On-Time" , "Delay", "Cancel")
+flight_no <- flight$flight_id
+
+regis_no <- us_fleet$regis_no
+dept_iata_code <- flight$`Origin Airport`
+ariv_iata_code <- flight$`Destination Airport`
+
+tickets <- data.frame(flight_no, dept_iata_code, ariv_iata_code)
+tickets$regis_no <- sample(regis_no, nrow(tickets), replace = TRUE)
+tickets$flight_status <- sample(status, nrow(tickets), replace = TRUE)
+
+flights_ariv_dept <- tickets[,c("regis_no", "flight_no", "flight_status", "ariv_iata_code", "dept_iata_code")]
+
+```
