@@ -1,0 +1,743 @@
+﻿iata_code,airport_name,country,weather,airport_status
+WKK,Aleknagik / New Airport,US,Cloudy,Large-Scale Delay
+BLD,Boulder City-Lake Mead International Airport,US,Rainy,Free
+MFH,Mesquite International Airport,US,Frost,Free
+ABE,Lehigh Valley International Airport,US,Heavy Snowy,Small-Scale Delay
+ABI,Abilene Regional Airport,US,Heavy Rainy,Small-Scale Delay
+ABQ,Albuquerque International Sunport,US,Rainy,Normal
+ABR,Aberdeen Regional Airport,US,Rainy,Small-Scale Delay
+ABY,Southwest Georgia Regional Airport,US,Partly Cloudy,Small-Scale Delay
+ACK,Nantucket Memorial Airport,US,Heavy Snowy,Normal
+ACT,Waco Regional Airport,US,Snowy,Large-Scale Delay
+ACV,California Redwood Coast-Humboldt County Airport,US,Heavy Snowy,Normal
+ACY,Atlantic City International Airport,US,Sunny,Busy
+ADW,Joint Base Andrews,US,Mostly Sunny,Busy
+AEX,Alexandria International Airport,US,Cloudy,Normal
+AFW,Fort Worth Alliance Airport,US,Rainy,Busy
+AGC,Allegheny County Airport,US,Heavy Rainy,Normal
+AGS,Augusta Regional At Bush Field,US,Heavy Rainy,Normal
+AHN,Athens Ben Epps Airport,US,Sunny,Small-Scale Delay
+AKC,Akron Executive Airport,US,Frost,Large-Scale Delay
+ALB,Albany International Airport,US,Snowy,Busy
+ALI,Alice International Airport,US,Sunny,Busy
+ALM,Alamogordo White Sands Regional Airport,US,Heavy Rainy,Busy
+ALN,St Louis Regional Airport,US,Heavy Snowy,Small-Scale Delay
+ALO,Waterloo Regional Airport,US,Heavy Snowy,Busy
+ALS,San Luis Valley Regional Airport/Bergman Field,US,Mostly Sunny,Small-Scale Delay
+ALW,Walla Walla Regional Airport,US,Heavy Snowy,Small-Scale Delay
+AMA,Rick Husband Amarillo International Airport,US,Sunny,Normal
+ANB,Anniston Regional Airport,US,Foggy,Normal
+AND,Anderson Regional Airport,US,Foggy,Small-Scale Delay
+AOO,Altoona Blair County Airport,US,Frost,Normal
+APA,Centennial Airport,US,Snowy,Busy
+APF,Naples Municipal Airport,US,Sunny,Large-Scale Delay
+APN,Alpena County Regional Airport,US,Sunny,Busy
+ARA,Acadiana Regional Airport,US,Snowy,Small-Scale Delay
+ART,Watertown International Airport,US,Cloudy,Busy
+ASE,Aspen-Pitkin Co/Sardy Field,US,Foggy,Free
+AST,Astoria Regional Airport,US,Frost,Normal
+ATL,Hartsfield Jackson Atlanta International Airport,US,Rainy,Free
+ATY,Watertown Regional Airport,US,Snowy,Large-Scale Delay
+AUG,Augusta State Airport,US,Heavy Rainy,Free
+AUS,Austin Bergstrom International Airport,US,Partly Cloudy,Free
+AUW,Wausau Downtown Airport,US,Sunny,Small-Scale Delay
+AVL,Asheville Regional Airport,US,Mostly Sunny,Large-Scale Delay
+AVP,Wilkes Barre Scranton International Airport,US,Mostly Sunny,Free
+AXN,Chandler Field,US,Snowy,Normal
+AZO,Kalamazoo Battle Creek International Airport,US,Sunny,Normal
+BAF,Westfield-Barnes Regional Airport,US,Frost,Free
+CLU,Columbus Municipal Airport,US,Partly Cloudy,Large-Scale Delay
+BBD,Curtis Field,US,Partly Cloudy,Busy
+BCE,Bryce Canyon Airport,US,Sunny,Small-Scale Delay
+BDE,Baudette International Airport,US,Heavy Rainy,Small-Scale Delay
+BDL,Bradley International Airport,US,Sunny,Small-Scale Delay
+BDR,Igor I Sikorsky Memorial Airport,US,Partly Cloudy,Normal
+BED,Laurence G Hanscom Field,US,Snowy,Small-Scale Delay
+BFD,Bradford Regional Airport,US,Sunny,Large-Scale Delay
+BFF,Western Neb. Rgnl/William B. Heilig Airport,US,Heavy Snowy,Free
+BFI,Boeing Field King County International Airport,US,Frost,Normal
+BFL,Meadows Field,US,Snowy,Normal
+BFM,Mobile Downtown Airport,US,Snowy,Busy
+BGM,Greater Binghamton/Edwin A Link field,US,Cloudy,Large-Scale Delay
+BGR,Bangor International Airport,US,Heavy Rainy,Free
+BHB,Hancock County-Bar Harbor Airport,US,Mostly Sunny,Small-Scale Delay
+BHM,Birmingham-Shuttlesworth International Airport,US,Rainy,Large-Scale Delay
+BIH,Eastern Sierra Regional Airport,US,Cloudy,Free
+BIL,Billings Logan International Airport,US,Rainy,Free
+BIS,Bismarck Municipal Airport,US,Cloudy,Free
+BJC,Rocky Mountain Metropolitan Airport,US,Sunny,Normal
+BJI,Bemidji Regional Airport,US,Rainy,Free
+BKE,Baker City Municipal Airport,US,Snowy,Normal
+BFK,Buckley Space Force Base,US,Cloudy,Large-Scale Delay
+BKL,Burke Lakefront Airport,US,Sunny,Busy
+BKW,Raleigh County Memorial Airport,US,Partly Cloudy,Large-Scale Delay
+BLF,Mercer County Airport,US,Snowy,Busy
+BLH,Blythe Airport,US,Heavy Rainy,Small-Scale Delay
+BLI,Bellingham International Airport,US,Rainy,Normal
+BLV,Scott AFB/Midamerica Airport,US,Heavy Snowy,Small-Scale Delay
+BMG,Monroe County Airport,US,Heavy Snowy,Large-Scale Delay
+BMI,Central Illinois Regional Airport at Bloomington-Normal,US,Heavy Rainy,Large-Scale Delay
+BNA,Nashville International Airport,US,Snowy,Large-Scale Delay
+BNO,Burns Municipal Airport,US,Rainy,Free
+BOI,Boise Air Terminal/Gowen Field,US,Snowy,Large-Scale Delay
+BOS,Logan International Airport,US,Rainy,Normal
+BPI,Miley Memorial Field,US,Rainy,Busy
+WMH,Ozark Regional Airport,US,Heavy Rainy,Normal
+BPT,Jack Brooks Regional Airport,US,Sunny,Normal
+BQK,Brunswick Golden Isles Airport,US,Partly Cloudy,Normal
+BRD,Brainerd Lakes Regional Airport,US,Rainy,Normal
+BRL,Southeast Iowa Regional Airport,US,Cloudy,Small-Scale Delay
+BRO,Brownsville South Padre Island International Airport,US,Mostly Sunny,Busy
+BTL,Battle Creek Executive Airport at Kellogg Field,US,Cloudy,Busy
+BTM,Bert Mooney Airport,US,Rainy,Large-Scale Delay
+BTR,Baton Rouge Metropolitan Airport,US,Partly Cloudy,Free
+BTV,Burlington International Airport,US,Snowy,Small-Scale Delay
+BUF,Buffalo Niagara International Airport,US,Rainy,Free
+BUR,Bob Hope Airport,US,Rainy,Small-Scale Delay
+BFP,Beaver County Airport,US,Cloudy,Small-Scale Delay
+BVY,Beverly Regional Airport,US,Rainy,Large-Scale Delay
+BWG,Bowling Green Warren County Regional Airport,US,Mostly Sunny,Small-Scale Delay
+BWI,Baltimore/Washington International Thurgood Marshall Airport,US,Heavy Rainy,Busy
+BYH,Arkansas International Airport,US,Sunny,Normal
+BYI,Burley Municipal Airport,US,Sunny,Small-Scale Delay
+BZN,Gallatin Field,US,Partly Cloudy,Busy
+CAE,Columbia Metropolitan Airport,US,Snowy,Normal
+CAK,Akron Canton Regional Airport,US,Cloudy,Free
+CAR,Caribou Municipal Airport,US,Sunny,Busy
+CCY,Northeast Iowa Regional Airport,US,Partly Cloudy,Normal
+CDC,Cedar City Regional Airport,US,Rainy,Busy
+CDR,Chadron Municipal Airport,US,Heavy Snowy,Normal
+CDS,Childress Municipal Airport,US,Foggy,Free
+CEC,Jack Mc Namara Field Airport,US,Heavy Snowy,Busy
+CEF,Westover ARB/Metropolitan Airport,US,Partly Cloudy,Free
+CEW,Bob Sikes Airport,US,Snowy,Free
+CGF,Cuyahoga County Airport,US,Foggy,Normal
+CGI,Cape Girardeau Regional Airport,US,Foggy,Normal
+CHA,Chattanooga Metropolitan Airport (Lovell Field),US,Heavy Rainy,Large-Scale Delay
+CHO,Charlottesville Albemarle Airport,US,Heavy Rainy,Small-Scale Delay
+CHS,Charleston International Airport,US,Sunny,Busy
+CID,The Eastern Iowa Airport,US,Cloudy,Small-Scale Delay
+CIU,Chippewa County International Airport,US,Foggy,Busy
+CKB,North Central West Virginia Airport,US,Heavy Rainy,Normal
+CLE,Cleveland Hopkins International Airport,US,Heavy Rainy,Small-Scale Delay
+CLL,Easterwood Field,US,Snowy,Free
+CLM,William R Fairchild International Airport,US,Heavy Snowy,Large-Scale Delay
+CLT,Charlotte Douglas International Airport,US,Frost,Busy
+CMH,John Glenn Columbus International Airport,US,Cloudy,Large-Scale Delay
+CMI,University of Illinois Willard Airport,US,Frost,Normal
+CMX,Houghton County Memorial Airport,US,Foggy,Free
+CNM,Cavern City Air Terminal,US,Mostly Sunny,Small-Scale Delay
+CNU,Chanute Martin Johnson Airport,US,Cloudy,Small-Scale Delay
+COD,Yellowstone Regional Airport,US,Cloudy,Normal
+COE,Coeur D'Alene - Pappy Boyington Field,US,Sunny,Large-Scale Delay
+CON,Concord Municipal Airport,US,Rainy,Large-Scale Delay
+COS,City of Colorado Springs Municipal Airport,US,Partly Cloudy,Busy
+COU,Columbia Regional Airport,US,Mostly Sunny,Large-Scale Delay
+CPF,Wendell H Ford Airport,US,Heavy Rainy,Large-Scale Delay
+CPR,Casper-Natrona County International Airport,US,Foggy,Normal
+CRE,Grand Strand Airport,US,Mostly Sunny,Normal
+CRG,Jacksonville Executive at Craig Airport,US,Frost,Small-Scale Delay
+CRP,Corpus Christi International Airport,US,Partly Cloudy,Free
+CLD,McClellan-Palomar Airport,US,Heavy Snowy,Free
+CRW,Yeager Airport,US,Sunny,Large-Scale Delay
+CSG,Columbus Metropolitan Airport,US,Heavy Rainy,Large-Scale Delay
+CSV,Crossville Memorial Whitson Field,US,Cloudy,Large-Scale Delay
+CTB,Cut Bank International Airport,US,Frost,Large-Scale Delay
+CUB,Jim Hamilton L.B. Owens Airport,US,Foggy,Normal
+CVG,Cincinnati Northern Kentucky International Airport,US,Heavy Snowy,Free
+CVO,Corvallis Municipal Airport,US,Heavy Snowy,Busy
+CWA,Central Wisconsin Airport,US,Foggy,Normal
+CXO,Conroe-North Houston Regional Airport,US,Mostly Sunny,Busy
+CYS,Cheyenne Regional Jerry Olson Field,US,Heavy Snowy,Busy
+DAB,Daytona Beach International Airport,US,Snowy,Normal
+DAG,Barstow Daggett Airport,US,Mostly Sunny,Small-Scale Delay
+DAL,Dallas Love Field,US,Cloudy,Normal
+DAN,Danville Regional Airport,US,Sunny,Large-Scale Delay
+DAY,James M Cox Dayton International Airport,US,Rainy,Small-Scale Delay
+DBQ,Dubuque Regional Airport,US,Cloudy,Small-Scale Delay
+DCA,Ronald Reagan Washington National Airport,US,Cloudy,Busy
+DDC,Dodge City Regional Airport,US,Mostly Sunny,Large-Scale Delay
+DEC,Decatur Airport,US,Partly Cloudy,Free
+DEN,Denver International Airport,US,Frost,Normal
+DET,Coleman A. Young Municipal Airport,US,Cloudy,Busy
+DFW,Dallas Fort Worth International Airport,US,Foggy,Free
+DHN,Dothan Regional Airport,US,Foggy,Normal
+DHT,Dalhart Municipal Airport,US,Rainy,Large-Scale Delay
+DIK,Dickinson Theodore Roosevelt Regional Airport,US,Foggy,Small-Scale Delay
+DLH,Duluth International Airport,US,Snowy,Small-Scale Delay
+DLS,Columbia Gorge Regional Airport,US,Heavy Rainy,Large-Scale Delay
+DMN,Deming Municipal Airport,US,Snowy,Free
+DNL,Daniel Field,US,Heavy Snowy,Free
+DPA,Dupage Airport,US,Rainy,Busy
+DRA,Desert Rock Airport,US,Heavy Snowy,Busy
+DRI,Beauregard Regional Airport,US,Mostly Sunny,Free
+DRT,Del Rio International Airport,US,Sunny,Normal
+DSM,Des Moines International Airport,US,Partly Cloudy,Normal
+DTW,Detroit Metropolitan Wayne County Airport,US,Mostly Sunny,Small-Scale Delay
+DUG,Bisbee Douglas International Airport,US,Partly Cloudy,Normal
+DUJ,DuBois Regional Airport,US,Cloudy,Free
+EAR,Kearney Regional Airport,US,Snowy,Normal
+EAT,Pangborn Memorial Airport,US,Partly Cloudy,Free
+EAU,Chippewa Valley Regional Airport,US,Frost,Free
+ECP,Northwest Florida Beaches International Airport,US,Mostly Sunny,Small-Scale Delay
+EED,Needles Airport,US,Frost,Normal
+EEN,Dillant Hopkins Airport,US,Mostly Sunny,Normal
+EFD,Ellington Airport,US,Frost,Large-Scale Delay
+EGE,Eagle County Regional Airport,US,Snowy,Normal
+EGI,Duke Field,US,Rainy,Large-Scale Delay
+EKA,Murray Field,US,Rainy,Normal
+EKN,Elkins-Randolph County Regional Airport,US,Mostly Sunny,Large-Scale Delay
+EKO,Elko Regional Airport,US,Snowy,Free
+ELD,South Arkansas Regional At Goodwin Field,US,Foggy,Busy
+ELM,Elmira Corning Regional Airport,US,Rainy,Busy
+LYU,Ely Municipal Airport,US,Cloudy,Large-Scale Delay
+ELP,El Paso International Airport,US,Heavy Rainy,Busy
+ELY,Ely Airport Yelland Field,US,Sunny,Normal
+ENV,Wendover Airport,US,Mostly Sunny,Free
+ENW,Kenosha Regional Airport,US,Heavy Rainy,Free
+ERI,Erie International Tom Ridge Field,US,Rainy,Normal
+EUG,Mahlon Sweet Field,US,Cloudy,Normal
+EVV,Evansville Regional Airport,US,Heavy Rainy,Free
+EVW,Evanston-Uinta County Airport-Burns Field,US,Sunny,Small-Scale Delay
+EWB,New Bedford Regional Airport,US,Cloudy,Large-Scale Delay
+EWN,Coastal Carolina Regional Airport,US,Mostly Sunny,Free
+EWR,Newark Liberty International Airport,US,Sunny,Small-Scale Delay
+EYW,Key West International Airport,US,Cloudy,Free
+FAR,Hector International Airport,US,Cloudy,Free
+FAT,Fresno Yosemite International Airport,US,Snowy,Free
+FAY,Fayetteville Regional Airport - Grannis Field,US,Frost,Busy
+FCS,Butts AAF (Fort Carson) Air Field,US,Partly Cloudy,Free
+FDY,Findlay Airport,US,Foggy,Free
+FKL,Venango Regional Airport,US,Rainy,Small-Scale Delay
+FLG,Flagstaff Pulliam International Airport,US,Heavy Rainy,Busy
+FLL,Fort Lauderdale Hollywood International Airport,US,Sunny,Free
+FLO,Florence Regional Airport,US,Cloudy,Large-Scale Delay
+FME,Tipton Airport,US,Sunny,Busy
+FMN,Four Corners Regional Airport,US,Heavy Rainy,Free
+FMY,Page Field,US,Snowy,Normal
+FNT,Bishop International Airport,US,Heavy Snowy,Busy
+FOD,Fort Dodge Regional Airport,US,Snowy,Busy
+FOE,Topeka Regional Airport,US,Heavy Rainy,Small-Scale Delay
+FPR,St Lucie County International Airport,US,Partly Cloudy,Busy
+FRG,Republic Airport,US,Heavy Snowy,Busy
+FSD,Sioux Falls Regional Airport / Joe Foss Field,US,Mostly Sunny,Free
+FSM,Fort Smith Regional Airport,US,Heavy Rainy,Busy
+FST,Fort Stockton Pecos County Airport,US,Rainy,Normal
+FTW,Fort Worth Meacham International Airport,US,Snowy,Busy
+FTY,Fulton County Airport Brown Field,US,Snowy,Busy
+FWA,Fort Wayne International Airport,US,Partly Cloudy,Large-Scale Delay
+FXE,Fort Lauderdale Executive Airport,US,Heavy Rainy,Normal
+FYV,Drake Field,US,Foggy,Free
+GCC,Northeast Wyoming Regional Airport,US,Partly Cloudy,Large-Scale Delay
+GCK,Garden City Regional Airport,US,Sunny,Busy
+GCN,Grand Canyon National Park Airport,US,Partly Cloudy,Large-Scale Delay
+GDV,Dawson Community Airport,US,Frost,Large-Scale Delay
+GEG,Spokane International Airport,US,Foggy,Small-Scale Delay
+GFK,Grand Forks International Airport,US,Mostly Sunny,Small-Scale Delay
+GFL,Floyd Bennett Memorial Airport,US,Snowy,Normal
+GGG,East Texas Regional Airport,US,Frost,Large-Scale Delay
+GGW,Wokal Field/Glasgow-Valley County Airport,US,Sunny,Free
+GJT,Grand Junction Regional Airport,US,Heavy Snowy,Busy
+GLD,Renner Field-Goodland Municipal Airport,US,Rainy,Normal
+GLH,Mid Delta Regional Airport,US,Foggy,Normal
+GLS,Scholes International At Galveston Airport,US,Sunny,Normal
+GMU,Greenville Downtown Airport,US,Mostly Sunny,Free
+GNV,Gainesville Regional Airport,US,Heavy Rainy,Busy
+GON,Groton New London Airport,US,Heavy Snowy,Busy
+FCA,Glacier Park International Airport,US,Mostly Sunny,Large-Scale Delay
+GPT,Gulfport Biloxi International Airport,US,Snowy,Small-Scale Delay
+GRB,Austin Straubel International Airport,US,Sunny,Normal
+GRI,Central Nebraska Regional Airport,US,Foggy,Normal
+GRR,Gerald R. Ford International Airport,US,Frost,Small-Scale Delay
+GSO,Piedmont Triad International Airport,US,Rainy,Normal
+GSP,Greenville Spartanburg International Airport,US,Frost,Free
+GTF,Great Falls International Airport,US,Rainy,Small-Scale Delay
+GTR,Golden Triangle Regional Airport,US,Partly Cloudy,Free
+GUP,Gallup Municipal Airport,US,Foggy,Large-Scale Delay
+GUS,Grissom Air Reserve Base,US,Mostly Sunny,Normal
+GUY,Guymon Municipal Airport,US,Cloudy,Busy
+GWO,Greenwood–Leflore Airport,US,Cloudy,Large-Scale Delay
+GYY,Gary Chicago International Airport,US,Snowy,Normal
+HBG,Hattiesburg Bobby L Chain Municipal Airport,US,Mostly Sunny,Normal
+HBR,Hobart Regional Airport,US,Cloudy,Free
+HFD,Hartford Brainard Airport,US,Heavy Rainy,Busy
+HGR,Hagerstown Regional Richard A Henson Field,US,Cloudy,Small-Scale Delay
+HHR,Jack Northrop Field Hawthorne Municipal Airport,US,Frost,Small-Scale Delay
+HIB,Range Regional Airport,US,Snowy,Small-Scale Delay
+HII,Lake Havasu City International Airport,US,Cloudy,Large-Scale Delay
+HIO,Portland Hillsboro Airport,US,Mostly Sunny,Free
+HKY,Hickory Regional Airport,US,Foggy,Normal
+HLG,Wheeling Ohio County Airport,US,Partly Cloudy,Large-Scale Delay
+HLN,Helena Regional Airport,US,Heavy Snowy,Normal
+HOB,Lea County Regional Airport,US,Foggy,Small-Scale Delay
+HON,Huron Regional Airport,US,Heavy Rainy,Small-Scale Delay
+HOP,Campbell AAF (Fort Campbell) Air Field,US,Frost,Free
+HOT,Memorial Field Airport,US,Heavy Rainy,Large-Scale Delay
+HOU,William P Hobby Airport,US,Cloudy,Normal
+HPN,Westchester County Airport,US,Partly Cloudy,Small-Scale Delay
+HQM,Bowerman Airport,US,Rainy,Free
+HRL,Valley International Airport,US,Foggy,Busy
+HRO,Boone County Airport,US,Cloudy,Small-Scale Delay
+HST,Homestead ARB Airport,US,Partly Cloudy,Small-Scale Delay
+HSV,Huntsville International Carl T Jones Field,US,Sunny,Normal
+HTS,Tri-State/Milton J. Ferguson Field,US,Partly Cloudy,Busy
+HUF,"Terre Haute Regional Airport, Hulman Field",US,Sunny,Large-Scale Delay
+HUL,Houlton International Airport,US,Partly Cloudy,Small-Scale Delay
+HUT,Hutchinson Municipal Airport,US,Cloudy,Normal
+HVN,Tweed New Haven Airport,US,Cloudy,Small-Scale Delay
+HVR,Havre City County Airport,US,Frost,Large-Scale Delay
+HYA,Barnstable Municipal Boardman Polando Field,US,Frost,Free
+HYR,Sawyer County Airport,US,Heavy Rainy,Free
+HYS,Hays Regional Airport,US,Frost,Small-Scale Delay
+JFN,Northeast Ohio Regional Airport,US,Mostly Sunny,Busy
+IAD,Washington Dulles International Airport,US,Frost,Busy
+IAG,Niagara Falls International Airport,US,Snowy,Large-Scale Delay
+IAH,George Bush Intercontinental Houston Airport,US,Cloudy,Small-Scale Delay
+ICT,Wichita Eisenhower National Airport,US,Snowy,Small-Scale Delay
+IDA,Idaho Falls Regional Airport,US,Heavy Snowy,Small-Scale Delay
+IFP,Laughlin Bullhead International Airport,US,Rainy,Large-Scale Delay
+IGM,Kingman Airport,US,Sunny,Small-Scale Delay
+IKK,Greater Kankakee Airport,US,Heavy Rainy,Busy
+ILG,New Castle Airport,US,Cloudy,Normal
+ILM,Wilmington International Airport,US,Snowy,Normal
+ILN,Wilmington Airpark,US,Partly Cloudy,Normal
+IND,Indianapolis International Airport,US,Snowy,Busy
+INK,Winkler County Airport,US,Snowy,Free
+INL,Falls International Airport,US,Snowy,Busy
+INT,Smith Reynolds Airport,US,Snowy,Large-Scale Delay
+INW,Winslow Lindbergh Regional Airport,US,Rainy,Small-Scale Delay
+IPL,Imperial County Airport,US,Partly Cloudy,Normal
+IPT,Williamsport Regional Airport,US,Foggy,Small-Scale Delay
+IRK,Kirksville Regional Airport,US,Sunny,Normal
+ISM,Kissimmee Gateway Airport,US,Sunny,Large-Scale Delay
+ISO,Kinston Regional Jetport At Stallings Field,US,Partly Cloudy,Normal
+ISP,Long Island Mac Arthur Airport,US,Heavy Rainy,Large-Scale Delay
+ITH,Ithaca Tompkins Regional Airport,US,Foggy,Small-Scale Delay
+AZA,Phoenix–Mesa Gateway Airport,US,Cloudy,Small-Scale Delay
+JAC,Jackson Hole Airport,US,Foggy,Busy
+JAN,Jackson-Medgar Wiley Evers International Airport,US,Snowy,Large-Scale Delay
+JAX,Jacksonville International Airport,US,Sunny,Small-Scale Delay
+JBR,Jonesboro Municipal Airport,US,Foggy,Busy
+JCT,Kimble County Airport,US,Partly Cloudy,Free
+JFK,John F Kennedy International Airport,US,Snowy,Normal
+JHW,Chautauqua County-Jamestown Airport,US,Partly Cloudy,Normal
+JLN,Joplin Regional Airport,US,Frost,Large-Scale Delay
+JMS,Jamestown Regional Airport,US,Cloudy,Normal
+USA,Concord-Padgett Regional Airport,US,Heavy Rainy,Free
+JST,John Murtha Johnstown Cambria County Airport,US,Snowy,Normal
+JXN,Jackson County Reynolds Field,US,Frost,Small-Scale Delay
+KLS,Southwest Washington Regional Airport,US,Partly Cloudy,Normal
+LAA,Southeast Colorado Regional Airport,US,Cloudy,Busy
+LAF,Purdue University Airport,US,Cloudy,Busy
+LAL,Lakeland Linder International Airport,US,Heavy Rainy,Normal
+LAN,Capital City Airport,US,Heavy Snowy,Small-Scale Delay
+LAR,Laramie Regional Airport,US,Partly Cloudy,Busy
+LAS,McCarran International Airport,US,Cloudy,Free
+LAW,Lawton Fort Sill Regional Airport,US,Mostly Sunny,Normal
+LAX,Los Angeles International Airport,US,Cloudy,Large-Scale Delay
+LBB,Lubbock Preston Smith International Airport,US,Sunny,Busy
+LBE,Arnold Palmer Regional Airport,US,Heavy Rainy,Free
+LBF,North Platte Regional Airport Lee Bird Field,US,Heavy Snowy,Large-Scale Delay
+LBL,Liberal Mid-America Regional Airport,US,Heavy Snowy,Busy
+LBT,Lumberton Regional Airport,US,Heavy Rainy,Small-Scale Delay
+LJN,Texas Gulf Coast Regional Airport,US,Foggy,Small-Scale Delay
+LCH,Lake Charles Regional Airport,US,Cloudy,Normal
+LCK,Rickenbacker International Airport,US,Rainy,Small-Scale Delay
+LEB,Lebanon Municipal Airport,US,Heavy Rainy,Busy
+LEE,Leesburg International Airport,US,Cloudy,Large-Scale Delay
+LEX,Blue Grass Airport,US,Rainy,Large-Scale Delay
+LFK,Angelina County Airport,US,Snowy,Normal
+LFT,Lafayette Regional Airport,US,Partly Cloudy,Normal
+LGA,La Guardia Airport,US,Heavy Snowy,Busy
+LGB,Long Beach Airport (Daugherty Field),US,Partly Cloudy,Small-Scale Delay
+LGU,Logan-Cache Airport,US,Rainy,Large-Scale Delay
+LIT,Bill & Hillary Clinton National Airport/Adams Field,US,Snowy,Normal
+LMT,Crater Lake-Klamath Regional Airport,US,Mostly Sunny,Busy
+LND,Hunt Field,US,Snowy,Small-Scale Delay
+LNK,Lincoln Airport,US,Partly Cloudy,Small-Scale Delay
+LNS,Lancaster Airport,US,Frost,Free
+LOL,Derby Field,US,Heavy Snowy,Busy
+LOU,Bowman Field,US,Mostly Sunny,Free
+LOZ,London-Corbin Airport/Magee Field,US,Sunny,Small-Scale Delay
+LRD,Laredo International Airport,US,Snowy,Large-Scale Delay
+LRU,Las Cruces International Airport,US,Rainy,Large-Scale Delay
+LSE,La Crosse Regional Airport,US,Rainy,Free
+LUK,Cincinnati Municipal Airport Lunken Field,US,Foggy,Normal
+LVM,Mission Field,US,Heavy Snowy,Free
+LVS,Las Vegas Municipal Airport,US,Heavy Snowy,Free
+LWB,Greenbrier Valley Airport,US,Sunny,Normal
+LWM,Lawrence Municipal Airport,US,Partly Cloudy,Small-Scale Delay
+LWS,Lewiston Nez Perce County Airport,US,Rainy,Normal
+LWT,Lewistown Municipal Airport,US,Heavy Snowy,Normal
+LYH,Lynchburg Regional Airport - Preston Glenn Field,US,Partly Cloudy,Large-Scale Delay
+MAF,Midland International Airport,US,Cloudy,Normal
+MBG,Mobridge Municipal Airport,US,Snowy,Small-Scale Delay
+MBS,MBS International Airport,US,Foggy,Normal
+MCB,McComb-Pike County Airport / John E Lewis Field,US,Cloudy,Small-Scale Delay
+MCE,Merced Regional Macready Field,US,Sunny,Small-Scale Delay
+MCI,Kansas City International Airport,US,Frost,Large-Scale Delay
+MCK,Mc Cook Ben Nelson Regional Airport,US,Frost,Normal
+MCN,Middle Georgia Regional Airport,US,Rainy,Busy
+MCO,Orlando International Airport,US,Snowy,Large-Scale Delay
+MCW,Mason City Municipal Airport,US,Cloudy,Large-Scale Delay
+MDH,Southern Illinois Airport,US,Frost,Large-Scale Delay
+MDT,Harrisburg International Airport,US,Sunny,Free
+MDW,Chicago Midway International Airport,US,Sunny,Large-Scale Delay
+MEI,Key Field / Meridian Regional Airport,US,Cloudy,Small-Scale Delay
+MEM,Memphis International Airport,US,Rainy,Large-Scale Delay
+MER,Castle Airport,US,Foggy,Busy
+MFD,Mansfield Lahm Regional Airport,US,Partly Cloudy,Small-Scale Delay
+MFE,McAllen Miller International Airport,US,Rainy,Small-Scale Delay
+MFR,Rogue Valley International Medford Airport,US,Heavy Rainy,Busy
+MGE,Dobbins Air Reserve Base,US,Rainy,Free
+MGM,Montgomery Regional (Dannelly Field) Airport,US,Rainy,Small-Scale Delay
+MGW,Morgantown Municipal Airport Walter L. (Bill) Hart Field,US,Cloudy,Free
+MHK,Manhattan Regional Airport,US,Cloudy,Small-Scale Delay
+MHR,Sacramento Mather Airport,US,Partly Cloudy,Busy
+MHT,Manchester-Boston Regional Airport,US,Heavy Rainy,Normal
+MIA,Miami International Airport,US,Frost,Small-Scale Delay
+MIE,Delaware County Johnson Field,US,Cloudy,Free
+MIV,Millville Municipal Airport,US,Foggy,Free
+MKC,Charles B. Wheeler Downtown Airport,US,Partly Cloudy,Free
+MKE,General Mitchell International Airport,US,Cloudy,Small-Scale Delay
+MKG,Muskegon County Airport,US,Heavy Snowy,Busy
+MKL,McKellar-Sipes Regional Airport,US,Cloudy,Large-Scale Delay
+MLB,Melbourne Orlando International Airport,US,Rainy,Small-Scale Delay
+MLC,Mc Alester Regional Airport,US,Snowy,Small-Scale Delay
+MLI,Quad City International Airport,US,Rainy,Small-Scale Delay
+MLS,Frank Wiley Field,US,Cloudy,Busy
+MLU,Monroe Regional Airport,US,Mostly Sunny,Small-Scale Delay
+MMT,Mc Entire Joint National Guard Base,US,Mostly Sunny,Large-Scale Delay
+MMU,Morristown Municipal Airport,US,Foggy,Small-Scale Delay
+MOB,Mobile Regional Airport,US,Rainy,Small-Scale Delay
+MOD,Modesto City Co-Harry Sham Field,US,Cloudy,Busy
+MOT,Minot International Airport,US,Frost,Free
+MPV,Edward F Knapp State Airport,US,Cloudy,Normal
+MQY,Smyrna Airport,US,Frost,Small-Scale Delay
+MRB,Eastern WV Regional Airport/Shepherd Field,US,Cloudy,Small-Scale Delay
+MRY,Monterey Peninsula Airport,US,Mostly Sunny,Large-Scale Delay
+MSL,Northwest Alabama Regional Airport,US,Heavy Snowy,Free
+MSN,Dane County Regional Truax Field,US,Frost,Large-Scale Delay
+MSO,Missoula International Airport,US,Frost,Small-Scale Delay
+MSP,Minneapolis–Saint Paul International Airport / Wold–Chamberlain Field,US,Snowy,Large-Scale Delay
+MSS,Massena International Airport Richards Field,US,Cloudy,Normal
+MSY,Louis Armstrong New Orleans International Airport,US,Cloudy,Free
+MTC,Selfridge Air National Guard Base Airport,US,Partly Cloudy,Busy
+MTH,The Florida Keys Marathon Airport,US,Snowy,Large-Scale Delay
+MTJ,Montrose Regional Airport,US,Partly Cloudy,Normal
+MTN,Martin State Airport,US,Mostly Sunny,Small-Scale Delay
+MWH,Grant County International Airport,US,Snowy,Busy
+MYL,McCall Municipal Airport,US,Partly Cloudy,Large-Scale Delay
+MYR,Myrtle Beach International Airport,US,Frost,Free
+MYV,Yuba County Airport,US,Frost,Busy
+NBG,New Orleans NAS JRB/Alvin Callender Field,US,Rainy,Small-Scale Delay
+NEL,Lakehurst Maxfield Field Airport,US,Frost,Small-Scale Delay
+NEW,Lakefront Airport,US,Mostly Sunny,Small-Scale Delay
+FWH,NAS Fort Worth JRB / Carswell Field,US,Cloudy,Busy
+NHZ,Brunswick Executive Airport,US,Cloudy,Large-Scale Delay
+NJK,El Centro NAF Airport (Vraciu Field),US,Foggy,Normal
+NQA,Millington-Memphis Airport,US,Snowy,Small-Scale Delay
+OAJ,Albert J Ellis Airport,US,Rainy,Busy
+OAK,Metropolitan Oakland International Airport,US,Foggy,Small-Scale Delay
+OFK,Karl Stefan Memorial Airport,US,Mostly Sunny,Small-Scale Delay
+OGB,Orangeburg Municipal Airport,US,Partly Cloudy,Small-Scale Delay
+OGD,Ogden Hinckley Airport,US,Cloudy,Busy
+OKC,Will Rogers World Airport,US,Rainy,Free
+OLF,L M Clayton Airport,US,Heavy Snowy,Small-Scale Delay
+OLM,Olympia Regional Airport,US,Cloudy,Small-Scale Delay
+OLS,Nogales International Airport,US,Partly Cloudy,Free
+ONP,Newport Municipal Airport,US,Foggy,Busy
+ONT,Ontario International Airport,US,Snowy,Large-Scale Delay
+OPF,Miami-Opa Locka Executive Airport,US,Cloudy,Busy
+NCO,Quonset State Airport,US,Heavy Rainy,Normal
+ORD,Chicago O'Hare International Airport,US,Snowy,Normal
+ORF,Norfolk International Airport,US,Snowy,Free
+ORH,Worcester Regional Airport,US,Sunny,Normal
+OSH,Wittman Regional Airport,US,Sunny,Free
+OSU,The Ohio State University Airport - Don Scott Field,US,Partly Cloudy,Busy
+OTH,Southwest Oregon Regional Airport,US,Cloudy,Small-Scale Delay
+OTM,Ottumwa Regional Airport,US,Sunny,Large-Scale Delay
+OWB,Owensboro Daviess County Airport,US,Heavy Snowy,Free
+OWD,Norwood Memorial Airport,US,Frost,Large-Scale Delay
+OXR,Oxnard Airport,US,Heavy Snowy,Small-Scale Delay
+OZR,Cairns AAF (Fort Rucker) Air Field,US,Heavy Snowy,Free
+PAE,Snohomish County (Paine Field) Airport,US,Partly Cloudy,Small-Scale Delay
+PAH,Barkley Regional Airport,US,Heavy Rainy,Normal
+PBF,"Pine Bluff Regional Airport, Grider Field",US,Rainy,Free
+PBG,Plattsburgh International Airport,US,Partly Cloudy,Large-Scale Delay
+PBI,Palm Beach International Airport,US,Snowy,Free
+PDK,DeKalb Peachtree Airport,US,Cloudy,Normal
+PDT,Eastern Oregon Regional At Pendleton Airport,US,Partly Cloudy,Free
+PDX,Portland International Airport,US,Heavy Rainy,Free
+PGA,Page Municipal Airport,US,Partly Cloudy,Small-Scale Delay
+PGD,Charlotte County Airport,US,Partly Cloudy,Busy
+PGV,Pitt Greenville Airport,US,Snowy,Busy
+PHF,Newport News Williamsburg International Airport,US,Heavy Snowy,Large-Scale Delay
+PHL,Philadelphia International Airport,US,Heavy Snowy,Normal
+PHX,Phoenix Sky Harbor International Airport,US,Mostly Sunny,Busy
+PIA,General Wayne A. Downing Peoria International Airport,US,Foggy,Large-Scale Delay
+PIB,Hattiesburg Laurel Regional Airport,US,Foggy,Free
+PIE,St Petersburg Clearwater International Airport,US,Rainy,Normal
+PIH,Pocatello Regional Airport,US,Cloudy,Normal
+PIR,Pierre Regional Airport,US,Mostly Sunny,Normal
+PIT,Pittsburgh International Airport,US,Heavy Rainy,Busy
+PKB,Mid Ohio Valley Regional Airport,US,Frost,Large-Scale Delay
+PLN,Pellston Regional Airport of Emmet County Airport,US,Heavy Snowy,Normal
+PMD,Palmdale Regional Airport / USAF Plant 42 Airport,US,Mostly Sunny,Normal
+PWY,Ralph Wenz Field,US,Sunny,Large-Scale Delay
+PNC,Ponca City Regional Airport,US,Partly Cloudy,Large-Scale Delay
+PNE,Northeast Philadelphia Airport,US,Snowy,Busy
+PNS,Pensacola International Airport,US,Heavy Rainy,Busy
+POB,Pope Field,US,Cloudy,Small-Scale Delay
+POU,Dutchess County Airport,US,Snowy,Busy
+PQI,Presque Isle International Airport,US,Heavy Rainy,Free
+PRB,Paso Robles Municipal Airport,US,Snowy,Small-Scale Delay
+PRC,Prescott International Airport - Ernest A. Love Field,US,Foggy,Free
+PRX,Cox Field,US,Heavy Snowy,Busy
+PSC,Tri Cities Airport,US,Partly Cloudy,Normal
+PSM,Portsmouth International at Pease Airport,US,Foggy,Free
+PSP,Palm Springs International Airport,US,Foggy,Free
+PTK,Oakland County International Airport,US,Snowy,Small-Scale Delay
+PUB,Pueblo Memorial Airport,US,Sunny,Normal
+PUW,Pullman Moscow Regional Airport,US,Mostly Sunny,Normal
+PVD,Theodore Francis Green State Airport,US,Mostly Sunny,Busy
+PVU,Provo-Utah Lake International Airport,US,Partly Cloudy,Small-Scale Delay
+PWK,Chicago Executive Airport,US,Rainy,Normal
+PWM,Portland International Jetport,US,Frost,Normal
+PWT,Bremerton National Airport,US,Frost,Normal
+RAL,Riverside Municipal Airport,US,Heavy Rainy,Large-Scale Delay
+RAP,Rapid City Regional Airport,US,Cloudy,Busy
+RBL,Red Bluff Municipal Airport,US,Partly Cloudy,Large-Scale Delay
+RDD,Redding Municipal Airport,US,Mostly Sunny,Busy
+RDG,Reading Regional Airport (Carl A Spaatz Field),US,Rainy,Normal
+RDM,Roberts Field,US,Cloudy,Large-Scale Delay
+RDU,Raleigh Durham International Airport,US,Cloudy,Free
+RFD,Chicago Rockford International Airport,US,Cloudy,Large-Scale Delay
+RHI,Rhinelander Oneida County Airport,US,Sunny,Normal
+RIC,Richmond International Airport,US,Heavy Snowy,Normal
+RIL,Garfield County Regional Airport,US,Rainy,Small-Scale Delay
+RIV,March Air Reserve Base,US,Sunny,Normal
+RIW,Riverton Regional Airport,US,Heavy Snowy,Large-Scale Delay
+RKS,Southwest Wyoming Regional Airport,US,Foggy,Normal
+RME,Griffiss International Airport,US,Rainy,Normal
+RMG,Richard B Russell Airport,US,Cloudy,Small-Scale Delay
+RNO,Reno Tahoe International Airport,US,Heavy Snowy,Busy
+ROA,Roanoke–Blacksburg Regional Airport,US,Heavy Snowy,Normal
+ROC,Frederick Douglass Greater Rochester International Airport,US,Frost,Normal
+ROW,Roswell Air Center Airport,US,Cloudy,Normal
+RSL,Russell Municipal Airport,US,Snowy,Large-Scale Delay
+RST,Rochester International Airport,US,Sunny,Normal
+RSW,Southwest Florida International Airport,US,Rainy,Free
+RUT,Rutland - Southern Vermont Regional Airport,US,Heavy Snowy,Busy
+RVS,Richard Lloyd Jones Jr Airport,US,Cloudy,Small-Scale Delay
+RWF,Redwood Falls Municipal Airport,US,Heavy Snowy,Free
+RWI,Rocky Mount Wilson Regional Airport,US,Heavy Rainy,Busy
+RWL,Rawlins Municipal Airport/Harvey Field,US,Mostly Sunny,Normal
+SAC,Sacramento Executive Airport,US,Mostly Sunny,Large-Scale Delay
+SAF,Santa Fe Municipal Airport,US,Cloudy,Free
+SAN,San Diego International Airport,US,Cloudy,Busy
+SAT,San Antonio International Airport,US,Sunny,Normal
+SAV,Savannah Hilton Head International Airport,US,Heavy Rainy,Large-Scale Delay
+MQT,Sawyer International Airport,US,Mostly Sunny,Small-Scale Delay
+SBA,Santa Barbara Municipal Airport,US,Sunny,Free
+SBD,San Bernardino International Airport,US,Sunny,Large-Scale Delay
+SBN,South Bend Regional Airport,US,Foggy,Free
+SBP,San Luis County Regional Airport,US,Rainy,Busy
+SBY,Salisbury Ocean City Wicomico Regional Airport,US,Mostly Sunny,Normal
+SCH,Schenectady County Airport,US,Rainy,Free
+SCK,Stockton Metropolitan Airport,US,Rainy,Large-Scale Delay
+SDF,Louisville Muhammad Ali International Airport,US,Rainy,Large-Scale Delay
+SDM,Brown Field Municipal Airport,US,Mostly Sunny,Busy
+SDY,Sidney - Richland Regional Airport,US,Snowy,Normal
+SEA,Seattle Tacoma International Airport,US,Partly Cloudy,Small-Scale Delay
+SFB,Orlando Sanford International Airport,US,Heavy Snowy,Small-Scale Delay
+SFF,Felts Field,US,Heavy Rainy,Normal
+SFO,San Francisco International Airport,US,Foggy,Large-Scale Delay
+SGF,Springfield Branson National Airport,US,Heavy Snowy,Large-Scale Delay
+SGH,Springfield-Beckley Municipal Airport,US,Rainy,Small-Scale Delay
+UST,Northeast Florida Regional Airport,US,Sunny,Small-Scale Delay
+SGR,Sugar Land Regional Airport,US,Cloudy,Large-Scale Delay
+SGU,St George Regional Airport,US,Heavy Rainy,Normal
+SHD,Shenandoah Valley Regional Airport,US,Sunny,Busy
+SHR,Sheridan County Airport,US,Snowy,Normal
+SHV,Shreveport Regional Airport,US,Heavy Rainy,Normal
+SJC,Norman Y. Mineta San Jose International Airport,US,Sunny,Normal
+SJT,San Angelo Regional Mathis Field,US,Rainy,Large-Scale Delay
+SLC,Salt Lake City International Airport,US,Rainy,Free
+SLE,Salem Municipal Airport/McNary Field,US,Cloudy,Small-Scale Delay
+SLK,Adirondack Regional Airport,US,Mostly Sunny,Large-Scale Delay
+SLN,Salina Municipal Airport,US,Frost,Busy
+SME,Lake Cumberland Regional Airport,US,Partly Cloudy,Normal
+SMF,Sacramento International Airport,US,Sunny,Large-Scale Delay
+SMN,Lemhi County Airport,US,Mostly Sunny,Free
+SMO,Santa Monica Municipal Airport,US,Snowy,Busy
+SMX,Santa Maria Public Airport Captain G Allan Hancock Field,US,Heavy Rainy,Free
+SNA,John Wayne Airport-Orange County Airport,US,Heavy Rainy,Large-Scale Delay
+SNS,Salinas Municipal Airport,US,Heavy Rainy,Large-Scale Delay
+SPI,Abraham Lincoln Capital Airport,US,Heavy Snowy,Free
+SRQ,Sarasota Bradenton International Airport,US,Cloudy,Normal
+RUI,Sierra Blanca Regional Airport,US,Partly Cloudy,Normal
+SSF,Stinson Municipal Airport,US,Foggy,Large-Scale Delay
+SSI,St Simons Island Airport,US,Heavy Rainy,Busy
+STC,Saint Cloud Regional Airport,US,Mostly Sunny,Free
+STJ,Rosecrans Memorial Airport,US,Foggy,Busy
+STL,St Louis Lambert International Airport,US,Frost,Busy
+STP,St Paul Downtown Holman Field,US,Heavy Rainy,Normal
+STS,Charles M. Schulz Sonoma County Airport,US,Foggy,Small-Scale Delay
+SUN,Friedman Memorial Airport,US,Frost,Normal
+SUS,Spirit of St Louis Airport,US,Sunny,Small-Scale Delay
+SUX,Sioux Gateway Airport / Brigadier General Bud Day Field,US,Foggy,Large-Scale Delay
+SWF,New York Stewart International Airport,US,Snowy,Small-Scale Delay
+SWO,Stillwater Regional Airport,US,Foggy,Large-Scale Delay
+SYR,Syracuse Hancock International Airport,US,Rainy,Small-Scale Delay
+TBN,Waynesville-St. Robert Regional Forney field,US,Cloudy,Free
+TCC,Tucumcari Municipal Airport,US,Foggy,Normal
+TCL,Tuscaloosa Regional Airport,US,Foggy,Large-Scale Delay
+TCS,Truth or Consequences Municipal Airport,US,Heavy Snowy,Large-Scale Delay
+TEB,Teterboro Airport,US,Rainy,Normal
+TIW,Tacoma Narrows Airport,US,Heavy Snowy,Busy
+TIX,Space Coast Regional Airport,US,Heavy Rainy,Free
+TLH,Tallahassee Regional Airport,US,Heavy Rainy,Busy
+TMB,Miami Executive Airport,US,Mostly Sunny,Free
+TOI,Troy Municipal Airport at N Kenneth Campbell Field,US,Frost,Busy
+TOL,Eugene F. Kranz Toledo Express Airport,US,Heavy Snowy,Small-Scale Delay
+TOP,Philip Billard Municipal Airport,US,Rainy,Large-Scale Delay
+TPA,Tampa International Airport,US,Sunny,Free
+TPH,Tonopah Airport,US,Heavy Snowy,Normal
+TPL,Draughon Miller Central Texas Regional Airport,US,Sunny,Free
+TRI,Tri-Cities Regional TN/VA Airport,US,Partly Cloudy,Normal
+TKF,Truckee Tahoe Airport,US,Cloudy,Normal
+TRM,Jacqueline Cochran Regional Airport,US,Cloudy,Small-Scale Delay
+TTD,Portland Troutdale Airport,US,Sunny,Large-Scale Delay
+TTN,Trenton Mercer Airport,US,Snowy,Small-Scale Delay
+TUL,Tulsa International Airport,US,Heavy Snowy,Large-Scale Delay
+TUP,Tupelo Regional Airport,US,Snowy,Free
+TUS,Tucson International Airport / Morris Air National Guard Base,US,Sunny,Busy
+TVC,Cherry Capital Airport,US,Sunny,Normal
+TVL,Lake Tahoe Airport,US,Heavy Snowy,Large-Scale Delay
+TWF,Joslin Field Magic Valley Regional Airport,US,Rainy,Busy
+TXK,Texarkana Regional Webb Field,US,Heavy Rainy,Large-Scale Delay
+TYR,Tyler Pounds Regional Airport,US,Heavy Rainy,Large-Scale Delay
+TYS,McGhee Tyson Airport,US,Rainy,Free
+UTH,South Valley International Airport,US,Sunny,Small-Scale Delay
+UIN,Quincy Regional Baldwin Field,US,Heavy Snowy,Busy
+UKI,Ukiah Municipal Airport,US,Rainy,Normal
+SCE,University Park Airport,US,Snowy,Free
+UOX,University Oxford Airport,US,Heavy Snowy,Normal
+HTV,Huntsville Regional Airport,US,Heavy Rainy,Normal
+VCT,Victoria Regional Airport,US,Frost,Free
+VEL,Vernal Regional Airport,US,Rainy,Free
+VGT,North Las Vegas Metropolitan International Airport,US,Foggy,Normal
+VIS,Visalia International Airport,US,Snowy,Small-Scale Delay
+VLD,Valdosta Regional Airport,US,Rainy,Busy
+VNY,Van Nuys Airport,US,Snowy,Normal
+VOK,Volk Field,US,Cloudy,Free
+VPS,Destin-Fort Walton Beach Airport,US,Snowy,Small-Scale Delay
+VPZ,Porter County Municipal Airport,US,Sunny,Small-Scale Delay
+VRB,Vero Beach Regional Airport,US,Snowy,Small-Scale Delay
+VTN,Miller Field,US,Cloudy,Normal
+WMC,Winnemucca Municipal Airport,US,Heavy Rainy,Large-Scale Delay
+WRL,Worland Municipal Airport,US,Heavy Snowy,Small-Scale Delay
+WWD,Cape May County Airport,US,Rainy,Busy
+WWR,West Woodward Airport,US,Foggy,Small-Scale Delay
+WYS,Yellowstone Airport,US,Snowy,Normal
+XNA,Northwest Arkansas Regional Airport,US,Snowy,Large-Scale Delay
+YIP,Willow Run Airport,US,Heavy Snowy,Normal
+YKM,Yakima Air Terminal McAllister Field,US,Partly Cloudy,Busy
+YKN,Chan Gurney Municipal Airport,US,Sunny,Normal
+YNG,Youngstown Warren Regional Airport,US,Cloudy,Busy
+ZZV,Zanesville Municipal Airport,US,Partly Cloudy,Small-Scale Delay
+PAQ,"Warren ""Bud"" Woods Palmer Municipal Airport",US,Partly Cloudy,Busy
+BET,Bethel Airport,US,Partly Cloudy,Large-Scale Delay
+BKC,Buckland Airport,US,Mostly Sunny,Normal
+BRW,Wiley Post Will Rogers Memorial Airport,US,Partly Cloudy,Normal
+BTT,Bettles Airport,US,Partly Cloudy,Free
+CDB,Cold Bay Airport,US,Heavy Rainy,Large-Scale Delay
+SCM,Scammon Bay Airport,US,Heavy Snowy,Large-Scale Delay
+CDV,Merle K (Mudhole) Smith Airport,US,Cloudy,Normal
+CZF,Cape Romanzof LRRS Airport,US,Heavy Snowy,Small-Scale Delay
+DRG,Deering Airport,US,Rainy,Large-Scale Delay
+ADK,Adak Airport,US,Cloudy,Large-Scale Delay
+DLG,Dillingham Airport,US,Mostly Sunny,Normal
+MLL,Marshall Don Hunter Sr Airport,US,Snowy,Large-Scale Delay
+ADQ,Kodiak Airport,US,Foggy,Small-Scale Delay
+DUT,Tom Madsen (Dutch Harbor) Airport,US,Heavy Snowy,Normal
+EHM,Cape Newenham LRRS Airport,US,Heavy Snowy,Free
+EMK,Emmonak Airport,US,Cloudy,Normal
+ENA,Kenai Municipal Airport,US,Partly Cloudy,Normal
+FAI,Fairbanks International Airport,US,Partly Cloudy,Busy
+ABL,Ambler Airport,US,Partly Cloudy,Free
+GAL,Edward G. Pitka Sr Airport,US,Heavy Snowy,Normal
+GKN,Gulkana Airport,US,Partly Cloudy,Normal
+GAM,Gambell Airport,US,Foggy,Free
+GST,Gustavus Airport,US,Frost,Normal
+HCR,Holy Cross Airport,US,Cloudy,Free
+HSL,Huslia Airport,US,Heavy Rainy,Busy
+HNS,Haines Airport,US,Cloudy,Small-Scale Delay
+HOM,Homer Airport,US,Partly Cloudy,Normal
+HPB,Hooper Bay Airport,US,Snowy,Small-Scale Delay
+EGX,Egegik Airport,US,Cloudy,Free
+IAN,Bob Baker Memorial Airport,US,Frost,Small-Scale Delay
+ILI,Iliamna Airport,US,Foggy,Free
+UTO,Indian Mountain LRRS Airport,US,Rainy,Small-Scale Delay
+JNU,Juneau International Airport,US,Frost,Small-Scale Delay
+AKN,King Salmon Airport,US,Heavy Rainy,Free
+AKP,Anaktuvuk Pass Airport,US,Heavy Rainy,Large-Scale Delay
+KTN,Ketchikan International Airport,US,Heavy Snowy,Small-Scale Delay
+KLW,Klawock Airport,US,Rainy,Small-Scale Delay
+LUR,Cape Lisburne LRRS Airport,US,Cloudy,Busy
+MCG,McGrath Airport,US,Mostly Sunny,Small-Scale Delay
+MRI,Merrill Field,US,Snowy,Small-Scale Delay
+MYU,Mekoryuk Airport,US,Heavy Snowy,Normal
+ANC,Ted Stevens Anchorage International Airport,US,Snowy,Normal
+ANI,Aniak Airport,US,Sunny,Small-Scale Delay
+ENN,Nenana Municipal Airport,US,Mostly Sunny,Busy
+ANN,Annette Island Airport,US,Heavy Rainy,Normal
+ANV,Anvik Airport,US,Cloudy,Free
+OME,Nome Airport,US,Heavy Rainy,Small-Scale Delay
+ORT,Northway Airport,US,Heavy Snowy,Small-Scale Delay
+OTZ,Ralph Wien Memorial Airport,US,Frost,Busy
+STG,St George Airport,US,Sunny,Small-Scale Delay
+PSG,Petersburg James A Johnson Airport,US,Foggy,Busy
+PTH,Port Heiden Airport,US,Partly Cloudy,Large-Scale Delay
+PTU,Platinum Airport,US,Frost,Free
+NUI,Nuiqsut Airport,US,Heavy Rainy,Normal
+ARC,Arctic Village Airport,US,Snowy,Large-Scale Delay
+RBY,Ruby Airport,US,Foggy,Large-Scale Delay
+SVA,Savoonga Airport,US,Rainy,Busy
+SCC,Deadhorse Airport,US,Heavy Rainy,Small-Scale Delay
+SDP,Sand Point Airport,US,Heavy Rainy,Normal
+SHH,Shishmaref Airport,US,Foggy,Busy
+SIT,Sitka Rocky Gutierrez Airport,US,Heavy Rainy,Busy
+KSM,St Mary's Airport,US,Snowy,Small-Scale Delay
+SNP,St Paul Island Airport,US,Partly Cloudy,Busy
+SVW,Sparrevohn LRRS Airport,US,Mostly Sunny,Small-Scale Delay
+SXQ,Soldotna Airport,US,Snowy,Normal
+TOG,Togiak Airport,US,Foggy,Small-Scale Delay
+TKA,Talkeetna Airport,US,Mostly Sunny,Busy
+TLJ,Tatalina LRRS Airport,US,Mostly Sunny,Small-Scale Delay
+ATK,Atqasuk Edward Burnell Sr Memorial Airport,US,Heavy Snowy,Busy
+VDZ,Valdez Pioneer Field,US,Frost,Small-Scale Delay
+KVL,Kivalina Airport,US,Foggy,Large-Scale Delay
+SWD,Seward Airport,US,Cloudy,Normal
+WRG,Wrangell Airport,US,Foggy,Large-Scale Delay
+AIN,Wainwright Airport,US,Rainy,Small-Scale Delay
+WTK,Noatak Airport,US,Snowy,Free
+WWA,Wasilla Airport,US,Foggy,Small-Scale Delay
+YAK,Yakutat Airport,US,Frost,Free
+FYU,Fort Yukon Airport,US,Mostly Sunny,Busy
+BKH,Barking Sands Airport,US,Heavy Snowy,Small-Scale Delay
+HNM,Hana Airport,US,Cloudy,Busy
+JHM,Kapalua Airport,US,Frost,Small-Scale Delay
+JRF,Kalaeloa Airport,US,Foggy,Busy
+KOA,Ellison Onizuka Kona International Airport at Keahole,US,Partly Cloudy,Large-Scale Delay
+LIH,Lihue Airport,US,Frost,Busy
+MKK,Molokai Airport,US,Rainy,Small-Scale Delay
+MUE,Waimea Kohala Airport,US,Cloudy,Free
+NGF,Kaneohe Bay MCAS (Marion E. Carl Field) Airport,US,Cloudy,Busy
+HNL,Daniel K Inouye International Airport,US,Partly Cloudy,Free
+LNY,Lanai Airport,US,Foggy,Busy
+OGG,Kahului Airport,US,Heavy Snowy,Busy
+ITO,Hilo International Airport,US,Sunny,Free
+PIZ,Point Lay LRRS Airport,US,Heavy Snowy,Large-Scale Delay
+XWA,Williston Basin International Airport,US,Foggy,Normal
