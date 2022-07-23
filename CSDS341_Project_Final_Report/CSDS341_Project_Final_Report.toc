@@ -1,0 +1,7 @@
+\contentsline {section}{Introduction}{1}{section*.2}%
+\contentsline {section}{Database High-Level Design}{1}{section*.3}%
+\contentsline {subsection}{Assumptions}{1}{section*.4}%
+\contentsline {subsection}{Entity-Relationship Model}{2}{section*.5}%
+\contentsline {subsection}{Data Description}{3}{section*.6}%
+\contentsline {section}{Relational Schema (SQL Language):}{3}{section*.7}%
+\contentsline {subsection}{Primary Key Constraints:}{6}{section*.8}%
