@@ -55,7 +55,10 @@ Our database consists of seven entities, eight relationships, and one identifyin
 
 `Travelers` and `Crew` are considered as users of our airline user system. `Travelers` contains each travelers' information such as `credits`, `citizenship`, etc. `Crew`, sharing part of the attributes with `Travelers`, also has its unique attributes such as `ssn` and `salary`. Note that each user should be either a Traveler or a Crew. A user cannot be both or none, which means that if a `user_id` has already been stored in `Travelers` table, it will not be present in the `Crew` Table. 
 
-# Relational Schema (SQL Language):
+# Relational Schema (SQL Language)
+
+## Strong Entities
+
 **Table of Travelers:**
 ```
 CREATE TABLE IF NOT EXISTS Travelers (
@@ -72,7 +75,7 @@ CREATE TABLE IF NOT EXISTS Travelers (
     CHECK (gender IN ('M' , 'F', 'U')));
 ```
 
-**Table of Crew:**
+**Table of Crew:** 
 ```
 CREATE TABLE IF NOT EXISTS Crew (
     user_id INT NOT NULL,
@@ -123,19 +126,7 @@ CREATE TABLE IF NOT EXISTS Schedules (
     PRIMARY KEY (schedule_id));
 ```
 
-**Table of Aeroplanes_belong:**
-```
-CREATE TABLE IF NOT EXISTS Aeroplanes_belong (
-    regis_no VARCHAR(10) NOT NULL,
-    fir_capacity INT,
-    bus_capacity INT,
-    eco_capacity INT,
-    aircraft_type VARCHAR(50),
-    company_id INT NOT NULL,
-    PRIMARY KEY (regis_no),
-    FOREIGN KEY (company_id)
-        REFERENCES Airlines(company_id));
-```
+## Weak Entity
 
 **Table of Flights_ariv_dept:**
 ```
@@ -153,6 +144,22 @@ CREATE TABLE IF NOT EXISTS Flights_ariv_dept (
     FOREIGN KEY (dept_iata_code)
         REFERENCES Airports(iata_code),
     CHECK (flight_status IN ('On-Time' , 'Delay', 'Cancel')));
+```
+
+## Relationships
+
+**Table of Aeroplanes_belong:**
+```
+CREATE TABLE IF NOT EXISTS Aeroplanes_belong (
+    regis_no VARCHAR(10) NOT NULL,
+    fir_capacity INT,
+    bus_capacity INT,
+    eco_capacity INT,
+    aircraft_type VARCHAR(50),
+    company_id INT NOT NULL,
+    PRIMARY KEY (regis_no),
+    FOREIGN KEY (company_id)
+        REFERENCES Airlines(company_id));
 ```
 
 **Table of Tickets_book_for:**
@@ -211,33 +218,101 @@ CREATE TABLE IF NOT EXISTS hub (
         REFERENCES Airports(iata_code));
 ```
 
-**Note: In order to prevent redundancy, the relational schema for relation "book" and "for" are not necessary to create by included both inside the "Tickets_book_for" table.**
-\
-\
 
-## Primary Key Constraints:
-
-1. The primary key attribute of the entities **Travelers** and **Crew** are both **user_id** which is distinct for each one of the travelers.
-
-2. The **Airport** has a primary key attribute **iata_code** which is unique for every single airport.
-
-3. The primary key attribute of the **Airlines** is **company_id**.
-
-4. The primary key attribute of the **Schedules** is **schedule_id**.
-
-5. The primary key attribute of the **Aeroplanes_belong** is **regis_no**.
-
-6. The primary key attribute of the **Flights_ariv_dept** is **regis_no** and **flight_no**.
-
-7. The primary key attribute of the **Tickets_book_for** is **ticket_id**.
-
-8. The primary key attribute of the **serve** is **crew_id**, **regin_no** and **flight_no**.
-
-9. The primary key attribute of the **assign** is **regis_no**, **flight_no** and **schedule_id**.
-
-10. The primary key attribute of the **hub** is **company_id** and **iata_code**.
+Note: In order to prevent redundancy for table ``Tickets_book_for``, since both the book and for relationships are one-to-many relationships, they are merged with the entity on many side which is ``Tickets``. This table includes three different foreign keys, such as ``traveler_id`` from the ``book`` relationship; ``regis_no`` and ``flight_no`` from ``for`` relationship. Additionally, ``Tickets`` involves in both ``for`` and ``book`` relationship as total participation, while ``Travellers`` (in ``book`` relationship) and ``Flights`` (in ``for`` relationship) are partial relationship. 
 
 
 
+## Primary Key Constraints
 
+1. The primary key attribute of the entities ``Travelers`` and ``Crew*`` are both ``user_id`` which is distinct for each one of the travelers, so each user can be uniquely identified by his/her ``user_id``.
+
+2. The  entity ``Airport`` stores the information of airports and has a primary key attribute ``iata_code`` which stands for the unique three-character International Air Transport Association Code for each airport.
+
+3. The primary key attribute of the ``Airlines*`` is ``company_id`` which stores the information of airline companiesis and is unique for each airline.
+
+4. The primary key attribute of the ``Schedules`` is ``schedule_id`` which is unique for each schedule.
+
+5. The primary key attribute of the ``Aeroplanes_belong`` is ``regis_no``.
+
+6. The primary key attribute of the ``Flights_ariv_dept`` is ``regis_no`` and ``flight_no``.
+
+7. The primary key attribute of the ``Tickets_book_for`` is ``ticket_id``.
+
+8. The primary key attribute of the ``serve`` is ``crew_id``, ``regin_no`` and ``flight_no``.
+
+9. The primary key attribute of the ``assign`` is ``regis_no``, ``flight_no`` and ``schedule_id``.
+
+10. The primary key attribute of the ``hub*`` is ``company_id`` and ``iata_code``.
+
+## Overlap Constraint
+
+A ``User`` can be either ``Travelers`` or ``Crew``, but they share the same primary key attribute ``user_id``, so when a ``Travelers`` or a ``Crew`` is created, they have their unique ``user_id``.
+
+## Foreign key constraints (please also check the schema for more details):
+
+1. The ``Tickets_book_for`` schema has three foreign-key constraints: (1)``traveler_id`` references the primary key of the ``book`` relationship which is ``Travelers.user_id``. (2)``regin_no`` references the primary key of the ``for`` relationship which is ``Aeroplanes_belong.regis_no``. (3)``flight_no`` reference the primary key of the ``for`` relationship which is ``Flights_ariv_dept.flight_no``.
+  
+2. The ``Aeroplanes_belong`` schema has one foreign-key constraint: attribute ``company_id`` references the primary key of the ``Airlines`` which is ``Airlines.company_id``.
+
+3. The ``Flights_ariv_dept`` schema has three foreign-key constraints: (1)``regis_no`` references the primary key of the ``Aeroplanes_belong`` relationship which is ``Aeroplanes_belong.regis_no``. (2)``dept_iata_code`` references the primary key of the ``Airports`` entity which is ``Airports.iata_code``. (3)``ariv_iata_code`` reference the primary key of the ``Airports`` entity which is ``Airports.iata_code``.
+
+4. The ``serve`` schema has three foreign-key constraints: (1)``crew_id`` references the primary key of the ``Crew`` entity which is ``Crew.user_id``. (2)``regis_no`` references the primary key of the ``Aeroplanes_belong`` relationship which is ``Aeroplanes_belong.regis_no``. (3)``flight_no`` reference the primary key of the ``Flights_ariv_dept`` entity which is ``Flights_ariv_dept.flight_no``.
+
+5. The `assign` schema has three foreign-key constraints: (1)`chedule_i`` references the primary key of the ``Schedules`` entity which is ``Schedules.schedule_id``. (2)``regis_no`` references the primary key of the ``Aeroplanes_belong`` relationship which is ``Aeroplanes_belong.regis_no``. (3)``flight_no`` reference the primary key of the ``Flights_ariv_dept`` relationship which is ``Flights_ariv_dept.flight_no``.
+
+6. The `hub` schema has three foreign-key constraints: (1)`company_id` references the primary key of the `Airlines` entity which is `Airlines.company_id`. (2)`iata_code` references the primary key of the `Airports` entity which is `Aeroplanes_belong.regis_no`.
+
+## Mapping cardinalities (please also check the ER-Diagram for more details):
+
+1. `book` in `Tickets_book_for`is a many-to-one relationship set from `Tickets` to `Travelers`, meaning that a travelers can book multiple tickets for flights.
+
+2. `for` in `Tickets_book_for` is a many-to-one relationship set from `Tickets` to `Flights`, meaning that a flight can have many tickets.
+
+3. `serve` is a many-to-many relationship set from `Crew` to `Flights`, meaning that several crews can work on one flights, and one crew can work on several flights.
+
+4. `depart` and `arrive` in `Flights_ariv_dept` are many-to-one relationship set from `Flights` to `Airports`, meaning that several flights can depart from the same airports.
+
+5. `assign` is a many-to-one relationship set from `Flights` to `Schedules`, meaning that several different flights can have the same schedule of event.
+
+6. `fly` is a many-to-one relationship set from `Flights` to `Aeroplanes`, meaning that several different flights can correspond to one planes.
+
+7. `belong` is a many-to-one relationship set from `Aeroplanes` to `Airlines`, meaning that several planes can have the same airline.
+
+8. `hub` is a many-to-many relationship set from `Airlines` to `Airports`, meaning that airline companies can have several of their hub airports, and airports can be the hub airport of several different airlines companies.
+
+## Participation Constraints (please also check the ER-Diagram and Schema for more details):
+
+1. `Tickets` must have a total participation in the `book` and `for` relationship set, because every travelers must have at least one ticket, and every tickets must at least for one flight.
+
+2. `Flights` is a weak entity and totally participates in identifying relationship set `fly` with `Aeroplanes`, since a flight must at least corresponds to one plane.
+
+3. `Flights` must have a total participation in the `depart`, `arrive` and `assign` relationship set, because an airport cannot have no flight for departure or arrival, and the existence of a schedule must have at least on flights relates to.
+
+4. `Flights` must also a total participation in `serve`, because there should be at least a crew member to take care of a flight.
+
+5. `Aeroplanes` must have a total participation in the `belong` relationship set, since each one of the planes should relate to their airlines company.
+
+6. `Airlines` must have a total participation in the `hub` relationship set, meaning that there should be at least one airline company that the airport is the hub of its planes.
+
+# Functional Dependencies
+
+
+# Example Queries
+
+
+
+# Implementation
+
+
+
+# Roles of members
+
+
+
+# What we learned from this project
+
+
+
+# GUI Interface
 
