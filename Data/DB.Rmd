@@ -11,8 +11,10 @@ library("data.table")
 library(lubridate)
 library("xlsx")
 ```
-```{r Crew}
-genders <- c("F", "M")
+```{r 1. Travelers}
+country <- data.frame(read_excel("Downloads/country_code.xlsx"))
+##Update genders value 
+genders <- c("F", "M", "U")
 df <- data.frame(GENDER=sample(genders, 50000, replace=TRUE))
 names <- randomNames(gender=df$GENDER, name.sep = " ")
 travelers <- data.frame(str_split_fixed(names, " ", 2))
@@ -38,7 +40,42 @@ head(travelers)
 write.xlsx(travelers, file = 'travelers.xlsx', row.names = FALSE)
 ```
 
+```{r 2.Crew} 
+##Import Crew
+genders <- c("F", "M", "U")
+df <- data.frame(GENDER=sample(genders, 5000, replace=TRUE))
+names <- randomNames(gender=df$GENDER, name.sep = " ")
+crew <- data.frame(str_split_fixed(names, " ", 2))
+colnames(crew) <- c("first_name", "last_name")
+crew$middle_name<- randomNames(gender=df$GENDER, name.sep = " ", which.names = "first")
+crew$gender <- df$GENDER
+crew$dob <- sample(seq(as.Date('1962/01/01'), as.Date('1999/12/31'), by="day"), nrow(crew), replace = TRUE)
+crew$ssn <- sample(10000000:99999999, size = nrow(crew), replace = FALSE)
+crew$user_id <- sample(0:99999, nrow(crew), replace = FALSE) 
+crew$total_distance <- sample(0:430000, nrow(crew), replace = TRUE)
+crew['salary'] <-NA
+for (i in 1: nrow(crew)) {
+  if (crew[i,]$total_distance <= 1000) {
+    crew[i,]$salary <- 100000
+  }
+  if(crew[i,]$total_distance > 1000 & crew[i,]$total_distance <= 50000){
+    crew[i,]$salary <- 150000
+  }
+  if(crew[i,]$total_distance > 50000 & crew[i,]$total_distance <= 100000){
+    crew[i,]$salary <- 180000
+  }
+  else{
+    crew[i,]$salary <- 200000
+  }
+}
+
+crew <- crew[,c("user_id", "first_name", "middle_name", "last_name", "gender", "dob", "ssn", "salary", "total_distance")]
+
+write.xlsx(crew, file = 'crew.xlsx', row.names = FALSE)
+```
+
 ```{r 3. Airports, result = 'hide'}
+##Update airports, create additional file for international airport in the US
 
 raw_airport <- read.csv("https://davidmegginson.github.io/ourairports-data/airports.csv")
 
@@ -74,10 +111,52 @@ status <- c('Free' , 'Normal', 'Busy', 'Small-Scale Delay', 'Large-Scale Delay')
 status <- data.frame(status)
 airport$airport_status <- sample(status$status, nrow(airport), replace = TRUE)
 
-##Only get US Airport
+##Only get US International Airport
 us_airport <- airport[airport$country == 'US', ]
+a1 <- us_airport %>% filter(grepl('International', airport_name))
+a2 <- us_airport %>% filter(grepl('Alliance', airport_name))
+
+us_intl_airport <- data.frame(rbind(a1, a2))
+write.xlsx(us_airport, file = 'us_airport.xlsx', row.names = FALSE)
+write.xlsx(us_intl_airport, file = 'us_intl_airport.xlsx', row.names = FALSE)
+```
+```{r 4.Airlines}
+##Import airlines
+##US Airlines only
+raw_us_airline <- read_excel("Downloads/us_airline.xlsx")
+raw_us_airline <- data.frame(na.omit(raw_us_airline))
+colnames(raw_us_airline) <- c("company_name", "IATA", "ICAO")
+
+cape_air <- c("Cape Air", "9K", "KAP")
+republic_air <- c("Republic Airline", "YX", "RPA")
+raw_us_airline <- rbind(raw_us_airline, cape_air)
+raw_us_airline <- rbind(raw_us_airline, republic_air)
+
+##Conver letter to number
+LETTER2num <- function(x) {utf8ToInt(x) - utf8ToInt("A") + 1L}
+icao <- raw_us_airline[,3]
+id <- c()
+a <- c()
+
+##convert ICAO of each airlines into its id
+for (i in 1: length(icao)){
+  a <- icao[i]
+  a <- strsplit(a, split ="")
+  a <- unlist(a)
+  b1 <- LETTER2num(a[1])
+  b2 <- LETTER2num(a[2])
+  b3 <- LETTER2num(a[3])
+  id[i] <- strtoi(paste(b1, b2, b3, sep =""))
+}
+
+raw_us_airline$company_id <- id
+
+
+us_airline <- raw_us_airline[, c("company_id", "company_name")] ##export this to excel file later
+write.xlsx(us_airline, file = 'us_airline.xlsx', row.names = FALSE)
 
 ```
+
 ```{r 4.a Airlines}
 ## These are global airlines. Will work on this later if time permits
 #create raw airlines data frame
@@ -153,6 +232,7 @@ t2 <- subset(t2, Name != "Southjet connect")
 t2 <- subset(t2, Name != "Southjet cargo")
 ```
 ```{r 5.Schedules}
+##Update schedules
 #data1 <- data.frame(read_csv("Downloads/archive/Flights_with_TSA_Contact.csv", show_col_types = FALSE))
 #data1$carrier_name[data1$carrier_name == 'JetBlue Airways'] <- 'JetBlue'
 #data1$carrier_name[data1$carrier_name == 'Southwest Airlines Co.'] <- "Southwest Airlines"
@@ -170,7 +250,7 @@ dis_between <- data.frame(dt[, mean(Distance), by = list(Origin_airport, Destina
 colnames(dis_between) <- c("Origin Airport", "Destination Airport", "Distance")
 dis_between$duration <- round((dis_between$Distance*18)/60)
 
-dis_between$freq <- sample(1:5, nrow(dis_between), replace = TRUE)
+dis_between$freq <- sample(1:3, nrow(dis_between), replace = TRUE)
 
 flight  <- data.frame('Origin Airport' = character(), 
                       'Destination Airport' = character(), 
@@ -187,9 +267,22 @@ possible_dates <- seq(as.POSIXct('2019/01/01'), as.POSIXct('2022/05/31'), by="15
 possible_dates <- possible_dates[hour(possible_dates) < 21 & hour(possible_dates) >= 9]
 depature <- sample(possible_dates, nrow(flight), replace = TRUE)
 dept_time<- data.frame(str_split_fixed(depature, " ", 2))
-cbind(flight, dept_time)$
 
+flight <- cbind(flight, dept_time)
+colnames(flight) <- c('Origin Airport', 'Destination Airport', 'Distance', 'Duration', 'Frequency', 'Depature Day', 'Depature Time')
+
+
+a <- sample(raw_us_airline$IATA, nrow(flight), replace = TRUE)
+b <- sample(1000:999999, nrow(flight), replace = FALSE)
+c <- paste0(a,b)
+
+flight$flight_id <- c
+
+schedule <- flight[,c("flight_id", 'Depature Day', 'Depature Time')]
+schedule <- schedule[1:40000,]
+write.xlsx(schedule, file = 'schedule.xlsx', row.names = FALSE)
 ```
+
 ```{r 6. US Aeroplanes_belong}
 us_fleet_raw <-  data.frame(read_excel("Downloads/us_fleet.xlsx"))
 colnames(us_fleet_raw) <- c("Customer.Name", "Model.Series", "Order.Total")
@@ -328,4 +421,23 @@ us_fleet <- us_fleet[,c("regis_no", "fir_capacity", "bus_capacity", "eco_capacit
 
 
 write.xlsx(us_fleet, file = 'us_aeroplanes.xlsx', row.names = FALSE)
+```
+```{r 11.hub}
+
+company_id <- us_airline$company_id
+company_name <- us_airline$company_name
+airlines <- data.frame(company_id, company_name)
+airlines$num_hub <- c( 120, 91, 269, 6, 30, 275, 90, 101, 120, 132, 103, 47, 70, 210, 20, 70)
+
+
+hub <- data.frame('company_id' = integer(), 
+                  'company_name' = character(), 
+                        stringsAsFactors=FALSE)
+for (i in 1:nrow(airlines)){
+  row <- i
+  time <- airlines[i,]$num_hub
+  data <- airlines[rep(row, time),]
+  hub <- rbind(airlines, data)
+}
+
 ```
