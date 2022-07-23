@@ -422,6 +422,19 @@ us_fleet <- us_fleet[,c("regis_no", "fir_capacity", "bus_capacity", "eco_capacit
 
 write.xlsx(us_fleet, file = 'us_aeroplanes.xlsx', row.names = FALSE)
 ```
+```{r 8. Tickets_book_for}
+status <- c("On-Time" , "Delay", "Cancel")
+flight_no <- flight$flight_id
+regis_no <- us_fleet$regis_no
+dept_iata_code <- flight$`Origin Airport`
+ariv_iata_code <- flight$`Destination Airport`
+
+tickets <- data.frame(flight_no, dept_iata_code, ariv_iata_code)
+tickets$regis_no <- sample(regis_no, nrow(tickets), replace = TRUE)
+tickets$flight_status <- sample(status, nrow(tickets), replace = TRUE)
+
+tickets <- tickets[,c("regis_no", "flight_no", "flight_status", "ariv_iata_code", "dept_iata_code")]
+```
 ```{r 11.hub}
 
 company_id <- us_airline$company_id
