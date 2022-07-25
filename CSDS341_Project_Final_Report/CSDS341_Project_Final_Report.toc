@@ -36,9 +36,9 @@
 \contentsline {subsection}{Hard-Level Query}{13}{section*.37}%
 \contentsline {subsubsection}{\textbf {Query 03}: Find the passport number(\texttt {passport\_no}) and first name(\texttt {first\_name}) of all Chinese Traveler who has already booked at least one Plane Ticket. The result table should also include \texttt {citizenship} as a check.}{13}{section*.38}%
 \contentsline {section}{Implementation}{14}{section*.39}%
-\contentsline {section}{GUI Interface}{14}{section*.40}%
-\contentsline {section}{Roles of members}{14}{section*.41}%
-\contentsline {subsection}{Luke Zhang}{14}{section*.42}%
-\contentsline {subsection}{Jiamu Zhang}{14}{section*.43}%
+\contentsline {section}{GUI Interface}{15}{section*.40}%
+\contentsline {section}{Roles of members}{15}{section*.41}%
+\contentsline {subsection}{Luke Zhang}{15}{section*.42}%
+\contentsline {subsection}{Jiamu Zhang}{15}{section*.43}%
 \contentsline {subsection}{Quynh Nguyen}{15}{section*.44}%
 \contentsline {section}{What we learned from this project}{15}{section*.45}%
