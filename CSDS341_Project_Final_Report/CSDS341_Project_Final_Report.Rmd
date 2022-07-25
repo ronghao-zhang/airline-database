@@ -444,7 +444,7 @@ output_01 %>% kable()
 **Relational Algebra**: 
 
 $$\begin{array}{ccc}
-  USMale\;\leftarrow\;\sigma_{gender\;=\;'M'}(UScitizen) \\
+  UScitizen\;\leftarrow \;\sigma_{citizenship\;=\;'US'}(travelers) \\
   USMale\;\leftarrow\;\sigma_{gender\;=\;'M'}(UScitizen) \\
   result\;\leftarrow\;\Pi_{first\_name,last\_name,dob,credits}(\sigma_{dob\;<\;'1985-01-01'}(USMale))
 \end{array}$$
