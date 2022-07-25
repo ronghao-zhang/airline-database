@@ -2,6 +2,8 @@
 title: "CSDS341 Project - Airline Querying System - Final Report"
 author: "Luke Zhang (rxz330), Jiamu Zhang (jxz1217), Quynh Nguyen (qtn2)"
 date: "`r Sys.Date()`"
+header-includes:
+  - \usepackage{float}
 output: 
   pdf_document:
     toc: yes
@@ -24,7 +26,6 @@ Although there do exist several flight databases or applications for commercial 
 Since our airline querying system contains a relatively extensive data sets, the crew members who choose to use our database are able to access the basic information about the travelers who will be on their flight and provides updates about the airline information. 
 
 # Database High-Level Design
-
 ## Assumptions
 
 In order to simulate the real-world situation of a complex flight system, we need to design our database based on the following assumptions. These assumptions can also be used as references for all data constraints.
@@ -68,7 +69,6 @@ For Functional Dependencies and Normalization, all of our tables are in BCNF. Fo
 
 
 # Relational Schema
-
 ## Strong Entities
 
 The `Travelers` Table records the information of each traveler such as citizenship and passport numbers.
@@ -220,7 +220,7 @@ CREATE TABLE IF NOT EXISTS assign (
         REFERENCES Schedules(schedule_id));
 ```
 
-The `hub` Table contains information of connectin between airline companies and their hub airports. 
+The `hub` Table contains information of connection between airline companies and their hub airports. 
 ```
 CREATE TABLE IF NOT EXISTS hub (
     company_id INT NOT NULL,
@@ -231,8 +231,8 @@ CREATE TABLE IF NOT EXISTS hub (
     FOREIGN KEY (iata_code)
         REFERENCES Airports(iata_code));
 ```
-# Constraints 
 
+# Constraints 
 ## Primary Key Constraints
 
 The Primary Key of each table can either be one or several attributes. Assume that a primary key is NOT NULL and unique. 
@@ -319,23 +319,208 @@ A `User` can be either `Travelers` or `Crew`, but they share the same primary ke
 5. `Airlines` total participates in `hub`. This means that an airline must have at least one airport as its hub and one airport can have zero or many airlines. 
 
 # Functional Dependencies
+### `Travelers` Table
 
+$$ 
+F_\text{travelers} = \{\text{user\_id} \rightarrow \{\text{all other attributes}\}, \{\text{passport\_no, citizenship}\}\rightarrow\{\text{all other attributes}\}\} 
+$$
+There are two functional dependencies for `travelers`. $\text{user\_id}$ and $\{\text{passport\_no, citizenship}\}$ are two super keys of the `travelers` relation, which means that the functional dependencies do not violate the BCNF. Note that there is only one candidate key which is $\text{user\_id}$ because $\{\text{passport\_no, citizenship}\}$ is not minimal. 
+
+### `Crew` Table
+
+$$ 
+F_\text{crew} = \{\text{user\_id} \rightarrow \{\text{all other attributes}\}, \text{ssn}\rightarrow\{\text{all other attributes}\}\} 
+$$
+There are two functional dependencies for `travelers`. $\text{user\_id}$ and $\text{ssn}$ are two super keys of the `travelers` relation, which means that the functional dependencies do not violate the BCNF. Note that both $\text{user\_id}$ and $\text{ssn}$ are candidate keys.
+
+### `Airports` Table
+
+$$ 
+F_\text{airports} = \{\text{iata\_code} \rightarrow \{\text{all other attributes}\},\{\text{airport\_name, country}\}\rightarrow\{\text{all other attributes}\}\} 
+$$
+There are two functional dependencies for `airports`. $\text{iata\_id}$ and $\{\text{airport\_name, country}\}$ are two super keys of the `travelers` relation, which means that the functional dependencies do not violate the BCNF.
+
+### `Airlines` Table
+
+$$ 
+F_\text{airlines} = \{\text{compnay\_id} \rightarrow \{\text{company\_name}\}\} 
+$$
+There is just one functional dependency for `airports`. $\text{iata\_id}$ is the super key of the `travelers` relation, which means that the functional dependency does not violate the BCNF.
+
+### `Schedules` Table
+
+$$ 
+F_\text{schedules} = \{\text{schedule\_id} \rightarrow \{\text{all other attributes}\}\} 
+$$
+There is just one functional dependency for `Schedules`. $\text{schedule\_id}$ is the super key of the `Schedules` relation, which means that the functional dependency does not violate the BCNF.
+
+### `Aeroplanes_belong` Table
+
+$$ 
+F_\text{Aeroplanes\_belong} = \{\text{regio\_no} \rightarrow \{\text{all other attributes}\}\} 
+$$
+There is just one functional dependency for `Aeroplanes_belong`. $\text{regis\_no}$ is the super key of the `Aeroplanes_belong` relation, which means that the functional dependency does not violate the BCNF.
+
+### `Tickets_book_for` Table
+
+$$ 
+F_\text{Tickets\_book\_for} = \{\text{ticket\_id} \rightarrow \{\text{all other attributes}\}\} 
+$$
+There is just one functional dependency for `Tickets_book_for`. $\text{ticket\_id}$ is the super key of the `Tickets_book_for` relation, which means that the functional dependency does not violate the BCNF.
+
+### `Flights_ariv_dept` Table
+
+$$ 
+F_\text{Flights\_ariv\_dept} = \{\{\text{regis\_no, flight\_no}\} \rightarrow \{\text{all other attributes}\}\} 
+$$
+There is just one functional dependency for `Flights_ariv_dept`. $\text{ticket\_id}$ is the super key of the `Flights_ariv_dept` relation, which means that the functional dependency does not violate the BCNF.
+
+### `serve` Table
+
+$$ 
+F_\text{serve} = \{\{\text{regis\_no, flight\_no, crew\_id}\} \rightarrow \{\text{all attributes}\}\} 
+$$
+There is just one functional dependency for `serve`. $\{\text{regis\_no, flight\_no, crew\_id}\}$ is the super key of the `serve` relation, which means that the functional dependency does not violate the BCNF.
+
+### `assign` Table
+
+$$ 
+F_\text{assign} = \{\{\text{regis\_no, flight\_no, schedule\_id}\} \rightarrow \{\text{all attributes}\}\} 
+$$
+There is just one functional dependency for `assign`. $\{\text{regis\_no, flight\_no, crew\_id}\}$ is the super key of the `assign` relation, which means that the functional dependency does not violate the BCNF.
+
+### `hub` Table 
+
+$$ 
+F_\text{hub} = \{\{\text{iata\_code, company\_id}\} \rightarrow \{\text{all attributes}\}\} 
+$$
+There is just one functional dependency for `hub`. $\{\text{iata\_code, company\_id}\}$ is the super key of the `hub` relation, which means that the functional dependency does not violate the BCNF.
 
 # Example Queries
 
+## Preliminaries
+Database connection and data querying will require the following packages.
+```{r packages, message=FALSE, warning=FALSE}
+library(RMySQL) 
+library(RODBC)
+library(knitr)
+library(tidyverse)
+```
+
+## Set-Up Connection to Database
+The following code set-up a connection to our airline database built by `MySQL`. The function `dbListTables` function lists the name of all tables we have in the database alphabetically. 
+```{r connectio_to_sql, message=FALSE}
+# Establish Connection to MySQL
+sql_link <- dbConnect(RMySQL::MySQL(),
+                      dbname='airline',
+                      host='localhost', 
+                      port=3306,
+                      user='root', 
+                      password='Lukezrh@010408')
+
+# List All the Tables in the Schema
+dbListTables(sql_link)
+```
+
+## Easy-Level Query
+
+### **Query 01**: Find the first name(`first_name`), last name(`last_name`), date of birth(`dob`), and the credits(`credits`) of all male travelers who are U.S. citizen. 
+
+**SQL & Output Table**:
+
+We convert the Query to SQL and Stored in the variable `sql_01` and generate the following table as the output.
+```{r sql_01, message=FALSE}
+sql_01 <- "SELECT first_name, last_name, dob, credits
+           FROM   travelers
+           WHERE  citizenship = 'US' AND
+                  gender = 'M' AND 
+                  dob < '1985-01-01'"
+
+result_01 <- dbSendQuery(sql_link, sql_01)
+output_01 <- fetch(result_01)
+output_01 %>% kable()
+```
+
+**Relational Algebra**: 
+
+**Tuple Relational Calculus**:
+
+## Medium-Level Query
+
+### **Query 02**: Find the flight number(`flight_no`), departure airport(`dept_iata_code`), arrival airport(`ariv_iata_code`) of all flights that operated by China Eastern Airlines and has a capacity of 30 seats in first class cabin. 
+
+**SQL & Output Table**:
+
+```{r}
+sql_02 <- "SELECT flight_no, dept_iata_code, ariv_iata_code
+           FROM   Flights_ariv_dept NATURAL JOIN Aeroplanes_belong
+           WHERE  (Aeroplanes_belong.fir_capacity = 30) 
+           AND    (regis_no IN (
+              SELECT regis_no
+              FROM   Aeroplanes_belong NATURAL JOIN Airlines
+              WHERE  Airlines.company_name = 'China Eastern Airlines'))"
+
+result_02 <- dbSendQuery(sql_link, sql_02)
+
+output_02 <- fetch(result_02)
+output_02 %>% kable()
+```
+
+**Relational Algebra**: 
+
+**Tuple Relational Calculus**:
+
+## Hard-Level Query
+
+### **Query 03**: Find the passport number(`passport_no`) and first name(`first_name`) of all Chinese Traveler who has already booked at least one Plane Ticket. The result table should also include `citizenship` as a check.
+
+**SQL & Output Table**:
+```{r}
+sql_03 <-	"SELECT passport_no, first_name, citizenship
+		       FROM   Travelers
+		       WHERE  (Citizenship = 'CN') 
+		              AND 
+		              (user_id IN (SELECT    traveler_id
+		                           FROM      Tickets_book_for
+		                           GROUP BY  traveler_id
+		                           HAVING    count(ticket_id) >= 1))"
+
+result_03 <- dbSendQuery(sql_link, sql_03)
+
+output_03 <- fetch(result_03)
+output_03 %>% kable()
+```
+
+**Relational Algebra**: 
+
+**Tuple Relational Calculus**:
 
 
 # Implementation
 
+Our database system was implemented as a simple command-line interface that can give an expected output table of queries. We use `MySQL Benchwork 8.0 CE` to create our database. There are eleven tables in our database. The SQL language that we used to create them are documented previously in the schema section. 
 
+For the data used in our database system, one of our largest table `Tickets_book_for` contains over $10,000$ tuples, while one of our smallest table `Airlines` contains only approx. $50$ tuples. Some data are obtained directly from internet. For instance, the airport names and airport IATA codes are obtained from internet, but filtered using `R` programming language to ensure the data quality. However, other part of data are not accessable from internet since they are protected by law or are part of the commercial secrets of airline companies. We use `R` to randomly simulate this type of data which includes the departure time of flights, flight numbers, travelers' passport number, and airport weather data. 
 
+For connecting the database from outside, we decide to use R programming language. We use mainly `RMySQL` and `RODBC` packages to push our query to `MySQL` server, and to generate the output table as dataframe in R environment. 
+
+# GUI Interface
+
+ 
 # Roles of members
 
+## Luke Zhang
 
+ER Diagram, Constraints, Relational Schema, Functional Dependencies, Example Query (SQL), Implementing R-MySQL Connection
+
+## Jiamu Zhang
+
+Constraints, Example Query (TRC, RA), Implementing Java GUI
+
+## Quynh Nguyen
+
+Background, Prepare Data for Database, Relational Schema
 
 # What we learned from this project
 
-
-
-# GUI Interface
 
