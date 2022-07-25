@@ -1,20 +1,22 @@
-\contentsline {section}{Introduction}{2}{section*.2}%
+\contentsline {section}{Background \& Introduction}{2}{section*.2}%
 \contentsline {section}{Database High-Level Design}{2}{section*.3}%
 \contentsline {subsection}{Assumptions}{2}{section*.4}%
 \contentsline {subsection}{Entity-Relationship Model}{3}{section*.5}%
 \contentsline {subsection}{Data Description}{3}{section*.6}%
-\contentsline {section}{Relational Schema (SQL Language)}{3}{section*.7}%
-\contentsline {subsection}{Strong Entities}{3}{section*.8}%
-\contentsline {subsection}{Weak Entity}{5}{section*.9}%
-\contentsline {subsection}{Relationships}{5}{section*.10}%
-\contentsline {subsection}{Primary Key Constraints}{6}{section*.11}%
-\contentsline {subsection}{Overlap Constraint}{7}{section*.12}%
-\contentsline {subsection}{Foreign key constraints (please also check the schema for more details):}{7}{section*.13}%
-\contentsline {subsection}{Mapping cardinalities (please also check the ER-Diagram for more details):}{7}{section*.14}%
-\contentsline {subsection}{Participation Constraints (please also check the ER-Diagram and Schema for more details):}{8}{section*.15}%
-\contentsline {section}{Functional Dependencies}{8}{section*.16}%
-\contentsline {section}{Example Queries}{8}{section*.17}%
-\contentsline {section}{Implementation}{8}{section*.18}%
-\contentsline {section}{Roles of members}{8}{section*.19}%
-\contentsline {section}{What we learned from this project}{8}{section*.20}%
-\contentsline {section}{GUI Interface}{8}{section*.21}%
+\contentsline {section}{Relational Schema}{4}{section*.7}%
+\contentsline {subsection}{Strong Entities}{4}{section*.8}%
+\contentsline {subsection}{Merged Tables}{5}{section*.9}%
+\contentsline {subsection}{Weak Entity}{6}{section*.10}%
+\contentsline {subsection}{Relationships}{6}{section*.11}%
+\contentsline {section}{Constraints}{7}{section*.12}%
+\contentsline {subsection}{Primary Key Constraints}{7}{section*.13}%
+\contentsline {subsection}{Overlap Constraints}{7}{section*.14}%
+\contentsline {subsection}{Foreign Key Constraints}{7}{section*.15}%
+\contentsline {subsection}{Mapping Cardinalities}{8}{section*.16}%
+\contentsline {subsection}{Participation Constraints}{8}{section*.17}%
+\contentsline {section}{Functional Dependencies}{9}{section*.18}%
+\contentsline {section}{Example Queries}{9}{section*.19}%
+\contentsline {section}{Implementation}{9}{section*.20}%
+\contentsline {section}{Roles of members}{9}{section*.21}%
+\contentsline {section}{What we learned from this project}{9}{section*.22}%
+\contentsline {section}{GUI Interface}{9}{section*.23}%

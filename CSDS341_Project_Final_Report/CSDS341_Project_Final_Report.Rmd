@@ -15,7 +15,8 @@ output:
     fig_width: 8
 ---
 
-# Introduction
+# Background & Introduction
+
 In recent decades, the growing demand for leisure and business travel has led to the prosperity of the airline market. An increasing number of people have been choosing to take flights to travel domestically or internationally. Therefore, an organized and comprehensive database that stores the airline system is critical for both travelers and crew to obtain plenty of simultaneous information.
 	
 Although there do exist several flight databases or applications for commercial airlines, it is rare to find comprehensive information - including weather at the departure airport and destination, aircraft type, the total flight hours of pilots, and the number of luggage allowed - in just one database. This information offers travelers a chance to be better prepared for traveling.
@@ -23,7 +24,9 @@ Although there do exist several flight databases or applications for commercial 
 Since our airline querying system contains a relatively extensive data sets, the crew members who choose to use our database are able to access the basic information about the travelers who will be on their flight and provides updates about the airline information. 
 
 # Database High-Level Design
+
 ## Assumptions
+
 In order to simulate the real-world situation of a complex flight system, we need to design our database based on the following assumptions. These assumptions can also be used as references for all data constraints.
 
 1. Assume that there have and only have two types of users of the airline querying system: travelers and crew.
@@ -45,21 +48,30 @@ In order to simulate the real-world situation of a complex flight system, we nee
 9. Assume that each flight only departures from exactly one airport and only arrives at exactly one airport. However, an airport can have many flights.
 
 ## Entity-Relationship Model
+
 ```{r ER-Diagram, echo=FALSE, fig.cap="CSDS341 Airline Database ER-Diagram", out.width = '70%',fig.align="center"}
 knitr::opts_chunk$set(fig.pos = "!H", out.extra = "")
 knitr::include_graphics("CSDS341_Project_ER_Diagram.jpeg")
 ```
 
 ## Data Description
+
 Our database consists of seven entities, eight relationships, and one identifying relationship. Notice that some tables and relationships are merged together to reduce redundancy.
 
 `Travelers` and `Crew` are considered as users of our airline user system. `Travelers` contains each travelers' information such as `credits`, `citizenship`, etc. `Crew`, sharing part of the attributes with `Travelers`, also has its unique attributes such as `ssn` and `salary`. Note that each user should be either a Traveler or a Crew. A user cannot be both or none, which means that if a `user_id` has already been stored in `Travelers` table, it will not be present in the `Crew` Table. 
 
-# Relational Schema (SQL Language)
+For `Travelers`, they are connected to their booking information (i.e. Table `Tickets`) by the `book` relationship, while travelers connect to `flight` information by the `serve` relationship. Note that `flight` cannot exist by itself, which means that a flight must be operated by an aeroplane. Additionally, an aeroplane must belong to exactly one airline company by the `belong` relationship. Moreover, a flight is connected to two airports by the `arrive` and `depart` relationships. An airline company can also connect to `airports` by the `hub` relationship.
+
+Our database implement `NOT NULL` constraints for primary keys and part of other attributes. We also use `FOREIGN KEY` constraints when referencing information from other tables. `PRIMARY KEY` constraints are adopted in all tables to ensure that each tuple is unique. `PRIMARY KEY` constraints also prevent the NULL values being assigned into the table by default. For more information, please see the constraints section where our group listed all primary key constraints, overlap Constraints, Foreign Key Constraints, Mapping Cardinalities, Participation Constraints. 
+
+For Functional Dependencies and Normalization, all of our tables are in BCNF. For each table, the functional dependencies are non-trivial and for each FD $X \rightarrow Y$, X is one of the super key of the table. Since there are no violation of BCNF, no tables should be decomposed from our current design. We will discussed our functional dependencies in more detail later in the Functional Dependencies Section.
+
+
+# Relational Schema
 
 ## Strong Entities
 
-**Table of Travelers:**
+The `Travelers` Table records the information of each traveler such as citizenship and passport numbers.
 ```
 CREATE TABLE IF NOT EXISTS Travelers (
     user_id INT NOT NULL,
@@ -75,7 +87,7 @@ CREATE TABLE IF NOT EXISTS Travelers (
     CHECK (gender IN ('M' , 'F', 'U')));
 ```
 
-**Table of Crew:** 
+The `Crew` Table is built for crew members including pilots. Their information such as social-security number and total distance traveled will be recorded. 
 ```
 CREATE TABLE IF NOT EXISTS Crew (
     user_id INT NOT NULL,
@@ -91,7 +103,7 @@ CREATE TABLE IF NOT EXISTS Crew (
     CHECK (gender IN ('M' , 'F', 'U')));
 ```
 
-**Table of Airports:**
+The `Airports` Table contains information of airports such as the IATA code and name of the airport. 
 ```
 CREATE TABLE IF NOT EXISTS Airports (
     iata_code CHAR(3) NOT NULL,
@@ -107,7 +119,7 @@ CREATE TABLE IF NOT EXISTS Airports (
         'Busy', 'Small-Scale Delay', 'Large-Scale Delay')));
 ```
 
-**Table of Airlines:**
+The `Airlines` Table contains information of airline companies. 
 ```
 CREATE TABLE IF NOT EXISTS Airlines (
     company_id INT NOT NULL,
@@ -115,7 +127,7 @@ CREATE TABLE IF NOT EXISTS Airlines (
     PRIMARY KEY (company_id));
 ```
 
-**Table of Schedules:**
+The `Schedules` Table contains information of flight schedules including departure time and arrival time. 
 ```
 CREATE TABLE IF NOT EXISTS Schedules (
     schedule_id INT NOT NULL,
@@ -126,9 +138,43 @@ CREATE TABLE IF NOT EXISTS Schedules (
     PRIMARY KEY (schedule_id));
 ```
 
+## Merged Tables
+
+The `Aeroplanes_belong` Table merges one entity (`Aeroplanes`) and one relationship (`belong`). It contains information about connection between aeroplanes and airline companies.   
+```
+CREATE TABLE IF NOT EXISTS Aeroplanes_belong (
+    regis_no VARCHAR(10) NOT NULL,
+    fir_capacity INT,
+    bus_capacity INT,
+    eco_capacity INT,
+    aircraft_type VARCHAR(50),
+    company_id INT NOT NULL,
+    PRIMARY KEY (regis_no),
+    FOREIGN KEY (company_id)
+        REFERENCES Airlines(company_id));
+```
+
+The `Tickets_book_for` Table merges one entity (`Tickets`) and two relationships (`book` and `for`). It contains traveler booking information. 
+```
+CREATE TABLE IF NOT EXISTS Tickets_book_for (
+    ticket_id INT NOT NULL,
+    seat_location CHAR(4),
+    seat_class CHAR(1),
+    luggage_no INT,
+    regis_no VARCHAR(10) NOT NULL,
+    flight_no VARCHAR(7) NOT NULL,
+    traveler_id INT NOT NULL,
+    PRIMARY KEY (ticket_id),
+    FOREIGN KEY (traveler_id)
+        REFERENCES Travelers(user_id),
+	FOREIGN KEY (regis_no, flight_no)
+        REFERENCES Flights_ariv_dept(regis_no, flight_no),
+    CHECK (seat_class IN ('F' , 'B', 'E')));
+```
+
 ## Weak Entity
 
-**Table of Flights_ariv_dept:**
+The `Flights_ariv_dept` Table merges one weak entity (`Flights`), one identifying relationship (`Fly`), and two relationships (`arrive`, `depart`). It contains the information of flights as well as its departure and arrival information. 
 ```
 CREATE TABLE IF NOT EXISTS Flights_ariv_dept (
     regis_no VARCHAR(10) NOT NULL,
@@ -148,39 +194,7 @@ CREATE TABLE IF NOT EXISTS Flights_ariv_dept (
 
 ## Relationships
 
-**Table of Aeroplanes_belong:**
-```
-CREATE TABLE IF NOT EXISTS Aeroplanes_belong (
-    regis_no VARCHAR(10) NOT NULL,
-    fir_capacity INT,
-    bus_capacity INT,
-    eco_capacity INT,
-    aircraft_type VARCHAR(50),
-    company_id INT NOT NULL,
-    PRIMARY KEY (regis_no),
-    FOREIGN KEY (company_id)
-        REFERENCES Airlines(company_id));
-```
-
-**Table of Tickets_book_for:**
-```
-CREATE TABLE IF NOT EXISTS Tickets_book_for (
-    ticket_id INT NOT NULL,
-    seat_location CHAR(4),
-    seat_class CHAR(1),
-    luggage_no INT,
-    regis_no VARCHAR(10) NOT NULL,
-    flight_no VARCHAR(7) NOT NULL,
-    traveler_id INT NOT NULL,
-    PRIMARY KEY (ticket_id),
-    FOREIGN KEY (traveler_id)
-        REFERENCES Travelers(user_id),
-	FOREIGN KEY (regis_no, flight_no)
-        REFERENCES Flights_ariv_dept(regis_no, flight_no),
-    CHECK (seat_class IN ('F' , 'B', 'E')));
-```
-
-**Table of serve:**
+The `serve` Table contains information of connection between Crew members and the flights they serve. 
 ```
 CREATE TABLE IF NOT EXISTS serve (
     crew_id INT NOT NULL,
@@ -193,7 +207,7 @@ CREATE TABLE IF NOT EXISTS serve (
         REFERENCES Flights_ariv_dept(regis_no, flight_no));
 ```
 
-**Table of assign:**
+The `assign` Table contains information of connection between flights and flying schedules. 
 ```
 CREATE TABLE IF NOT EXISTS assign (
     regis_no VARCHAR(10) NOT NULL,
@@ -206,7 +220,7 @@ CREATE TABLE IF NOT EXISTS assign (
         REFERENCES Schedules(schedule_id));
 ```
 
-**Table of hub:**
+The `hub` Table contains information of connectin between airline companies and their hub airports. 
 ```
 CREATE TABLE IF NOT EXISTS hub (
     company_id INT NOT NULL,
@@ -217,83 +231,92 @@ CREATE TABLE IF NOT EXISTS hub (
     FOREIGN KEY (iata_code)
         REFERENCES Airports(iata_code));
 ```
-
-
-Note: In order to prevent redundancy for table ``Tickets_book_for``, since both the book and for relationships are one-to-many relationships, they are merged with the entity on many side which is ``Tickets``. This table includes three different foreign keys, such as ``traveler_id`` from the ``book`` relationship; ``regis_no`` and ``flight_no`` from ``for`` relationship. Additionally, ``Tickets`` involves in both ``for`` and ``book`` relationship as total participation, while ``Travellers`` (in ``book`` relationship) and ``Flights`` (in ``for`` relationship) are partial relationship. 
-
-
+# Constraints 
 
 ## Primary Key Constraints
 
-1. The primary key attribute of the entities ``Travelers`` and ``Crew*`` are both ``user_id`` which is distinct for each one of the travelers, so each user can be uniquely identified by his/her ``user_id``.
+The Primary Key of each table can either be one or several attributes. Assume that a primary key is NOT NULL and unique. 
 
-2. The  entity ``Airport`` stores the information of airports and has a primary key attribute ``iata_code`` which stands for the unique three-character International Air Transport Association Code for each airport.
+1. For Table `Travelers` and `Airports`, the primary key is `user_id`. Since a traveler or a crew `isa` user, a `user_id` cannot be used for a traveler or a crew simultaneously, which will also be discussed in the Overlap Constraints Section. 
 
-3. The primary key attribute of the ``Airlines*`` is ``company_id`` which stores the information of airline companiesis and is unique for each airline.
+2. For Table `Airports`, the primary key is `iata_code`. It stands for the unique three-character International Air Transport Association Code for each airport.
 
-4. The primary key attribute of the ``Schedules`` is ``schedule_id`` which is unique for each schedule.
+3. For Table `Airlines`, the primary key is `company_id`.
 
-5. The primary key attribute of the ``Aeroplanes_belong`` is ``regis_no``.
+4. For Table `Schedules`, the primary key is `schedule_id`.
 
-6. The primary key attribute of the ``Flights_ariv_dept`` is ``regis_no`` and ``flight_no``.
+5. For Table `Aeroplanes_belong`, the primary key is `regis_no`.
 
-7. The primary key attribute of the ``Tickets_book_for`` is ``ticket_id``.
+6. For Table `Flights_ariv_dept`, the primary keys are `regis_no` and `flight_no`.
 
-8. The primary key attribute of the ``serve`` is ``crew_id``, ``regin_no`` and ``flight_no``.
+7. For Table `Tickets_book_for`, the primary key is `ticket_id`.
 
-9. The primary key attribute of the ``assign`` is ``regis_no``, ``flight_no`` and ``schedule_id``.
+8. For Table `serve`, the primary keys are `crew_id`, `regin_no` and `flight_no`.
 
-10. The primary key attribute of the ``hub*`` is ``company_id`` and ``iata_code``.
+9. For Table `assign`, the primary keys are `regis_no`, `flight_no` and `schedule_id`.
 
-## Overlap Constraint
+10. For Table `hub`, The primary keys are `company_id` and `iata_code`.
 
-A ``User`` can be either ``Travelers`` or ``Crew``, but they share the same primary key attribute ``user_id``, so when a ``Travelers`` or a ``Crew`` is created, they have their unique ``user_id``.
+## Overlap Constraints
 
-## Foreign key constraints (please also check the schema for more details):
+A `User` can be either `Travelers` or `Crew`, but they share the same primary key attribute `user_id`, so a `user_id` cannot be used for a traveler or a crew simultaneously. 
 
-1. The ``Tickets_book_for`` schema has three foreign-key constraints: (1)``traveler_id`` references the primary key of the ``book`` relationship which is ``Travelers.user_id``. (2)``regin_no`` references the primary key of the ``for`` relationship which is ``Aeroplanes_belong.regis_no``. (3)``flight_no`` reference the primary key of the ``for`` relationship which is ``Flights_ariv_dept.flight_no``.
+## Foreign Key Constraints
+
+1. The `Tickets_book_for` relation has three foreign-key constraints: 
+    * `traveler_id` references the primary key of the `Travelers` relation (`Travelers.user_id`). 
+    * `regis_no` references the primary key of the `Flights_ariv_dept` relation (`Flights_ariv_dept.regis_no`).
+    * `flight_no` reference the primary key of the `Flights_ariv_dept` relation (`Flights_ariv_dept.flight_no`).
   
-2. The ``Aeroplanes_belong`` schema has one foreign-key constraint: attribute ``company_id`` references the primary key of the ``Airlines`` which is ``Airlines.company_id``.
+2. The `Aeroplanes_belong` relation has one foreign-key constraint: 
+    * `company_id` references the primary key of the `Airlines` relation (`Airlines.company_id`).
 
-3. The ``Flights_ariv_dept`` schema has three foreign-key constraints: (1)``regis_no`` references the primary key of the ``Aeroplanes_belong`` relationship which is ``Aeroplanes_belong.regis_no``. (2)``dept_iata_code`` references the primary key of the ``Airports`` entity which is ``Airports.iata_code``. (3)``ariv_iata_code`` reference the primary key of the ``Airports`` entity which is ``Airports.iata_code``.
+3. The `Flights_ariv_dept` relation has three foreign-key constraints: 
+    * `regis_no` references the primary key of the `Aeroplanes_belong` relation (`Aeroplanes_belong.regis_no`).
+    * `dept_iata_code` references the primary key of the `Airports` relation (`Airports.iata_code`). 
+    * `ariv_iata_code` references the primary key of the `Airports` relation (`Airports.iata_code`).
 
-4. The ``serve`` schema has three foreign-key constraints: (1)``crew_id`` references the primary key of the ``Crew`` entity which is ``Crew.user_id``. (2)``regis_no`` references the primary key of the ``Aeroplanes_belong`` relationship which is ``Aeroplanes_belong.regis_no``. (3)``flight_no`` reference the primary key of the ``Flights_ariv_dept`` entity which is ``Flights_ariv_dept.flight_no``.
+4. The `serve` relation has three foreign-key constraints: 
+    * `crew_id` references the primary key of the `Crew` relation (`Crew.user_id`). 
+    * `regis_no` references the primary key of the `Flights_ariv_dept` relation (`Flights_ariv_dept.regis_no`).
+    * `flight_no` reference the primary key of the `Flights_ariv_dept` relation (`Flights_ariv_dept.flight_no`).
 
-5. The `assign` schema has three foreign-key constraints: (1)`chedule_i`` references the primary key of the ``Schedules`` entity which is ``Schedules.schedule_id``. (2)``regis_no`` references the primary key of the ``Aeroplanes_belong`` relationship which is ``Aeroplanes_belong.regis_no``. (3)``flight_no`` reference the primary key of the ``Flights_ariv_dept`` relationship which is ``Flights_ariv_dept.flight_no``.
+5. The `assign` relation has three foreign-key constraints: 
+    * `schedule_id` references the primary key of the `Schedules` relation (`Schedules.schedule_id`). 
+    * `regis_no` references the primary key of the `Flights_ariv_dept` relation (`Flights_ariv_dept.regis_no`).
+    * `flight_no` reference the primary key of the `Flights_ariv_dept` relation (`Flights_ariv_dept.flight_no`).
 
-6. The `hub` schema has three foreign-key constraints: (1)`company_id` references the primary key of the `Airlines` entity which is `Airlines.company_id`. (2)`iata_code` references the primary key of the `Airports` entity which is `Aeroplanes_belong.regis_no`.
+6. The `hub` relation has three foreign-key constraints: 
+    * `company_id` references the primary key of the `Airlines` relation (`Airlines.company_id`). 
+    * `iata_code` references the primary key of the `Airports` relation (`Airports.iata_code`).
 
-## Mapping cardinalities (please also check the ER-Diagram for more details):
+## Mapping Cardinalities 
 
-1. `book` in `Tickets_book_for`is a many-to-one relationship set from `Tickets` to `Travelers`, meaning that a travelers can book multiple tickets for flights.
+1. `book` (merged in relation `Tickets_book_for`) is a many-to-one relationship set from `Tickets` to `Travelers`, meaning that a travelers can book multiple tickets for flights and a ticket can only be used for one traveler. 
 
-2. `for` in `Tickets_book_for` is a many-to-one relationship set from `Tickets` to `Flights`, meaning that a flight can have many tickets.
+2. `for` (merged in relation `Tickets_book_for`) is a many-to-one relationship set from `Tickets` to `Flights`, meaning that a flight can have many tickets being sold and one ticket can only be used for boarding one flight.
 
-3. `serve` is a many-to-many relationship set from `Crew` to `Flights`, meaning that several crews can work on one flights, and one crew can work on several flights.
+3. `serve` is a many-to-many relationship set from `Crew` to `Flights`, meaning that several crews can work on the same flight, and one crew can work on multiple flights.
 
-4. `depart` and `arrive` in `Flights_ariv_dept` are many-to-one relationship set from `Flights` to `Airports`, meaning that several flights can depart from the same airports.
+4. `depart` and `arrive` (merged in relation `Flights_ariv_dept`) are many-to-one relationships from `Flights` to `Airports`, meaning that one airport can have many departing or arriving aeroplanes and one flight can only depart (or arrive) at one airport.
 
-5. `assign` is a many-to-one relationship set from `Flights` to `Schedules`, meaning that several different flights can have the same schedule of event.
+5. `assign` is a many-to-many relationship, meaning that a flight can have several schedules. For instance, a flight can be operated on two successive days. Additionally, for one schedule, there might be two or more flights being operated. 
 
-6. `fly` is a many-to-one relationship set from `Flights` to `Aeroplanes`, meaning that several different flights can correspond to one planes.
+6. `belong` is a many-to-one relationship set from `Aeroplanes` to `Airlines`, meaning that one airline company can own multiple planes, while a plane can only belong to one airline company. 
 
-7. `belong` is a many-to-one relationship set from `Aeroplanes` to `Airlines`, meaning that several planes can have the same airline.
+7. `hub` is a many-to-many relationship set from `Airlines` to `Airports`, meaning that airline companies can have several hub airports, and one airport can be the hub airport of multiple airlines companies.
 
-8. `hub` is a many-to-many relationship set from `Airlines` to `Airports`, meaning that airline companies can have several of their hub airports, and airports can be the hub airport of several different airlines companies.
+## Participation Constraints
 
-## Participation Constraints (please also check the ER-Diagram and Schema for more details):
+1. `Tickets` total participates in `book` and `for`. A ticket must be assigned to one traveler and and must be mapped to a flight. However, a traveler can have no tickets and a flight can have no tickets being sold. 
 
-1. `Tickets` must have a total participation in the `book` and `for` relationship set, because every travelers must have at least one ticket, and every tickets must at least for one flight.
+2. `Flights` total participates in the `depart`, `arrive` and `assign`. This means that a ticket must be assigned to a certain schedule as well as a departure airport and an arrival airport. However, an airport can have no departing or arriving airports, and a schedule can have no flights in that schedule. 
 
-2. `Flights` is a weak entity and totally participates in identifying relationship set `fly` with `Aeroplanes`, since a flight must at least corresponds to one plane.
+3. `Flights` total participates in `serve`. This means that a flight must be served by at least one crew member, while a crew member can serve zero flights. 
 
-3. `Flights` must have a total participation in the `depart`, `arrive` and `assign` relationship set, because an airport cannot have no flight for departure or arrival, and the existence of a schedule must have at least on flights relates to.
+4. `Aeroplanes` total participates in `belong`. This means that an aeroplane must be owned by one airline company and one airline company can own zero aeroplanes. 
 
-4. `Flights` must also a total participation in `serve`, because there should be at least a crew member to take care of a flight.
-
-5. `Aeroplanes` must have a total participation in the `belong` relationship set, since each one of the planes should relate to their airlines company.
-
-6. `Airlines` must have a total participation in the `hub` relationship set, meaning that there should be at least one airline company that the airport is the hub of its planes.
+5. `Airlines` total participates in `hub`. This means that an airline must have at least one airport as its hub and one airport can have zero or many airlines. 
 
 # Functional Dependencies
 
