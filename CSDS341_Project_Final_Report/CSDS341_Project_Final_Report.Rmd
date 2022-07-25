@@ -443,7 +443,19 @@ output_01 %>% kable()
 
 **Relational Algebra**: 
 
+$$\begin{array}{ccc}
+  USMale\;\leftarrow\;\sigma_{gender\;=\;'M'}(UScitizen) \\
+  USMale\;\leftarrow\;\sigma_{gender\;=\;'M'}(UScitizen) \\
+  result\;\leftarrow\;\Pi_{first\_name,last\_name,dob,credits}(\sigma_{dob\;<\;'1985-01-01'}(USMale))
+\end{array}$$
+
 **Tuple Relational Calculus**:
+
+$$\begin{array}{ccc}
+  \{t^{4}\;|\;(( \exists\;fn)(\exists\;ln)(\exists\;d)(\exists\;c)(traverlers(fn)\;\land\;traverlers(ln) \\
+  \;\land\;traverlers(d)\;\land\;traverlers(c)\;\land\;t[1]\;=\;fn[first\_name] \land\;t[2]\;=\;ln[last\_name] \\
+  \;\land\;t[3]\;=\;d[dob]\;\land\;t[4]\;=\;c[credits]\;\land\;(\exists \;a)\;(travelers(a)\;\land\;a[citizenship]\;=\;'US'\\\land\;a[gender]\;=\;'M'\;\land\;a[dob]\;<\;'1985-01-01'\;\land\;fn[first\_name]\;=\;a[first\_name] \\ \;\land\;ln[last\_name]\;=\;a[last\_name]\;\land\;d[dob]\;=\;a[dob]\;\land\;c[citizenship]\;=\;a[citizenship]))\}
+\end{array}$$
 
 ## Medium-Level Query
 

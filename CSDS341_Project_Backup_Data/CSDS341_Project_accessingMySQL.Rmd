@@ -33,7 +33,7 @@ sql_link <- dbConnect(RMySQL::MySQL(),
                       host='localhost', 
                       port=3306,
                       user='root', 
-                      password='Lukezrh@010408')
+                      password='Zjm200249@szboy')
 
 # List All the Tables in the Schema
 dbListTables(sql_link)
