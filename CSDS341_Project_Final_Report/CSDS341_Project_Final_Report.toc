@@ -34,7 +34,7 @@
 \contentsline {subsection}{Medium-Level Query}{12}{section*.35}%
 \contentsline {subsubsection}{\textbf {Query 02}: Find the flight number(\texttt {flight\_no}), departure airport(\texttt {dept\_iata\_code}), arrival airport(\texttt {ariv\_iata\_code}) of all flights that operated by China Eastern Airlines and has a capacity of 30 seats in first class cabin.}{12}{section*.36}%
 \contentsline {subsection}{Hard-Level Query}{13}{section*.37}%
-\contentsline {subsubsection}{\textbf {Query 03}: Find the passport number(\texttt {passport\_no}) and first name(\texttt {first\_name}) of all Chinese Traveler who has already booked at least one Plane Ticket. The result table should also include \texttt {citizenship} as a check.}{13}{section*.38}%
+\contentsline {subsubsection}{\textbf {Query 03}: Find the passport number(\texttt {passport\_no}) and first name(\texttt {first\_name}) of all Chinese Traveler who has already booked at least two Plane Ticket. The result table should also include \texttt {citizenship} as a check.}{13}{section*.38}%
 \contentsline {section}{Implementation}{14}{section*.39}%
 \contentsline {section}{GUI Interface}{15}{section*.40}%
 \contentsline {section}{Roles of members}{15}{section*.41}%

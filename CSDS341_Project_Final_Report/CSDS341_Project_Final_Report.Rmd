@@ -455,7 +455,7 @@ $$
 $$
 \begin{array}{ccc}
   \{t^{4} \;|\; (\exists\; p) (p \in \text{travelers} \;\land\; t[1] = p[\text{first\_name}] \;\land\; t[2] = p[\text{last\_name}] \;\land\; t[3] = p[\text{dob}] \;\land\; t[4] = p[\text{credits}]  \;\land\; \\ 
-  t[\text{citizenship}] = \text{'us'} \;\land\; t[\text{gender}] = \text{'M'} \;\land\; t[\text{dob}] < \text{'1985-01-01'} )  \}
+  p[\text{citizenship}] = \text{'us'} \;\land\; p[\text{gender}] = \text{'M'} \;\land\; p[\text{dob}] < \text{'1985-01-01'} )  \}
 \end{array}
 $$
 
@@ -482,11 +482,27 @@ output_02 %>% kable()
 
 **Relational Algebra**: 
 
+$$
+\begin{array}{ccc}
+  \text{caePlanes} \;\leftarrow\; \sigma_{\text{company\_name}=\text{'China Eastern Airlines'}}(\text{Aeroplanes\_belong} \Join \text{Airlines}) \\
+  \text{result} \;\leftarrow\; \Pi_{\text{flight\_no, dept\_iata\_code, ariv\_iata\_code}}(\sigma_{\text{fir\_capacity} = 30}(\text{caePlanes} \Join \text{Flights\_ariv\_dept}))
+\end{array}
+$$
+
 **Tuple Relational Calculus**:
+
+$$
+\begin{array}{ccc}
+  \{t^{3} \;|\; (\exists\ f) (f \in \text{Flights\_ariv\_dept} \;\land\; t[1] = f[\text{flight\_no}] \;\land\; t[2] = f[\text{dept\_iata\_code}] \;\land\; t[3] = f[\text{ariv\_iata\_code}] \\ 
+  \;\land\; (\exists\ p)(p \in \text{Aeroplanes\_belong} \;\land\; p[\text{regis\_no}] = f[\text{regis\_no}] \;\land\; p[\text{fir\_capacity}] = 30 \;\land\; \\
+  (\exists\ l)(l \in \text{Airlines} \;\land\; l[\text{company\_id}] = p[\text{company\_id}] \;\land\; l[\text{company\_name} = \text{'Chinese Eastern Airlines'}])))\}
+\end{array}
+$$
+
 
 ## Hard-Level Query
 
-### **Query 03**: Find the passport number(`passport_no`) and first name(`first_name`) of all Chinese Traveler who has already booked at least one Plane Ticket. The result table should also include `citizenship` as a check.
+### **Query 03**: Find the passport number(`passport_no`) and first name(`first_name`) of all Chinese Traveler who has already booked at least two Plane Ticket. The result table should also include `citizenship` as a check.
 
 **SQL & Output Table**:
 ```{r}
@@ -497,7 +513,7 @@ sql_03 <-	"SELECT passport_no, first_name, citizenship
 		              (user_id IN (SELECT    traveler_id
 		                           FROM      Tickets_book_for
 		                           GROUP BY  traveler_id
-		                           HAVING    count(ticket_id) >= 1))"
+		                           HAVING    count(ticket_id) >= 2))"
 
 result_03 <- dbSendQuery(sql_link, sql_03)
 
@@ -507,8 +523,23 @@ output_03 %>% kable()
 
 **Relational Algebra**: 
 
+$$
+\begin{array}{ccc}
+\text{cnTraveler} \;\leftarrow\; \sigma_{\text{citizenship} = \text{'CN'}}(\text{Travelers}) \\
+  \text{oneTID(user\_id, ticket\_num)} \;\leftarrow\; \sigma_{\text{t\_num}\;\ge\;2}(\text{traveler\_id}\;\textbf{G}_{\text{count(ticket\_id) as t\_num}}(\text{Tickets\_book\_for})) \\
+  \text{result} \;\leftarrow\; \Pi_{\text{first\_name, passport\_no, citizenship}}(\text{cnTraveler} \Join \text{}_\text{user\_id} \text{oneTID} )
+\end{array}
+$$
+
 **Tuple Relational Calculus**:
 
+$$
+\begin{array}{ccc}
+  \{t^{3} \;|\; (\exists\ a) (a \in \text{Travelers} \;\land\; t[1] = a[\text{fisrt\_name}] \;\land\; t[2] = a[\text{passport\_no}] \;\land\; t[3] = a[\text{citizenship}] \;\land\; a[\text{citizenship}] = \text{'CN'} \;\land\; \\
+  (\exists\ b)(b \in \text{Tickets\_book\_for} \;\land\; b[\text{traveler\_id}] = a[\text{user\_id}] \;\land\; \\
+  (\exists\ c)(c \in \text{Tickets\_book\_for} \;\land\; b[\text{traveler\_id}] = c[\text{traveler\_id}] \;\land\; c[\text{ticket\_id}] <> b[\text{ticket\_id}])))\}
+\end{array}
+$$
 
 # Implementation
 
@@ -537,4 +568,4 @@ Background, Prepare Data for Database, Relational Schema
 
 # What we learned from this project
 
-
+Many of the things we have learned from this project. Firstly, we learned how to perform a high-level design of database system including the construction of Entity-Relationship Diagram. During the design process, we get practice with the knowledge of functional dependency and BCNF and learned under what situations should a relation be decomposed. Secondly, we learned how to implement the database system using `MySQL`. This includes table creation and data import. Furthermore, in order to return the output from the database into the command line interface, we learned how to connect `R` programming language to `MySQL` and how to send SQL queries to the database. 
