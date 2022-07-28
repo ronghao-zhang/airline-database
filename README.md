@@ -11,6 +11,13 @@ This repository is built for the final project for CSDS341 Introduction to Datab
 
 4. `CSDS341_Project_Code` directory contains `.sql` code that can be used in `MySQL BenchWork 8.0 CE` for table creation and deletion. 
 
+## Functionalities
+(Last Updated on 2022-07-28)
+1. This project includes the `.sql` file that aims to create the database in `MySQL` server.
+2. A user can use R pipelines to communicate with this database. 
+3. This database system **DOES NOT** have different views created for different users (i.e. travelers and crew). 
+4. Java GUI to be implemented. 
+
 ## Responsiblities and WorkLoad
 
 **Contributor**: Luke Zhang 
