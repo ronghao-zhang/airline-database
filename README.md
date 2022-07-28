@@ -28,11 +28,11 @@ This repository is built for the final project for CSDS341 Introduction to Datab
 5. Implementation of R-MySQL Connection
 6. Data Generation and Processing by R
 
-Contributor: Jiamu Zhang
+**Contributor**: Jiamu Zhang
 1. Query Examples & Conversion to SQL, RA, TLC
 2. Relational Schema Constraints Design
 3. Java GUI Implementation (To be done)
 
-Contributor: Quynh Nguyen
+**Contributor**: Quynh Nguyen
 1. Data Generation and Processing by R
 2. BackGround Research about Airline Database System
