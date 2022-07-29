@@ -19,11 +19,11 @@ output:
 
 # Background & Introduction
 
-In recent decades, the growing demand for leisure and business travel has led to the prosperity of the airline market. An increasing number of people have been choosing to take flights to travel domestically or internationally. Therefore, an organized and comprehensive database that stores the airline system is critical for both travelers and crew to obtain plenty of simultaneous information.
+In recent decades, the growing demand for leisure and business travel has led to the prosperity of the airline market. For instance, in the U.S only, the number of private and public airports has been increasing since 1990 until now. Around the U.S, there would be around 20,000 airports, with about 5,000 ones for public use and the rest for private uses. Along with this, the number of people choosing to take flights to travel domestically and internationally keeps increasing year by year. Based on Federal Aviation Administration (FAA), in the U.S, there would be around 2.9 million passengers flying in and out as well as within the country in 4,500 flights daily. With the high demand for flights, aviation has contributed about $488 million to the U.S industry and $3.5 trillion to the global industry, making it one of the top 20 industry fields contributing to global GDP. With this high impact, an organized and comprehensive database that stores the airline system is critical for both travelers and crew to obtain plenty of simultaneous information.
 	
-Although there do exist several flight databases or applications for commercial airlines, it is rare to find comprehensive information - including weather at the departure airport and destination, aircraft type, the total flight hours of pilots, and the number of luggage allowed - in just one database. This information offers travelers a chance to be better prepared for traveling.
+Although several flight databases or applications exist for commercial airlines, it is rare to find comprehensive information - including weather at the departure airport and destination, aircraft type, the total flight hours of pilots, and the number of luggage allowed - in just one database. This information offers travelers a chance to be better prepared for traveling.
 	
-Since our airline querying system contains a relatively extensive data sets, the crew members who choose to use our database are able to access the basic information about the travelers who will be on their flight and provides updates about the airline information. 
+Since our airline querying system contains relatively extensive data sets, the crew members who choose to use our database can access the basic information about the travelers who will be on their flight and provides updates about the airline information. 
 
 # Database High-Level Design
 ## Assumptions
