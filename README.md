@@ -16,7 +16,6 @@ This repository is built for the final project for CSDS341 Introduction to Datab
 1. This project includes the `.sql` file that aims to create the database in `MySQL` server.
 2. A user can use R pipelines to communicate with this database. 
 3. This database system **DOES NOT** have different views created for different users (i.e. travelers and crew). 
-4. Java GUI to be implemented. 
 
 ## Responsiblities and WorkLoad
 
@@ -31,7 +30,6 @@ This repository is built for the final project for CSDS341 Introduction to Datab
 **Contributor**: Jiamu Zhang
 1. Query Examples & Conversion to SQL, RA, TLC
 2. Relational Schema Constraints Design
-3. Java GUI Implementation (To be done)
 
 **Contributor**: Quynh Nguyen
 1. Data Generation and Processing by R
